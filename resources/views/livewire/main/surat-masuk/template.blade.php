@@ -1,9 +1,5 @@
 @section('title', $judul)
 
-@section('styles')
-<link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . 'vendor/stisla/css/daterangepicker.css') }}">
-@endsection
-
 <section class="section">
     @include('components.partials.header', [ 'judul' => $judul ])
 
@@ -35,8 +31,3 @@
         </div>
     </form>
 </section>
-
-@push('scripts')
-<script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/daterangepicker.js') }}"></script>
-<script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/page/forms-advanced-forms.js') }}"></script>
-@endpush
