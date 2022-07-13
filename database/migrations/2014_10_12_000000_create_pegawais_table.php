@@ -24,8 +24,8 @@ class CreatePegawaisTable extends Migration
             $table->boolean('aktif');
             $table->string('foto')->nullable();
             $table->string('telegram_id')->nullable();
-            $table->unsignedBigInteger('unit_kerja_id')->nullable();
-            $table->unsignedBigInteger('unit_fungsi_id')->nullable();
+            $table->unsignedInteger('unit_kerja_id')->nullable();
+            $table->unsignedInteger('unit_fungsi_id')->nullable();
             $table->timestamp('tanggal_buat');
             $table->timestamp('tanggal_update');
         });
