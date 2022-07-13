@@ -1,71 +1,42 @@
 @section('title', $judul)
 
-<section class="section">
-    @include('components.partials.header', [$judul => $judul])
+@section('styles')
+<link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . 'vendor/stisla/css/daterangepicker.css') }}">
+@endsection
 
-    <div class="card">
-        <div class="card-body">
-            <div class="form-group">
-                <label>Default Input Text</label>
-                <input type="text" class="form-control">
+<section class="section">
+    @include('components.partials.header', [ 'judul' => $judul ])
+
+    <form wire:submit.prevent="{{ $metode }}">
+        <div class="card">
+            <div class="card-body">
+                {{-- Nomor Agenda --}}
+                <x-forms.input-text judul='Nomor Agenda' model='no_agenda' />
+
+                {{-- Tanggal Surat --}}
+                <x-forms.input-date judul='Tanggal Surat' model='tanggal_surat' />
+
+                {{-- Nomor Surat --}}
+                <x-forms.input-text judul='Nomor Surat' model='no_surat' />
+
+                {{-- Pengirim Surat --}}
+                <x-forms.input-text judul='Pengirim Surat' model='pengirim_surat' />
+
+                {{-- Perihal Surat --}}
+                <x-forms.text-area judul='Perihal Surat' model='perihal_surat' />
+
+                {{-- File Surat --}}
+                <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
             </div>
-          <div class="form-group">
-            <label>Phone Number (US Format)</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <i class="fas fa-phone"></i>
-                </div>
-              </div>
-              <input type="text" class="form-control phone-number">
+            <div class="card-footer text-right">
+                <button class="btn btn-primary mr-1" type="submit">Simpan</button>
+                <button class="btn btn-secondary" type="reset">Batal</button>
             </div>
-          </div>
-          <div class="form-group">
-            <label>Password Strength</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <i class="fas fa-lock"></i>
-                </div>
-              </div>
-              <input type="password" class="form-control pwstrength" data-indicator="pwindicator">
-            </div>
-            <div id="pwindicator" class="pwindicator">
-              <div class="bar"></div>
-              <div class="label"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Currency</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  $
-                </div>
-              </div>
-              <input type="text" class="form-control currency">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Purchase Code</label>
-            <input type="text" class="form-control purchase-code" placeholder="ASDF-GHIJ-KLMN-OPQR">
-          </div>
-          <div class="form-group">
-            <label>Invoice</label>
-            <input type="text" class="form-control invoice-input">
-          </div>
-          <div class="form-group">
-            <label>Date</label>
-            <input type="text" class="form-control datemask" placeholder="YYYY/MM/DD">
-          </div>
-          <div class="form-group">
-            <label>Credit Card</label>
-            <input type="text" class="form-control creditcard">
-          </div>
-          <div class="form-group">
-            <label>Tags</label>
-            <div class="bootstrap-tagsinput"><input type="text" placeholder=""></div><input type="text" class="form-control inputtags" style="display: none;">
-          </div>
         </div>
-      </div>
+    </form>
 </section>
+
+@push('scripts')
+<script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/daterangepicker.js') }}"></script>
+<script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/page/forms-advanced-forms.js') }}"></script>
+@endpush

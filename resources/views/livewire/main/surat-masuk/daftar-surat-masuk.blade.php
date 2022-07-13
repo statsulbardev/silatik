@@ -2,7 +2,7 @@
 
 <div>
     <section class="section">
-        @include('components.partials.header', [$judul => 'Surat Masuk'])
+        @include('components.partials.header', [ 'judul' => 'Surat Masuk' ])
 
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">

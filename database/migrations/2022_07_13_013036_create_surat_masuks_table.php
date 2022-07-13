@@ -17,7 +17,7 @@ class CreateSuratMasuksTable extends Migration
             $table->id();
             $table->timestamp('tanggal_surat')->index();
             $table->string('no_surat')->index();
-            $table->string('sumber_surat')->index();
+            $table->string('pengirim_surat')->index();
             $table->string('perihal_surat')->index();
             $table->string('tautan_surat');
             $table->unsignedInteger('no_agenda_sekretaris')->nullable();

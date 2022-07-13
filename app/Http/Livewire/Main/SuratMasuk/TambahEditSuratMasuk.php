@@ -18,7 +18,7 @@ class TambahEditSuratMasuk extends Component
     public $no_agenda;
     public $tanggal_surat;
     public $no_surat;
-    public $sumber_surat;
+    public $pengirim_surat;
     public $perihal_surat;
     public $file_surat;
     public $tahapan;
@@ -33,7 +33,7 @@ class TambahEditSuratMasuk extends Component
             $this->no_agenda     = $surat->no_agenda_sekretaris ?? $surat->no_agenda_umum;
             $this->tanggal_surat = $surat->tanggal_surat;
             $this->no_surat      = $surat->no_surat;
-            $this->sumber_surat  = $surat->sumber_surat;
+            $this->sumber_surat  = $surat->pengirim_surat;
             $this->perihal_surat = $surat->perihal_surat;
             $this->file_surat    = $surat->tautan_surat;
         }
@@ -47,6 +47,6 @@ class TambahEditSuratMasuk extends Component
 
     public function save()
     {
-
+        dd($this);
     }
 }
