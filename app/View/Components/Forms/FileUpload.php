@@ -4,17 +4,17 @@ namespace App\View\Components\Forms;
 
 use Illuminate\View\Component;
 
-class InputText extends Component
+class FileUpload extends Component
 {
     public $model;
     public $judul;
     public $opsi;
 
-    public function __construct($judul, $model, $opsi = false)
+    public function __construct($judul, $model, $opsi = null)
     {
-        $this->model  = $model;
-        $this->judul  = $judul;
-        $this->opsi   = $opsi;
+        $this->judul = $judul;
+        $this->model = $model;
+        $this->opsi  = $opsi;
     }
 
     /**
@@ -24,6 +24,6 @@ class InputText extends Component
      */
     public function render()
     {
-        return view('components.forms.input-text');
+        return view('components.forms.file-upload');
     }
 }
