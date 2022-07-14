@@ -9,12 +9,14 @@ class InputText extends Component
     public $model;
     public $judul;
     public $opsi;
+    public $tipe;
 
-    public function __construct($judul, $model, $opsi = false)
+    public function __construct($judul, $model, $tipe, $opsi = false)
     {
         $this->model  = $model;
         $this->judul  = $judul;
         $this->opsi   = $opsi;
+        $this->tipe   = $tipe;
     }
 
     /**

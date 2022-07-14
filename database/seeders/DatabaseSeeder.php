@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             UnitKerjaTableSeeder::class,
             UnitFungsiTableSeeder::class,
             RoleTableSeeder::class,
-            PegawaiTableSeeder::class
+            PegawaiTableSeeder::class,
+            SuratTableSeeder::class
         ]);
     }
 }
