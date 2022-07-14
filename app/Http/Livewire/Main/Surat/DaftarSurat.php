@@ -33,4 +33,9 @@ class DaftarSurat extends Component
             'data' => $this->getAllData($this->tipe_surat)
         ])->layout('layouts.main');
     }
+
+    public function delete($id)
+    {
+
+    }
 }

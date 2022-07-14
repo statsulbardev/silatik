@@ -13,6 +13,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="menu-header">PERSURATAN</li>
             <li>
                 <a href="{{ env('APP_URL') . 'surat-masuk' }}" class="nav-link">
                     <i class="fas fa-mail-bulk"></i>
@@ -21,16 +22,11 @@
             </li>
             <li>
                 <a href="{{ env('APP_URL') . 'surat-keluar'}}" class="nav-link">
-                    <i class="fas fa-mail-bulk"></i>
+                    <i class="fas fa-inbox"></i>
                     <span>Surat Keluar</span>
                 </a>
             </li>
-            <li>
-                <a href="" class="nav-link">
-                    <i class="fas fa-mail-bulk"></i>
-                    <span>Disposisi Surat</span>
-                </a>
-            </li>
+            <li class="menu-header">PENGATURAN</li>
         </ul>
     </aside>
   </div>

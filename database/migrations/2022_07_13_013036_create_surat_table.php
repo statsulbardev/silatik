@@ -22,6 +22,7 @@ class CreateSuratTable extends Migration
             $table->string('perihal_surat')->index();
             $table->string('tautan_surat');
             $table->string('tipe_surat');
+            $table->boolean('usul_disposisi')->default(false);
             $table->unsignedBigInteger('pegawai_id');
             $table->unsignedBigInteger('unit_kerja_id');
             $table->unsignedBigInteger('unit_fungsi_id');

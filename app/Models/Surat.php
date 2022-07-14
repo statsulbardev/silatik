@@ -22,6 +22,7 @@ class Surat extends Model
         'perihal_surat',
         'tautan_surat',
         'tipe_surat',
+        'usul_disposisi',
         'pegawai_id',
         'unit_kerja_id',
         'unit_fungsi_id'
