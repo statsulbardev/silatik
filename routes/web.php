@@ -3,6 +3,7 @@
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Main\Dashboard;
 use App\Http\Livewire\Main\Surat\DaftarSurat;
+use App\Http\Livewire\Main\Surat\Disposisi;
 use App\Http\Livewire\Main\Surat\TambahEditSurat;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('surat-masuk/edit/{surat}', TambahEditSurat::class)->name('edit-surat-masuk');
     Route::get('surat-keluar', DaftarSurat::class)->name('surat-keluar');
     Route::get('surat-keluar/tambah', TambahEditSurat::class)->name('tambah-surat-keluar');
-    // Route::get('surat-keluar/edit/{surat}', TambahEditSuratKeluar::class)->name('edit-surat-keluar');
+    Route::get('surat-keluar/edit/{surat}', TambahEditSurat::class)->name('edit-surat-keluar');
+    Route::get('surat-masuk/{surat}/disposisi', Disposisi::class)->name('disposisi-surat-masuk');
+    Route::get('surat-keluar/{surat}/disposisi', Disposisi::class)->name('disposisi-surat-keluar');
 });

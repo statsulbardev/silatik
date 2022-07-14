@@ -21,28 +21,40 @@
                             <table class="table table-bordered table-striped table-md">
                                 <tbody>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Nomor Agenda</th>
-                                        <th>Tanggal Entri</th>
-                                        <th>Tanggal Surat</th>
+                                        <th>No.</th>
+                                        <th>Tanggal Terima</th>
                                         <th>Nomor Surat</th>
+                                        <th>Tanggal Surat</th>
                                         <th>Pengirim</th>
                                         <th>Perihal</th>
                                         <th>Tautan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                     @foreach ($data as $index => $item)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $item->no_agenda }}</td>
                                             <td>{{ DateFormat::convertDateTime($item->tanggal_buat) }}</td>
-                                            <td>{{ DateFormat::convertDateTime($item->tanggal_surat) }}</td>
                                             <td>{{ $item->no_surat }}</td>
+                                            <td>{{ DateFormat::convertDateTime($item->tanggal_surat) }}</td>
                                             <td>{{ $item->pengirim_surat }}</td>
                                             <td>{!! $item->perihal_surat !!}</td>
                                             <td>
-                                                <a href="{{ google_view_file($item->tautan_surat) }}" class="btn btn-icon icon-left btn-success">
-                                                    <i class="fa-solid fa-download"></i> Unduh
+                                                <a href="{{ google_view_file($item->tautan_surat) }}" id="unduh" class="btn btn-icon icon-left btn-success">
+                                                    <i class="fa-solid fa-download"></i>
                                                 </a>
+                                            </td>
+                                            <td>
+                                                @if ($item->usul_disposisi)
+                                                    <div class="badge badge-success">Sudah Disposisi</div>
+                                                @else
+                                                    <a href="{{ env('APP_URL') . Route::currentRouteName() . '/'. $item->id . '/disposisi' }}"
+                                                        id="disposisi" class="btn btn-primary">
+                                                        <i class="fas fa-tags"></i>
+                                                    </a>
+                                                    <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -72,3 +84,23 @@
         </div>
     </section>
 </div>
+
+@push('scripts')
+<script>
+    tippy('#unduh', {
+        content: 'Unduh Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#disposisi', {
+        content: 'Disposisi Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#hapus', {
+        content: 'Hapus Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+</script>
+@endpush
