@@ -16,7 +16,7 @@ class CreateUnitFungsisTable extends Migration
         Schema::create('unit_fungsis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent');
-            $table->string('nama_fungsi');
+            $table->string('nama');
             $table->timestamp('tanggal_buat');
             $table->timestamp('tanggal_update');
         });

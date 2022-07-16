@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Main\Surat;
 
-use App\Http\Traits\SuratTrait;
+use App\Traits\SuratTrait;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 

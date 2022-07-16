@@ -21,6 +21,7 @@ class Surat extends Model
         'pengirim',
         'perihal',
         'tipe',
+        'tk_keamanan',
         'pegawai_id',
         'unit_kerja_id',
         'unit_fungsi_id'

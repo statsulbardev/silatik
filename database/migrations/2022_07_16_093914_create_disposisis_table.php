@@ -16,6 +16,10 @@ class CreateDisposisisTable extends Migration
         Schema::create('disposisis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('surat_id');
+            $table->json('poin');
+            $table->json('penerima');
+            $table->string('kode_paraf');
+            $table->text('catatan');
             $table->timestamp('tanggal_buat');
             $table->timestamp('tanggal_update');
         });

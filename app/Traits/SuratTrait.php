@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Traits;
+namespace App\Traits;
 
 use App\Models\BerkasSurat;
 use App\Models\Pemeriksaan;
@@ -31,6 +31,7 @@ trait SuratTrait
                 'pengirim'       => $data->pengirim_surat,
                 'perihal'        => $data->perihal_surat,
                 'tipe'           => $data->tipe_surat,
+                'tk_keamanan'    => $data->tk_keamanan,
                 'pegawai_id'     => Auth::user()->id,
                 'unit_kerja_id'  => Auth::user()->unit_kerja_id,
                 'unit_fungsi_id' => Auth::user()->unit_fungsi_id

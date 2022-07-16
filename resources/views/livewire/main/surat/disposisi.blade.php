@@ -11,10 +11,10 @@
         @include('components.partials.header', [ 'judul' =>  str_replace('-',' ',ucwords(Route::currentRouteName(), '-')) ])
 
         <div class="card-columns">
-            {{-- Data Surat --}}
+            {{-- Informasi Surat --}}
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Surat</h4>
+                    <h4>Informasi Surat</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,6 +46,19 @@
                                     <td>{{ $surat->perihal }}</td>
                                 </tr>
                                 <tr>
+                                    <td class="font-weight-bold">Tingkat Keamanan</td>
+                                    <td width="2%">:</td>
+                                    <td>
+                                        {{
+                                            [
+                                                'SR' => 'Sangat Rahasia',
+                                                'R'  => 'Rahasia',
+                                                'B'  => 'Biasa'
+                                            ][$surat->tk_keamanan]
+                                        }}
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="font-weight-bold">Tanggal Terima Surat</td>
                                     <td width="2%">:</td>
                                     <td>{{ DateFormat::convertDateTime($surat->tanggal_buat) }}</td>
@@ -75,13 +88,13 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Untuk Diketahui">
                                 <label class="form-check-label" for="inlineCheckbox1">1. Untuk Diketahui</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Ambil Langkah Seperlunya">
                                 <label class="form-check-label" for="inlineCheckbox1">7. Ambil Langkah Seperlunya</label>
                             </div>
                         </div>
@@ -89,13 +102,13 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Untuk Diperhatikan">
                                 <label class="form-check-label" for="inlineCheckbox1">2. Untuk Diperhatikan</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Dibicarakan">
                                 <label class="form-check-label" for="inlineCheckbox1">8. Dibicarakan</label>
                             </div>
                         </div>
@@ -103,13 +116,13 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Untuk Dipelajari">
                                 <label class="form-check-label" for="inlineCheckbox1">3. Untuk Dipelajari</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Dilaporkan">
                                 <label class="form-check-label" for="inlineCheckbox1">9. Dilaporkan</label>
                             </div>
                         </div>
@@ -117,13 +130,13 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Disiapkan Jawaban">
                                 <label class="form-check-label" for="inlineCheckbox1">4. Disiapkan Jawaban</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Segera Diselesaikan">
                                 <label class="form-check-label" for="inlineCheckbox1">10. Segera Diselesaikan</label>
                             </div>
                         </div>
@@ -131,13 +144,13 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Jawab Langsung">
                                 <label class="form-check-label" for="inlineCheckbox1">5. Jawab Langsung</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Copy Untuk...">
                                 <label class="form-check-label" for="inlineCheckbox1">11. Copy Untuk...</label>
                             </div>
                         </div>
@@ -145,29 +158,35 @@
                     <div class="row border-bottom mb-4">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="ACC Untuk Ditindaklanjuti">
                                 <label class="form-check-label" for="inlineCheckbox1">6. ACC Untuk Ditindaklanjuti</label>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Arsip">
                                 <label class="form-check-label" for="inlineCheckbox1">12. Arsip</label>
                             </div>
                         </div>
                     </div>
                     <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-3 col-lg-2">
                             <span class="font-weight-bold">Kepada</span>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
-                                </select>
-                                </div>
+                        <div class="col-12 col-md-10 col-lg-10">
+                            {{-- @php
+                                $unitKerja = \App\Models\UnitKerja::get(['id', 'nama']);
+
+                                $data = \App\Models\Pegawai::get(['id', 'nama']);
+                            @endphp --}}
+                            {{-- Unit Kerja --}}
+                            <x-forms.select judul='Unit Kerja' model='unitKerja' :opsi="$daftarUnitKerja" />
+
+                            {{-- Unit Fungsi --}}
+                            <x-forms.select judul='Unit Fungsi' model='unitFungsi' :opsi="$daftarUnitFungsi" />
+
+                            {{-- Daftar Pegawai --}}
+                            {{-- <x-forms.multi-select judul='Nama Pegawai' model='penerima' :opsi="$data" /> --}}
                         </div>
                     </div>
                     <div class="row">

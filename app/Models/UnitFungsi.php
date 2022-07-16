@@ -14,5 +14,10 @@ class UnitFungsi extends Model
 
     protected $table = 'unit_fungsis';
 
-    protected $fillable = ['parent', 'nama_fungsi'];
+    protected $fillable = ['parent', 'nama'];
+
+    public function relasiUnitKerja()
+    {
+        return $this->belongsToMany(UnitKerja::class, 'kerja_fungsi', 'unit_fungsi_id', 'unit_kerja_id');
+    }
 }

@@ -24,6 +24,7 @@ class SuratTableSeeder extends Seeder
             'pengirim'       => 'Direktur Metodologi Sensus dan Survei',
             'perihal'        => 'Update DSBS Sakernas Agustus 2022',
             'tipe'           => 'masuk',
+            'tk_keamanan'    => 'R',
             'pegawai_id'     => 17,
             'unit_kerja_id'  => 1,
             'unit_fungsi_id' => 11
@@ -46,6 +47,7 @@ class SuratTableSeeder extends Seeder
             'pengirim'       => 'BPS Provinsi Sulawesi Barat',
             'perihal'        => 'Mekanisme Update Peta',
             'tipe'           => 'keluar',
+            'tk_keamanan'    => 'B',
             'pegawai_id'     => 60,
             'unit_kerja_id'  => 1,
             'unit_fungsi_id' => 26

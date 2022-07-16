@@ -15,7 +15,16 @@ class Disposisi extends Model
     protected $table = 'disposisis';
 
     protected $fillable = [
-        'surat_id'
+        'surat_id',
+        'poin',
+        'penerima',
+        'kode_paraf',
+        'catatan'
+    ];
+
+    protected $casts = [
+        'poin'     => 'array',
+        'penerima' => 'array'
     ];
 
     public function relasiSurat()

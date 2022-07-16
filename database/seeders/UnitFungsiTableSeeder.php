@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\UnitFungsi;
+use App\Models\UnitKerja;
 use Illuminate\Database\Seeder;
 
 class UnitFungsiTableSeeder extends Seeder
@@ -54,8 +55,25 @@ class UnitFungsiTableSeeder extends Seeder
         for ($i = 0; $i < count($data); $i++) {
             UnitFungsi::create([
                 'parent' => $data[$i][0],
-                'nama_fungsi' => $data[$i][1]
+                'nama' => $data[$i][1]
             ]);
         }
+
+        $unitProvinsi  = UnitFungsi::find([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]);
+        $unitKabupaten = UnitFungsi::find([28,29,30,31,32,33,34]);
+
+        $unit7600 = UnitKerja::find(1);
+        $unit7601 = UnitKerja::find(2);
+        $unit7602 = UnitKerja::find(3);
+        $unit7603 = UnitKerja::find(4);
+        $unit7604 = UnitKerja::find(5);
+        $unit7605 = UnitKerja::find(6);
+
+        $unit7600->relasiUnitFungsi()->attach($unitProvinsi);
+        $unit7601->relasiUnitFungsi()->attach($unitKabupaten);
+        $unit7602->relasiUnitFungsi()->attach($unitKabupaten);
+        $unit7603->relasiUnitFungsi()->attach($unitKabupaten);
+        $unit7604->relasiUnitFungsi()->attach($unitKabupaten);
+        $unit7605->relasiUnitFungsi()->attach($unitKabupaten);
     }
 }

@@ -21,6 +21,7 @@ class CreateSuratTable extends Migration
             $table->string('pengirim')->index();
             $table->string('perihal')->index();
             $table->string('tipe');
+            $table->enum('tk_keamanan', ['SR', 'R', 'B']);
             $table->unsignedBigInteger('pegawai_id');
             $table->unsignedBigInteger('unit_kerja_id');
             $table->unsignedBigInteger('unit_fungsi_id');
