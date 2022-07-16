@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use App\Models\BerkasSurat;
+use App\Models\Pemeriksaan;
 use App\Models\Surat;
 use Carbon\Carbon;
 use Exception;
@@ -22,17 +24,26 @@ trait SuratTrait
 
             DB::beginTransaction();
 
-            Surat::create([
+            $surat = Surat::create([
                 'no_agenda'      => $data->no_agenda,
-                'tanggal_surat'  => Carbon::parse($data->tanggal_surat, 'UTC'),
+                'tanggal_surat'  => Carbon::parse($data->tanggal_surat, Auth::user()->timezone),
                 'no_surat'       => $data->no_surat,
-                'pengirim_surat' => $data->pengirim_surat,
-                'perihal_surat' => $data->perihal_surat,
-                'tautan_surat'     => $path_surat,
-                'tipe_surat' => $data->tipe_surat,
-                'pegawai_id' => Auth::user()->id,
-                'unit_kerja_id' => Auth::user()->unit_kerja_id,
+                'pengirim'       => $data->pengirim_surat,
+                'perihal'        => $data->perihal_surat,
+                'tipe'           => $data->tipe_surat,
+                'pegawai_id'     => Auth::user()->id,
+                'unit_kerja_id'  => Auth::user()->unit_kerja_id,
                 'unit_fungsi_id' => Auth::user()->unit_fungsi_id
+            ]);
+
+            $berkas = BerkasSurat::create([
+                'surat_id' => $surat->id,
+                'tautan'   => $path_surat,
+            ]);
+
+            Pemeriksaan::create([
+                'surat_id'        => $surat->id,
+                'berkas_surat_id' => $berkas->id
             ]);
 
             DB::commit();
@@ -76,6 +87,8 @@ trait SuratTrait
 
     public function getAllData($tipe_routing_surat)
     {
-        return Surat::where('tipe_surat', $tipe_routing_surat)->get();
+        return Surat::query()
+            -> with(['relasiPegawai', 'relasiBerkasSurat', 'relasiPemeriksaan', 'relasiDisposisi'])
+            -> where('tipe', $tipe_routing_surat)->get();
     }
 }

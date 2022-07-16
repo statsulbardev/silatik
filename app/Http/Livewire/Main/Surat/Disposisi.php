@@ -16,8 +16,6 @@ class Disposisi extends Component
         $this->surat = $surat;
 
         $this->tahapan = Route::currentRouteName();
-
-
     }
 
     public function render()

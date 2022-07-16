@@ -23,38 +23,58 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Tanggal Terima</th>
-                                        <th>Nomor Surat</th>
-                                        <th>Tanggal Surat</th>
+                                        <th>Informasi Surat</th>
                                         <th>Pengirim</th>
-                                        <th>Perihal</th>
-                                        <th>Tautan</th>
+                                        <th>Status Pemeriksaan</th>
                                         <th>Aksi</th>
                                     </tr>
                                     @foreach ($data as $index => $item)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ DateFormat::convertDateTime($item->tanggal_buat) }}</td>
-                                            <td>{{ $item->no_surat }}</td>
-                                            <td>{{ DateFormat::convertDateTime($item->tanggal_surat) }}</td>
-                                            <td>{{ $item->pengirim_surat }}</td>
-                                            <td>{!! $item->perihal_surat !!}</td>
                                             <td>
-                                                <a href="{{ google_view_file($item->tautan_surat) }}" id="unduh" class="btn btn-icon icon-left btn-success">
-                                                    <i class="fa-solid fa-download"></i>
+                                                <i class="fas fa-calendar"></i>&nbsp;
+                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}</td>
+                                            <td>
+                                                <small class="font-weight-bold text-primary">
+                                                    <span style="letter-spacing: 1px">
+                                                        No. {{ $item->no_surat }},
+                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                    </span>
+                                                </small><br>
+                                                <span>{!! $item->perihal !!}</span><br><br>
+                                                <a href="{{ google_view_file($item->relasiPemeriksaan->max()->relasiBerkasSurat->tautan) }}" class="btn btn-icon icon-left btn-success" target="_blank">
+                                                    <i class="fas fa-eye"></i> Lihat Surat
                                                 </a>
                                             </td>
+                                            <td>{{ $item->pengirim }}</td>
                                             <td>
-                                                @if ($item->usul_disposisi)
-                                                    <div class="badge badge-success">Sudah Disposisi</div>
+                                                @if ($item->relasiPemeriksaan->max()->cek_kepala === 'op')
+                                                    <div class="badge badge-primary">Selesai Diperiksa</div>
                                                 @else
+                                                    <div class="badge badge-danger">Belum Selesai Diperiksa</div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->tipe === 'masuk' && $item->relasiPemeriksaan->max()->cek_kepala === 'op')
+                                                    @if ($item->relasiDisposisi)
+                                                        <div class="badge badge-success">Sudah Disposisi</div>
+                                                    @else
+                                                        <a href="{{ env('APP_URL') . Route::currentRouteName() . '/'. $item->id . '/disposisi' }}"
+                                                            id="disposisi" class="btn btn-primary">
+                                                            <i class="fas fa-tags"></i>
+                                                        </a>
+                                                    @endif
+                                                @endif
+                                                <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                {{-- @lseif ($item->tipe === 'keluar' && $item->relasiPemeriksaan->cek_kepala === 'op' && $item->relasiPemeriksaan[])
                                                     <a href="{{ env('APP_URL') . Route::currentRouteName() . '/'. $item->id . '/disposisi' }}"
                                                         id="disposisi" class="btn btn-primary">
                                                         <i class="fas fa-tags"></i>
                                                     </a>
-                                                    <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                @endif
+
+                                                @endif --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -87,11 +107,6 @@
 
 @push('scripts')
 <script>
-    tippy('#unduh', {
-        content: 'Unduh Surat',
-        placement: 'bottom',
-        arrow: true
-    })
     tippy('#disposisi', {
         content: 'Disposisi Surat',
         placement: 'bottom',

@@ -36,4 +36,9 @@ class Pegawai extends Authenticatable
     {
         return $this->hasOne(UnitKerja::class, 'id', 'unit_kerja_id');
     }
+
+    public function relasiUnitFungsi()
+    {
+        return $this->hasOne(UnitFungsi::class, 'id', 'unit_fungsi_id');
+    }
 }

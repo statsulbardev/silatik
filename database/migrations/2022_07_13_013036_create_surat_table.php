@@ -15,14 +15,12 @@ class CreateSuratTable extends Migration
     {
         Schema::create('surat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('no_agenda')->nullable();
+            $table->unsignedInteger('no_agenda');
             $table->timestamp('tanggal_surat')->index();
-            $table->string('no_surat')->index();
-            $table->string('pengirim_surat')->index();
-            $table->string('perihal_surat')->index();
-            $table->string('tautan_surat');
-            $table->string('tipe_surat');
-            $table->boolean('usul_disposisi')->default(false);
+            $table->string('no_surat');
+            $table->string('pengirim')->index();
+            $table->string('perihal')->index();
+            $table->string('tipe');
             $table->unsignedBigInteger('pegawai_id');
             $table->unsignedBigInteger('unit_kerja_id');
             $table->unsignedBigInteger('unit_fungsi_id');
