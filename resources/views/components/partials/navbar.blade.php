@@ -7,7 +7,7 @@
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
         </ul>
         <div class="unit-kerja">
-            <span class="text-white font-weight-bold">{{ auth()->user()->relasiUnitKerja->nama_unit_kerja }}</span>
+            <span class="text-white font-weight-bold">{{ auth()->user()->relasiUnitKerja->nama }}</span>
         </div>
     </div>
     <ul class="navbar-nav navbar-right">

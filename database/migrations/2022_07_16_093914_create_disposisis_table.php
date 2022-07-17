@@ -17,7 +17,9 @@ class CreateDisposisisTable extends Migration
             $table->id();
             $table->unsignedBigInteger('surat_id');
             $table->json('poin');
-            $table->json('penerima');
+            $table->string('unit_kerja_penerima');
+            $table->json('unit_fungsi_penerima')->nullable();
+            $table->json('pegawai_penerima')->nullable();
             $table->string('kode_paraf');
             $table->text('catatan');
             $table->timestamp('tanggal_buat');

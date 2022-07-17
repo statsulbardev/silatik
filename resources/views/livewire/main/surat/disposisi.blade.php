@@ -71,9 +71,45 @@
                                 <tr>
                                     <td class="font-weight-bold">Unit Fungsi</td>
                                     <td width="2%">:</td>
-                                    <td>{{ $surat->relasiPegawai->relasiUnitFungsi->nama_fungsi }}</td>
+                                    <td>{{ $surat->relasiPegawai->relasiUnitFungsi->nama }}</td>
                                 </tr>
                             </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Berkas --}}
+            <div class="card">
+                <div class="card-header">
+                    <h4>Arsip Surat</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div style="width: 22%" class="mb-4 mx-auto">
+                        @include('components.icons.pdf-file')
+                    </div>
+                    <a href="{{ google_view_file($surat->relasiBerkasSurat->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
+                        <i class="fas fa-eye"></i>
+                        Lihat Berkas
+                    </a>
+                </div>
+            </div>
+
+            {{-- History Tindak Lanjut / Disposisi --}}
+            <div class="card">
+                <div class="card-header">
+                    <h4>History Tindak Lanjut / Disposisi</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Dari</th>
+                                <th>Kepada</th>
+                                <th>Ket</th>
+                                <th>Disposisi</th>
+                            </tr>
+                            <tr></tr>
                         </table>
                     </div>
                 </div>
@@ -174,28 +210,30 @@
                             <span class="font-weight-bold">Kepada</span>
                         </div>
                         <div class="col-12 col-md-10 col-lg-10">
-                            {{-- @php
-                                $unitKerja = \App\Models\UnitKerja::get(['id', 'nama']);
-
-                                $data = \App\Models\Pegawai::get(['id', 'nama']);
-                            @endphp --}}
                             {{-- Unit Kerja --}}
                             <x-forms.select judul='Unit Kerja' model='unitKerja' :opsi="$daftarUnitKerja" />
 
                             {{-- Unit Fungsi --}}
                             <x-forms.select judul='Unit Fungsi' model='unitFungsi' :opsi="$daftarUnitFungsi" />
 
-                            {{-- Daftar Pegawai --}}
-                            {{-- <x-forms.multi-select judul='Nama Pegawai' model='penerima' :opsi="$data" /> --}}
+                            <div class="form-inline mb-4">
+                                @if (count($penerima) > 0)
+                                    @foreach ($penerima as $index => $item)
+                                        <span class="badge badge-primary {{ $index > 0 ? 'ml-2' : '' }}">
+                                            {{ \App\Models\UnitFungsi::find($item)->nama }}
+                                        </span>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-2 col-lg-2">
                             <span class="font-weight-bold">Keterangan</span>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-10 col-lg-10">
                             <div class="form-group">
-                                <textarea class="form-control" style="height: 70px"></textarea>
+                                <textarea class="form-control" style="height: 125px"></textarea>
                             </div>
                         </div>
                     </div>
@@ -204,42 +242,6 @@
                     <button type="button" class="btn btn-icon icon-left btn-primary">
                         <i class="fas fa-paper-plane"></i> Kirim
                     </button>
-                </div>
-            </div>
-
-            {{-- Berkas --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4>Arsip Surat</h4>
-                </div>
-                <div class="card-body text-center">
-                    <div style="width: 22%" class="mb-4 mx-auto">
-                        @include('components.icons.pdf-file')
-                    </div>
-                    <a href="{{ google_view_file($surat->relasiBerkasSurat->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
-                        <i class="fas fa-eye"></i>
-                        Lihat Berkas
-                    </a>
-                </div>
-            </div>
-
-            {{-- History Tindak Lanjut / Disposisi --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4>History Tindak Lanjut / Disposisi</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th>Dari</th>
-                                <th>Kepada</th>
-                                <th>Ket</th>
-                                <th>Disposisi</th>
-                            </tr>
-                            <tr></tr>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

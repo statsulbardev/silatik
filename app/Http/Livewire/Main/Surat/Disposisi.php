@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Main\Surat;
 
+use App\Models\Pegawai;
 use App\Models\Surat;
-use App\Models\UnitFungsi;
 use App\Models\UnitKerja;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -13,7 +13,6 @@ class Disposisi extends Component
 {
     public $daftarUnitKerja;
     public $daftarUnitFungsi;
-    public $pegawai;
 
     public $unitKerja = null;
     public $unitFungsi = null;
@@ -22,6 +21,9 @@ class Disposisi extends Component
     public $poin = [];
     public $penerima = [];
     public $catatan;
+
+    public $tempUnitKerja;
+    public $tempUnitFungsi;
 
     private $backrouting;
 
@@ -41,20 +43,30 @@ class Disposisi extends Component
             return redirect(env('APP_URL') . $this->backrouting);
         }
 
+        $this->daftarUnitKerja  = UnitKerja::get(['id', 'nama']);
     }
 
     public function render()
     {
-        $this->daftarUnitKerja  = UnitKerja::get(['id', 'nama']);
-
-        if ($this->unitKerja === 'null') {
-            $temp = UnitKerja::find((int) $this->unitKerja);
-            $this->daftarUnitFungsi = $temp->relasiUnitFungsi;
-        } else {
-            $this->daftarUnitFungsi = [];
-        }
-
         return view('livewire.main.surat.disposisi')
             -> layout('layouts.main');
+    }
+
+    public function updatedUnitKerja($value)
+    {
+        $this->tempUnitKerja = (int) $value;
+
+        $temp = UnitKerja::find((int) $value);
+
+        $this->daftarUnitFungsi = $temp->id > 1
+            ? $temp->relasiUnitFungsi
+            : $temp->relasiUnitFungsi->where('parent', 1);
+    }
+
+    public function updatedUnitFungsi($value)
+    {
+        $this->tempUnitFungsi = (int) $value;
+
+        array_push($this->penerima, $value);
     }
 }

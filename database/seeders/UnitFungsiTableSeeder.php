@@ -45,11 +45,11 @@ class UnitFungsiTableSeeder extends Seeder
             [7, 'Fungsi Diseminasi dan Layanan Statistik'],
             [1, 'Kepala BPS Kabupaten'],
             [28, 'Kasubag Umum'],
-            [28, 'Fungsi Sosial'],
-            [28, 'Fungsi Produksi'],
-            [28, 'Fungsi Distribusi'],
-            [28, 'Fungsi Nerwilis'],
-            [28, 'Fungsi IPDS']
+            [28, 'Fungsi Statistik Sosial'],
+            [28, 'Fungsi Statistik Produksi'],
+            [28, 'Fungsi Statistik Distribusi'],
+            [28, 'Fungsi Neraca Wilayah dan Analisis Statistik'],
+            [28, 'Fungsi Integrasi Pengolahan dan Diseminasi Statistik']
         ];
 
         for ($i = 0; $i < count($data); $i++) {
