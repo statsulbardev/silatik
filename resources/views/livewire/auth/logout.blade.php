@@ -1,3 +1,5 @@
 <div>
-    {{-- Nothing in the world is as soft and yielding as water. --}}
+    <a wire:click="logout" class="dropdown-item has-icon text-danger">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
 </div>

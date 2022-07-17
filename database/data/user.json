@@ -1,5 +1,5 @@
 [
-    {"role":"kabps_prov","unit_kerja_id":"1","unit_fungsi_id":"1","nama":"Tina Wahyufitri, S.Si, M.Si","nip_bps":"340015476","nip_bkn":"197609281997122001","email":"tinaw@bps.go.id"},
+    {"role":"kabps","unit_kerja_id":"1","unit_fungsi_id":"1","nama":"Tina Wahyufitri, S.Si, M.Si","nip_bps":"340015476","nip_bkn":"197609281997122001","email":"tinaw@bps.go.id"},
     {"role":"kabag","unit_kerja_id":"1","unit_fungsi_id":"2","nama":"Markus Uda SE","nip_bps":"340013521","nip_bkn":"196705221993011001","email":"markus@bps.go.id"},
     {"role":"skf","unit_kerja_id":"1","unit_fungsi_id":"10","nama":"Chitra Dewi Said SST","nip_bps":"340017874","nip_bkn":"198311092006022001","email":"chitrads@bps.go.id"},
     {"role":"staf","unit_kerja_id":"1","unit_fungsi_id":"10","nama":"Novia Triputri T. S.Tr.Stat","nip_bps":"340058891","nip_bkn":"199611052019012001","email":"noviataju@bps.go.id"},
@@ -61,8 +61,8 @@
     {"role":"staf","unit_kerja_id":"1","unit_fungsi_id":"26","nama":"Syaifur Rijal Syamsul SST","nip_bps":"340056465","nip_bkn":"199008162013111001","email":"syaifur.rijal@bps.go.id"},
     {"role":"skf","unit_kerja_id":"1","unit_fungsi_id":"27","nama":"Misnawati Mansur SST, MM","nip_bps":"340054318","nip_bkn":"198802122010122003","email":"misna@bps.go.id"},
     {"role":"staf","unit_kerja_id":"1","unit_fungsi_id":"27","nama":"Yenni Kurnia S.Tr.Stat","nip_bps":"340059817","nip_bkn":"199612182019122002","email":"yenni.kurnia@bps.go.id"},
-    {"role":"kabps_kab","unit_kerja_id":"2","unit_fungsi_id":"28","nama":"Drs. Syihabuddin","nip_bps":"340013097","nip_bkn":"196408061992021001","email":"syihab@bps.go.id"},
-    {"role":"kasubag","unit_kerja_id":"2","unit_fungsi_id":"29","nama":"Fathul Muin Rum, SST","nip_bps":"340056828","nip_bkn":"199008232014101001","email":"fathul.mr@bps.go.id"},
+    {"role":"kabps","unit_kerja_id":"2","unit_fungsi_id":"28","nama":"Drs. Syihabuddin","nip_bps":"340013097","nip_bkn":"196408061992021001","email":"syihab@bps.go.id"},
+    {"role":"kabag","unit_kerja_id":"2","unit_fungsi_id":"29","nama":"Fathul Muin Rum, SST","nip_bps":"340056828","nip_bkn":"199008232014101001","email":"fathul.mr@bps.go.id"},
     {"role":"staf","unit_kerja_id":"2","unit_fungsi_id":"29","nama":"Puji Widyanto A.Md","nip_bps":"340051265","nip_bkn":"198605122009021003","email":"pujiw@bps.go.id"},
     {"role":"kf","unit_kerja_id":"2","unit_fungsi_id":"30","nama":"Andi Ishak SE, M.Si","nip_bps":"340013036","nip_bkn":"197305311992011001","email":"ishak@bps.go.id"},
     {"role":"staf","unit_kerja_id":"2","unit_fungsi_id":"30","nama":"Yasinta Amalia Nur Jannah S.Tr.Stat.","nip_bps":"340060960","nip_bkn":"200005202022012006","email":"yasinta.amalia@bps.go.id"},

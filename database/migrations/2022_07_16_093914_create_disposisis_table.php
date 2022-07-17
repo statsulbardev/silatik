@@ -19,7 +19,6 @@ class CreateDisposisisTable extends Migration
             $table->json('poin');
             $table->string('unit_kerja_penerima');
             $table->json('unit_fungsi_penerima')->nullable();
-            $table->json('pegawai_penerima')->nullable();
             $table->string('kode_paraf');
             $table->text('catatan');
             $table->timestamp('tanggal_buat');

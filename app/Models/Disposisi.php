@@ -17,7 +17,8 @@ class Disposisi extends Model
     protected $fillable = [
         'surat_id',
         'poin',
-        'penerima',
+        'unit_kerja_penerima',
+        'unit_fungsi_penerima',
         'kode_paraf',
         'catatan'
     ];

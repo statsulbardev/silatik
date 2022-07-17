@@ -17,11 +17,9 @@ class RoleTableSeeder extends Seeder
     {
         $data = [
             'admin',
-            'kabps_prov',
+            'kabps',
             'sekretaris',
-            'kabps_kab',
             'kabag',
-            'kasubag',
             'kf',
             'skf',
             'staf'

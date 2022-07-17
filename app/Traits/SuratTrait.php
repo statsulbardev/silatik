@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
 use App\Models\BerkasSurat;
 use App\Models\Pemeriksaan;
 use App\Models\Surat;
@@ -86,10 +87,20 @@ trait SuratTrait
         return $message;
     }
 
-    public function getAllData($tipe_routing_surat)
+    public function getSecretaryMails($tipe)
     {
         return Surat::query()
-            -> with(['relasiPegawai', 'relasiBerkasSurat', 'relasiPemeriksaan', 'relasiDisposisi'])
-            -> where('tipe', $tipe_routing_surat)->get();
+            -> with(['relasiPegawai', 'relasiDisposisi'])
+            -> where('tipe', $tipe)
+            -> get();
+    }
+
+    public function getChiefMails($tipe)
+    {
+        return Surat::query()
+            -> with(['relasiPegawai', 'relasiDisposisi'])
+            -> where('tipe', $tipe)
+            -> where('cek_kepala', 'bp')
+            -> get();
     }
 }

@@ -16,8 +16,8 @@ class UnitFungsiTableSeeder extends Seeder
     public function run()
     {
         $data = [
-            [0, 'Kepala BPS Provinsi'],
-            [1, 'Bagian Umum'],
+            [0, 'Kepala BPS'],
+            [1, 'Bagian / Subbagian Umum'],
             [1, 'Fungsi Statistik Sosial'],
             [1, 'Fungsi Statistik Produksi'],
             [1, 'Fungsi Statistik Distribusi'],
@@ -42,14 +42,7 @@ class UnitFungsiTableSeeder extends Seeder
             [6, 'Fungsi Analisis Statistik Lintas Sektor'],
             [7, 'Fungsi Integrasi Pengolahan Data'],
             [7, 'Fungsi Jaringan dan Rujukan Statistik'],
-            [7, 'Fungsi Diseminasi dan Layanan Statistik'],
-            [1, 'Kepala BPS Kabupaten'],
-            [28, 'Kasubag Umum'],
-            [28, 'Fungsi Statistik Sosial'],
-            [28, 'Fungsi Statistik Produksi'],
-            [28, 'Fungsi Statistik Distribusi'],
-            [28, 'Fungsi Neraca Wilayah dan Analisis Statistik'],
-            [28, 'Fungsi Integrasi Pengolahan dan Diseminasi Statistik']
+            [7, 'Fungsi Diseminasi dan Layanan Statistik']
         ];
 
         for ($i = 0; $i < count($data); $i++) {
@@ -59,8 +52,8 @@ class UnitFungsiTableSeeder extends Seeder
             ]);
         }
 
-        $unitProvinsi  = UnitFungsi::find([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]);
-        $unitKabupaten = UnitFungsi::find([28,29,30,31,32,33,34]);
+        $unitProvinsi  = UnitFungsi::all();
+        $unitKabupaten = UnitFungsi::find([1,2,3,4,5,6,7]);
 
         $unit7600 = UnitKerja::find(1);
         $unit7601 = UnitKerja::find(2);
