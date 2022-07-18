@@ -98,9 +98,10 @@ trait SuratTrait
     public function getChiefMails($tipe)
     {
         return Surat::query()
-            -> with(['relasiPegawai', 'relasiDisposisi'])
+            -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan' => function($q) {
+                    $q->where('cek_kepala', 'bp');
+            }, 'relasiDisposisi'])
             -> where('tipe', $tipe)
-            -> where('cek_kepala', 'bp')
             -> get();
     }
 }

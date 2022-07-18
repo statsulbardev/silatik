@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisposisisTable extends Migration
+class CreateBerkasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateDisposisisTable extends Migration
      */
     public function up()
     {
-        Schema::create('disposisis', function (Blueprint $table) {
+        Schema::create('berkas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('surat_id');
-            $table->json('poin');
-            $table->string('unit_kerja_penerima');
-            $table->json('unit_fungsi_penerima')->nullable();
-            $table->string('kode_paraf');
-            $table->text('catatan');
+            $table->string('tautan');
             $table->timestamp('tanggal_buat');
-            $table->timestamp('tanggal_update');
         });
     }
 
@@ -33,6 +28,6 @@ class CreateDisposisisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disposisis');
+        Schema::dropIfExists('berkas');
     }
 }

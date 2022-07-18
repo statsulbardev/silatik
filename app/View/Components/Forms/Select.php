@@ -10,18 +10,13 @@ class Select extends Component
     public $model;
     public $opsi;
 
-    public function __construct($judul, $model, $opsi)
+    public function __construct($judul = null, $model, $opsi)
     {
         $this->judul = $judul;
         $this->model = $model;
         $this->opsi  = $opsi;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
     public function render()
     {
         return view('components.forms.select');

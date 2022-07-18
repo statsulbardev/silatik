@@ -23,19 +23,23 @@ class Surat extends Model
         'tipe',
         'tk_keamanan',
         'pegawai_id',
-        'cek_kepala',
-        'catatan_kepala',
-        'tgl_cek_kepala',
-        'cek_kf',
-        'catatan_kf',
-        'tgl_cek_kf',
-        'tautan',
-        'parent'
+        'unit_kerja_id',
+        'unit_fungsi_id'
     ];
 
     public function relasiPegawai()
     {
         return $this->hasOne(Pegawai::class, 'id', 'pegawai_id');
+    }
+
+    public function relasiBerkas()
+    {
+        return $this->hasMany(Berkas::class, 'surat_id', 'id');
+    }
+
+    public function relasiPemeriksaan()
+    {
+        return $this->hasMany(Pemeriksaan::class, 'surat_id', 'id');
     }
 
     public function relasiDisposisi()

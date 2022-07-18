@@ -5,32 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Disposisi extends Model
+class Pemeriksaan extends Model
 {
     use HasFactory;
 
     const CREATED_AT = 'tanggal_buat';
     const UPDATED_AT = 'tanggal_update';
 
-    protected $table = 'disposisi';
+    protected $table = 'pemeriksaan';
 
     protected $fillable = [
         'surat_id',
-        'poin',
-        'unit_kerja_penerima',
-        'unit_fungsi_penerima',
-        'kode_paraf',
-        'catatan'
-    ];
-
-    protected $casts = [
-        'poin'                 => 'array',
-        'unit_kerja_penerima'  => 'array',
-        'unit_fungsi_penerima' => 'array'
+        'berkas_id',
+        'cek_kepala',
+        'catatan_kepala',
+        'tgl_cek_kepala',
+        'cek_kf',
+        'catatan_kf',
+        'tgl_cek_kf'
     ];
 
     public function relasiSurat()
     {
         return $this->hasOne(Surat::class, 'id', 'surat_id');
+    }
+
+    public function relasiBerkas()
+    {
+        return $this->hasOne(Berkas::class, 'id', 'berkas_id');
     }
 }

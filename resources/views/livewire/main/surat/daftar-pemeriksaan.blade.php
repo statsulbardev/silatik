@@ -9,6 +9,19 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Daftar Surat yang Akan Disposisi</h4>
+                        <div class="card-header-form">
+                            <form>
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-btn">
+                                  <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-md">
@@ -18,11 +31,11 @@
                                         <th>Tanggal Terima</th>
                                         <th>Informasi Surat</th>
                                         <th>Pengirim</th>
-                                        <th>Status Pemeriksaan</th>
                                         <th>Aksi</th>
                                     </tr>
-                                    @foreach ($daftar_surat as $item)
+                                    @foreach ($daftar_surat as $index => $item)
                                         <tr>
+                                            <td>{{ $index + 1 }}</td>
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
                                                 {{ DateFormat::convertDateTime($item->tanggal_buat) }}
@@ -35,20 +48,13 @@
                                                     </span>
                                                 </small><br>
                                                 <span>{!! $item->perihal !!}</span><br><br>
-                                                <a href="{{ google_view_file($item->tautan) }}" class="btn btn-icon icon-left btn-success" target="_blank">
+                                                <a href="{{ google_view_file($item->relasiPemeriksaan->max()->relasiBerkas->tautan) }}" class="btn btn-icon icon-left btn-success" target="_blank">
                                                     <i class="fas fa-eye"></i> Lihat Surat
                                                 </a>
                                             </td>
                                             <td>{{ $item->pengirim }}</td>
                                             <td>
-                                                @if ($item->cek_kepala === 'op')
-                                                    <div class="badge badge-primary">Selesai Diperiksa</div>
-                                                @else
-                                                    <div class="badge badge-danger">Belum Selesai Diperiksa</div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($item->tipe === 'masuk' && $item->cek_kepala === 'op')
+                                                @if ($item->tipe === 'sm' && $item->relasiPemeriksaan->max()->cek_kepala === 'bp')
                                                     @if ($item->relasiDisposisi)
                                                         <div class="badge badge-success">Sudah Disposisi</div>
                                                     @else
@@ -58,16 +64,6 @@
                                                         </a>
                                                     @endif
                                                 @endif
-                                                <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                                {{-- @lseif ($item->tipe === 'keluar' && $item->relasiPemeriksaan->cek_kepala === 'op' && $item->relasiPemeriksaan[])
-                                                    <a href="{{ env('APP_URL') . Route::currentRouteName() . '/'. $item->id . '/disposisi' }}"
-                                                        id="disposisi" class="btn btn-primary">
-                                                        <i class="fas fa-tags"></i>
-                                                    </a>
-
-                                                @endif --}}
                                             </td>
                                         </tr>
                                     @endforeach

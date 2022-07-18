@@ -5,27 +5,35 @@ namespace App\Http\Livewire\Main\Surat;
 use App\Traits\SuratTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class DaftarSurat extends Component
 {
     use SuratTrait;
 
-    public $tipe_surat;
-    public $data;
+    public $tipe;
+    public $role;
+    public $routing;
+
+    public $daftar_surat;
 
     public function mount()
     {
-        switch(Route::currentRouteName()) {
-            case 'surat-masuk':
-                $this->tipe_surat = 'masuk';
-                
-                break;
-            case 'surat-keluar':
-                $this->tipe_surat = 'keluar';
+        $this->tipe = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
+        $this->role = Auth::user()->roles[0]->name;
+        $this->routing = $this->tipe == "sm" ? "surat-masuk" : "surat-keluar";
 
+        switch ($this->role)
+        {
+            case 'kabps':
+                $this->daftar_surat = $this->getChiefMails($this->tipe);
                 break;
+            case 'sekretaris':
+                break;
+            default;
         }
+
     }
 
     public function render()

@@ -1,14 +1,14 @@
-@section('title', str_replace('-',' ',ucwords(Route::currentRouteName(), '-')))
+@section('title', 'Disposisi ' . str_replace('-',' ',ucwords($judul, '-')))
 
 @section('styles')
 <style>
-.card-columns { column-count: 2; !important}
+    .card-columns { column-count: 2; !important }
 </style>
 @endsection
 
 <div>
     <section class="section">
-        @include('components.partials.header', [ 'judul' =>  str_replace('-',' ',ucwords(Route::currentRouteName(), '-')) ])
+        @include('components.partials.header', [ 'judul' =>  'Disposisi ' . str_replace('-',' ',ucwords($judul, '-')) ])
 
         <div class="card-columns">
             {{-- Informasi Surat --}}
@@ -88,161 +88,111 @@
                     <div style="width: 22%" class="mb-4 mx-auto">
                         @include('components.icons.pdf-file')
                     </div>
-                    <a href="{{ google_view_file($surat->relasiBerkasSurat->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
+                    <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
                         <i class="fas fa-eye"></i>
                         Lihat Berkas
                     </a>
                 </div>
             </div>
 
-            {{-- History Tindak Lanjut / Disposisi --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4>History Tindak Lanjut / Disposisi</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th>Dari</th>
-                                <th>Kepada</th>
-                                <th>Ket</th>
-                                <th>Disposisi</th>
-                            </tr>
-                            <tr></tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             {{-- Tindak Lanjut/Disposisi --}}
             <div class="card">
-                <div class="card-header">
-                    <h4>Tindak Lanjut / Disposisi Surat</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Untuk Diketahui">
-                                <label class="form-check-label" for="inlineCheckbox1">1. Untuk Diketahui</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Ambil Langkah Seperlunya">
-                                <label class="form-check-label" for="inlineCheckbox1">7. Ambil Langkah Seperlunya</label>
-                            </div>
-                        </div>
+                <form wire:submit.prevent="save">
+                    <div class="card-header">
+                        <h4>Tindak Lanjut / Disposisi Surat</h4>
                     </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Untuk Diperhatikan">
-                                <label class="form-check-label" for="inlineCheckbox1">2. Untuk Diperhatikan</label>
+                    <div class="card-body">
+                        {{-- Poin-poin --}}
+                        <div class="row border-bottom mb-4">
+                            <div class="col-12 col-md-2 col-lg-2">
+                                <span class="font-weight-bold">Poin</span>
+                            </div>
+                            <div class="col-12 col-md-10 col-lg-10">
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Untuk Diketahui' model='poin' nilai='Untuk Diketahui' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Ambil Langkah Seperlunya' model='poin' nilai='Ambil Langkah Seperlunya' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Untuk Diperhatikan' model='poin' nilai='Untuk Diperhatikan' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Dibicarakan' model='poin' nilai='Dibicarakan' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Untuk Dipelajari' model='poin' nilai='Untuk Dipelajari' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Dilaporkan' model='poin' nilai='Dilaporkan' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Disiapkan Jawaban' model='poin' nilai='Disiapkan Jawaban' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Segera Diselesaikan' model='poin' nilai='Segera Diselesaikan' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Jawab Langsung' model='poin' nilai='Jawab Langsung' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Copy Untuk...' model='poin' nilai='Copy Untuk...' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='ACC Untuk Ditindaklanjuti' model='poin' nilai='ACC Untuk Ditindaklanjuti' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Arsip' model='poin' nilai='Arsip' style='col-12 col-md-6 col-lg-6' />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Dibicarakan">
-                                <label class="form-check-label" for="inlineCheckbox1">8. Dibicarakan</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Untuk Dipelajari">
-                                <label class="form-check-label" for="inlineCheckbox1">3. Untuk Dipelajari</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Dilaporkan">
-                                <label class="form-check-label" for="inlineCheckbox1">9. Dilaporkan</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Disiapkan Jawaban">
-                                <label class="form-check-label" for="inlineCheckbox1">4. Disiapkan Jawaban</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Segera Diselesaikan">
-                                <label class="form-check-label" for="inlineCheckbox1">10. Segera Diselesaikan</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Jawab Langsung">
-                                <label class="form-check-label" for="inlineCheckbox1">5. Jawab Langsung</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Copy Untuk...">
-                                <label class="form-check-label" for="inlineCheckbox1">11. Copy Untuk...</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="ACC Untuk Ditindaklanjuti">
-                                <label class="form-check-label" for="inlineCheckbox1">6. ACC Untuk Ditindaklanjuti</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-check form-check-inline">
-                                <input wire:model.defer="poin" class="form-check-input" type="checkbox" value="Arsip">
-                                <label class="form-check-label" for="inlineCheckbox1">12. Arsip</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom mb-4">
-                        <div class="col-12 col-md-3 col-lg-2">
-                            <span class="font-weight-bold">Kepada</span>
-                        </div>
-                        <div class="col-12 col-md-10 col-lg-10">
-                            {{-- Unit Kerja --}}
-                            <x-forms.select judul='Unit Kerja' model='unitKerja' :opsi="$daftarUnitKerja" />
 
-                            {{-- Unit Fungsi --}}
-                            <x-forms.select judul='Unit Fungsi' model='unitFungsi' :opsi="$daftarUnitFungsi" />
+                        {{-- Tujuan Penerima --}}
+                        <div class="row border-bottom mb-4">
+                            <div class="col-12 col-md-2 col-lg-2">
+                                <span class="font-weight-bold">Kepada</span>
+                            </div>
+                            <div class="col-12 col-md-10 col-lg-10">
+                                {{-- Unit Kerja --}}
+                                <label class="font-weight-bold border-bottom mb-3">1. Unit Kerja</label>
+                                <x-forms.select judul='Unit Kerja' model='unitKerja' :opsi="$daftarUnitKerja" />
 
-                            <div class="form-inline mb-4">
-                                @if (count($penerima) > 0)
-                                    @foreach ($penerima as $index => $item)
-                                        <span class="badge badge-primary {{ $index > 0 ? 'ml-2' : '' }}">
-                                            {{ \App\Models\UnitFungsi::find($item)->nama }}
-                                        </span>
-                                    @endforeach
-                                @endif
+                                {{-- Dipersiapkan untuk select multi satker --}}
+                                {{-- <div class="form-inline mb-4">
+                                    @if (count($penerima) > 0)
+                                        @foreach ($penerima as $index => $item)
+                                            <span class="badge badge-primary {{ $index > 0 ? 'ml-2' : '' }}">
+                                                {{ \App\Models\UnitFungsi::find($item)->nama }}
+                                            </span>
+                                        @endforeach
+                                    @endif
+                                </div> --}}
+
+                                {{-- Unit Fungsi --}}
+                                <label class="font-weight-bold border-bottom mb-3">2. Unit Fungsi</label>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Kepala BPS' model='penerima' nilai='1' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Bagian / Subbagian Umum' model='peneriman' nilai='2' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Fungsi Statistik Sosial' model='penerima' nilai='3' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Fungsi Statistik Produksi' model='peneriman' nilai='4' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Fungsi Statistik Distribusi' model='penerima' nilai='5' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Fungsi Nerwilis' model='peneriman' nilai='6' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Fungsi IPDS' model='penerima' nilai='7' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Keterangan --}}
+                        <div class="row">
+                            <div class="col-12 col-md-2 col-lg-2">
+                                <span class="font-weight-bold">Keterangan</span>
+                            </div>
+                            <div class="col-12 col-md-10 col-lg-10">
+                                <div class="form-group">
+                                    <textarea wire:model.defer="catatan" class="form-control" style="height: 125px"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-2 col-lg-2">
-                            <span class="font-weight-bold">Keterangan</span>
-                        </div>
-                        <div class="col-12 col-md-10 col-lg-10">
-                            <div class="form-group">
-                                <textarea class="form-control" style="height: 125px"></textarea>
-                            </div>
-                        </div>
+                    <div class="card-footer bg-secondary text-right">
+                        <button type="submit" class="btn btn-icon icon-left btn-primary">
+                            <i class="fas fa-paper-plane"></i> Kirim
+                        </button>
                     </div>
-                </div>
-                <div class="card-footer bg-secondary text-right">
-                    <button type="button" class="btn btn-icon icon-left btn-primary">
-                        <i class="fas fa-paper-plane"></i> Kirim
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </section>

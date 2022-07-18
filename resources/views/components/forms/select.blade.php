@@ -1,5 +1,7 @@
 <div class="form-group">
-    <label>{{ $judul }}</label>
+    @if (is_null($judul))
+        <label>{{ $judul }}</label>
+    @endif
     <select wire:model.lazy="{{ $model }}" class="form-control">
         @if (!is_null($opsi))
             <option value="null">Pilih salah satu</option>

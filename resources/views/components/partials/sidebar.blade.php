@@ -13,22 +13,14 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="menu-header">PERSURATAN</li>
-            <li>
-                @switch(auth()->user()->roles[0]->name)
-                    @case('kabps')
-                        <a href="{{ env('APP_URL') . 'surat-masuk/pemeriksaan' }}" class="nav-link">
-                            <i class="fas fa-mail-bulk"></i>
-                            <span>Surat Masuk</span>
-                        </a>
-                        @break
-                    @default
-                    <a href="{{ env('APP_URL') . 'surat-masuk' }}" class="nav-link">
-                        <i class="fas fa-mail-bulk"></i>
-                        <span>Surat Masuk</span>
-                    </a>
-                @endswitch
-            </li>
+            @switch(auth()->user()->roles[0]->name)
+                @case('kabps')
+                    @include('components.partials.sidebar-template.template-kepala')
+                    @break
+                @case('sekretaris')
+                    @include('components.partials.sidebar-template.template-sekretaris')
+                    @break
+            @endswitch
             <li>
                 <a href="{{ env('APP_URL') . 'surat-keluar'}}" class="nav-link">
                     <i class="fas fa-inbox"></i>

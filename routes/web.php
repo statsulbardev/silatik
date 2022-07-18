@@ -5,6 +5,7 @@ use App\Http\Livewire\Main\Dashboard;
 use App\Http\Livewire\Main\Surat\DaftarSurat;
 use App\Http\Livewire\Main\Surat\Disposisi;
 use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
+use App\Http\Livewire\Main\Surat\DetailSurat;
 use App\Http\Livewire\Main\Surat\TambahEditSurat;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('surat-masuk', DaftarSurat::class)->name('surat-masuk');
     Route::get('surat-masuk/tambah', TambahEditSurat::class)->name('tambah-surat-masuk');
     Route::get('surat-masuk/edit/{surat}', TambahEditSurat::class)->name('edit-surat-masuk');
-    Route::get('surat-masuk/pemeriksaan', DaftarPemeriksaan::class)->name('pemeriksaan-surat-masuk');
+
+    // Routing surat masuk untuk kepala bps
+    Route::get('surat-masuk/kepala', DaftarSurat::class)->name('kepala-surat-masuk');
+    Route::get('surat-masuk/kepala/{surat}/disposisi', Disposisi::class)->name('kepala-disposisi-surat-masuk');
+    Route::get('surat-masuk/kepala/{surat}', DetailSurat::class)->name('detail-kepala-surat-masuk');
+
     Route::get('surat-keluar', DaftarSurat::class)->name('surat-keluar');
     Route::get('surat-keluar/tambah', TambahEditSurat::class)->name('tambah-surat-keluar');
     Route::get('surat-keluar/edit/{surat}', TambahEditSurat::class)->name('edit-surat-keluar');
