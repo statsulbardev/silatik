@@ -37,8 +37,8 @@
                                                 No. {{ $item->no_surat }},
                                                 <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </span>
-                                        </label><br>
-                                        <p>{!! $item->perihal !!}</p>
+                                        </label>
+                                        <span>{!! $item->perihal !!}</span><br>
                                         @if ($item->relasiDisposisi)
                                             <div class="badge badge-primary">Sudah Disposisi</div>
                                         @endif
@@ -47,7 +47,7 @@
                                     <td>
                                         @if ($item->tipe === 'sm')
                                             @if ($item->relasiDisposisi)
-                                                <a href="{{ env('APP_URL') . 'surat-masuk/kepala/' . $item->id }}" id="lihat" class="btn btn-icon icon-left btn-primary">
+                                                <a href="{{ env('APP_URL') . 'surat-masuk/kepala/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             @else

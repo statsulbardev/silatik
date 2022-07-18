@@ -15,14 +15,17 @@ Route::get('login', Login::class)->name('login');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
-    Route::get('surat-masuk', DaftarSurat::class)->name('surat-masuk');
-    Route::get('surat-masuk/tambah', TambahEditSurat::class)->name('tambah-surat-masuk');
-    Route::get('surat-masuk/edit/{surat}', TambahEditSurat::class)->name('edit-surat-masuk');
 
     // Routing surat masuk untuk kepala bps
     Route::get('surat-masuk/kepala', DaftarSurat::class)->name('kepala-surat-masuk');
     Route::get('surat-masuk/kepala/{surat}/disposisi', Disposisi::class)->name('kepala-disposisi-surat-masuk');
     Route::get('surat-masuk/kepala/{surat}', DetailSurat::class)->name('detail-kepala-surat-masuk');
+
+    // Routing surat masuk untuk sekretaris
+    Route::get('surat-masuk/sekretaris', DaftarSurat::class)->name('sekretaris-surat-masuk');
+    Route::get('surat-masuk/sekretaris/tambah', TambahEditSurat::class)->name('sekretaris-tambah-surat-masuk');
+    Route::get('surat-masuk/sekretaris/edit/{surat}', TambahEditSurat::class)->name('sekretaris-edit-surat-masuk');
+    Route::get('surat-masuk/sekretaris/{surat}', DetailSurat::class)->name('sekretaris-detail-surat-masuk');
 
     Route::get('surat-keluar', DaftarSurat::class)->name('surat-keluar');
     Route::get('surat-keluar/tambah', TambahEditSurat::class)->name('tambah-surat-keluar');

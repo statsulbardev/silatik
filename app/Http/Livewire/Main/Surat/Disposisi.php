@@ -40,7 +40,7 @@ class Disposisi extends Component
             $this->redirectUrl = "surat-keluar";
         }
 
-        $this->daftarUnitKerja  = UnitKerja::get(['id', 'nama']);
+        $this->daftarUnitKerja  = UnitKerja::get(['id', 'nama'])->toArray();
     }
 
     public function render()

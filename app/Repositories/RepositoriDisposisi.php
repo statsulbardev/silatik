@@ -31,7 +31,7 @@ class RepositoriDisposisi
         } catch(Exception $error) {
             DB::rollBack();
 
-            Log::warning($error);
+            Log::alert($error);
 
             $pesan = "Gagal - Surat gagal di disposisi";
         }

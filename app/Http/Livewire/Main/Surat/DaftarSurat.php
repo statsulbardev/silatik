@@ -30,6 +30,7 @@ class DaftarSurat extends Component
                 $this->daftar_surat = $this->getChiefMails($this->tipe);
                 break;
             case 'sekretaris':
+                $this->daftar_surat = $this->getSecretaryMails($this->tipe);
                 break;
             default;
         }

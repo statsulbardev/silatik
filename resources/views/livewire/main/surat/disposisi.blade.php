@@ -43,7 +43,7 @@
                                 <tr>
                                     <td class="font-weight-bold">Perihal Surat</td>
                                     <td width="2%">:</td>
-                                    <td>{{ $surat->perihal }}</td>
+                                    <td>{!! $surat->perihal !!}</td>
                                 </tr>
                                 <tr>
                                     <td class="font-weight-bold">Tingkat Keamanan</td>
@@ -143,7 +143,7 @@
                             <div class="col-12 col-md-10 col-lg-10">
                                 {{-- Unit Kerja --}}
                                 <label class="font-weight-bold border-bottom mb-3">1. Unit Kerja</label>
-                                <x-forms.select judul='Unit Kerja' model='unitKerja' :opsi="$daftarUnitKerja" />
+                                <x-forms.select model='unitKerja' :opsi="$daftarUnitKerja" />
 
                                 {{-- Dipersiapkan untuk select multi satker --}}
                                 {{-- <div class="form-inline mb-4">
@@ -160,15 +160,15 @@
                                 <label class="font-weight-bold border-bottom mb-3">2. Unit Fungsi</label>
                                 <div class="row mb-4">
                                     <x-forms.checkbox judul='Kepala BPS' model='penerima' nilai='1' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Bagian / Subbagian Umum' model='peneriman' nilai='2' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Bagian / Subbagian Umum' model='penerima' nilai='2' style='col-12 col-md-6 col-lg-6' />
                                 </div>
                                 <div class="row mb-4">
                                     <x-forms.checkbox judul='Fungsi Statistik Sosial' model='penerima' nilai='3' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Fungsi Statistik Produksi' model='peneriman' nilai='4' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Fungsi Statistik Produksi' model='penerima' nilai='4' style='col-12 col-md-6 col-lg-6' />
                                 </div>
                                 <div class="row mb-4">
                                     <x-forms.checkbox judul='Fungsi Statistik Distribusi' model='penerima' nilai='5' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Fungsi Nerwilis' model='peneriman' nilai='6' style='col-12 col-md-6 col-lg-6' />
+                                    <x-forms.checkbox judul='Fungsi Nerwilis' model='penerima' nilai='6' style='col-12 col-md-6 col-lg-6' />
                                 </div>
                                 <div class="row mb-4">
                                     <x-forms.checkbox judul='Fungsi IPDS' model='penerima' nilai='7' style='col-12 col-md-6 col-lg-6' />

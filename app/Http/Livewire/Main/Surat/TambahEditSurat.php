@@ -4,7 +4,10 @@ namespace App\Http\Livewire\Main\Surat;
 
 use App\Traits\SuratTrait;
 use App\Models\Surat;
+use App\Repositories\RepositoriSurat;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,16 +15,20 @@ class TambahEditSurat extends Component
 {
     use WithFileUploads, SuratTrait;
 
+    public $surat;
+    public $action;
+    public $routing;
+    public $role;
+    public $daftarTkKeamanan;
+
     public $no_agenda;
     public $tanggal_surat;
     public $no_surat;
     public $pengirim_surat;
     public $perihal_surat;
     public $file_surat;
-    public $tahapan;
-    public $surat;
-    public $tipe_surat;
-    public $routing;
+    public $tipe;
+    public $tk_keamanan;
 
     protected $rules = [
         'no_agenda'      => 'required|max:3',
@@ -34,50 +41,43 @@ class TambahEditSurat extends Component
 
     public function mount(Surat $surat)
     {
-        switch(Route::currentRouteName()) {
-            case 'tambah-surat-masuk' :
-                $this->tipe_surat = 'masuk';
-                $this->routing = 'surat-masuk';
-                break;
-            case 'edit-surat-masuk' :
-                $this->surat         = $surat;
-                $this->no_agenda     = $surat->no_agenda;
-                $this->tanggal_surat = $surat->tanggal_surat;
-                $this->no_surat      = $surat->no_surat;
-                $this->sumber_surat  = $surat->pengirim_surat;
-                $this->perihal_surat = $surat->perihal_surat;
-                $this->file_surat    = $surat->tautan_surat;
-                $this->tipe_surat    = 'masuk';
-                $this->routing = 'surat-masuk';
-                break;
-            case 'tambah-surat-keluar' :
-                $this->tipe_surat = 'keluar';
-                $this->routing = 'surat-keluar';
-                break;
-            case 'edit-surat-keluar' :
-                $this->tipe_surat = 'keluar';
-                $this->routing = 'surat-keluar';
-                break;
-        }
+        $this->tipe    = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
+        $this->action  = Str::contains(Route::currentRouteName(), "tambah") ? "tambah" : "edit";
+        $this->routing = $this->tipe == "sm" ? "surat-masuk" : "surat-keluar";
+        $this->role    = Auth::user()->roles[0]->name;
 
-        $this->tahapan = Route::currentRouteName();
+        $this->daftarTkKeamanan = [
+            ["id" => "SR", "nama" => "Sangat Rahasia"],
+            ["id" => "R", "nama" => "Rahasia"],
+            ["id" => "B", "nama" => "Biasa"]
+        ];
+
+        if ($this->action == "edit") {
+            $this->surat         = $surat;
+            $this->no_agenda     = $surat->no_agenda;
+            $this->tanggal_surat = $surat->tanggal_surat;
+            $this->no_surat      = $surat->no_surat;
+            $this->sumber_surat  = $surat->pengirim_surat;
+            $this->perihal_surat = $surat->perihal_surat;
+            $this->file_surat    = $surat->relasiBerkas->tautan;
+            $this->tipe_surat    = 'sm';
+        }
     }
 
     public function render()
     {
-        return view('livewire.main.surat.tambah-edit-surat')
-            -> layout('layouts.main');
+        return view('livewire.main.surat.tambah-edit-surat')->layout('layouts.main');
     }
 
-    public function create()
+    public function create(RepositoriSurat $repositoriSurat)
     {
         $this->validate();
 
-        $message = $this->store($this);
+        $pesan = $repositoriSurat->store($this);
 
-        session()->flash('messages', $message);
+        session()->flash('messages', $pesan);
 
-        return redirect(env('APP_URL') . $this->routing);
+        return redirect(env('APP_URL') . $this->routing . '/' . $this->role);
     }
 
     public function edit()

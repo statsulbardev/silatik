@@ -21,12 +21,16 @@
                 {{-- Perihal Surat --}}
                 <x-forms.text-area judul='Perihal Surat' model='perihal_surat' />
 
+                {{-- Tingkat Keamanan Surat --}}
+                <x-forms.select judul='Tingkat Keamanan Surat' model='tk_keamanan' :opsi="$daftarTkKeamanan" />
+
                 {{-- File Surat --}}
                 <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
             </div>
             <div class="card-footer text-right">
-                <button class="btn btn-primary mr-1" type="submit">Simpan</button>
-                <button class="btn btn-secondary" type="reset">Batal</button>
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
             </div>
         </div>
     </form>
