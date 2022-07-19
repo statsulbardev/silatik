@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('surat-masuk/sekretaris/edit/{surat}', TambahEditSurat::class)->name('sekretaris-edit-surat-masuk');
     Route::get('surat-masuk/sekretaris/{surat}', DetailSurat::class)->name('sekretaris-detail-surat-masuk');
 
+    // Routing surat masuk untuk kf
+
     Route::get('surat-keluar', DaftarSurat::class)->name('surat-keluar');
     Route::get('surat-keluar/tambah', TambahEditSurat::class)->name('tambah-surat-keluar');
     Route::get('surat-keluar/edit/{surat}', TambahEditSurat::class)->name('edit-surat-keluar');

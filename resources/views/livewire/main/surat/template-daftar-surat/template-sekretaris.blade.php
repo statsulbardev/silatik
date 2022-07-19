@@ -54,6 +54,9 @@
                                                     <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
+                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/edit/' . $item->id }}" id="edit" class="btn btn-icon btn-warning">
+                                                        <i class="fas fa-pencil"></i>
+                                                    </a>
                                                     <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -94,6 +97,16 @@
 <script>
     tippy('#lihat', {
         content: 'Lihat Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#edit', {
+        content: 'Edit Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#hapus', {
+        content: 'Hapus Surat',
         placement: 'bottom',
         arrow: true
     })

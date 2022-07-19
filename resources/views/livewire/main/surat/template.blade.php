@@ -26,6 +26,15 @@
 
                 {{-- File Surat --}}
                 <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
+
+                {{-- Berkas Surat Sebelumnya --}}
+                @if ($tahapan === 'edit')
+                    <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-success">
+                        <i class="fas fa-eye"></i>
+                        Link Berkas Surat Sebelumnya
+                    </a>
+                @endif
+
             </div>
             <div class="card-footer text-right">
                 <button class="btn btn-primary" type="submit">

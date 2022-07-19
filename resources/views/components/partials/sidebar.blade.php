@@ -20,6 +20,9 @@
                 @case('sekretaris')
                     @include('components.partials.sidebar-template.template-sekretaris')
                     @break
+                @case('kf')
+                    @include('components.partials.sidebar-template.template-kf')
+                    @break
             @endswitch
             <li>
                 <a href="{{ env('APP_URL') . 'surat-keluar'}}" class="nav-link">

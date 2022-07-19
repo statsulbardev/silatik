@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
+use App\Models\Berkas;
 use App\Models\BerkasSurat;
 use App\Models\Pemeriksaan;
 use App\Models\Surat;
@@ -14,29 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 trait SuratTrait
 {
-    
-
-    public function update($data)
-    {
-        try {
-            DB::beginTransaction();
-
-            $data->surat->update([
-
-            ]);
-
-            DB::commit();
-
-            $message = '';
-
-        } catch(Exception $error) {
-            DB::rollBack();
-
-            $message = '';
-        }
-
-        return $message;
-    }
+    use GoogleDriveTrait;
 
     public function getSecretaryMails($tipe)
     {
@@ -54,5 +33,22 @@ trait SuratTrait
             }, 'relasiDisposisi'])
             -> where('tipe', $tipe)
             -> get();
+    }
+
+    public function deleteMail($id)
+    {
+        $berkas = Berkas::where('surat_id', (int) $id);
+
+        foreach($berkas->get() as $file) {
+            $this->deleteFile($file->tautan);
+        }
+
+        $berkas->delete();
+
+        Pemeriksaan::where('surat_id', (int) $id)->delete();
+
+        $respon = Surat::find((int) $id)->delete();
+
+        return $respon;
     }
 }

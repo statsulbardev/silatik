@@ -15,7 +15,6 @@ class DaftarSurat extends Component
     public $tipe;
     public $role;
     public $routing;
-
     public $daftar_surat;
 
     public function mount()
@@ -34,7 +33,6 @@ class DaftarSurat extends Component
                 break;
             default;
         }
-
     }
 
     public function render()
@@ -44,6 +42,12 @@ class DaftarSurat extends Component
 
     public function delete($id)
     {
+        $result = $this->deleteMail($id);
 
+        $result
+            ? session()->flash('messages', 'Sukses - Informasi surat telah dihapus.')
+            : session()->flash('messages', 'Gagal - Informasi surat gagal dihapus.');
+
+        return redirect()->back();
     }
 }

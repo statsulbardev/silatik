@@ -27,6 +27,7 @@ class TambahEditSurat extends Component
     public $pengirim_surat;
     public $perihal_surat;
     public $file_surat;
+    public $temp_file_surat;
     public $tipe;
     public $tk_keamanan;
 
@@ -36,7 +37,7 @@ class TambahEditSurat extends Component
         'no_surat'       => 'required|min:3',
         'pengirim_surat' => 'required|min:3',
         'perihal_surat'  => 'required|min:5',
-        'file_surat'     => 'required|mimes:jpeg,png,pdf'
+        'file_surat'     => 'nullable|mimes:jpeg,png,pdf'
     ];
 
     public function mount(Surat $surat)
@@ -53,14 +54,14 @@ class TambahEditSurat extends Component
         ];
 
         if ($this->action == "edit") {
-            $this->surat         = $surat;
-            $this->no_agenda     = $surat->no_agenda;
-            $this->tanggal_surat = $surat->tanggal_surat;
-            $this->no_surat      = $surat->no_surat;
-            $this->sumber_surat  = $surat->pengirim_surat;
-            $this->perihal_surat = $surat->perihal_surat;
-            $this->file_surat    = $surat->relasiBerkas->tautan;
-            $this->tipe_surat    = 'sm';
+            $this->surat           = $surat;
+            $this->no_agenda       = $surat->no_agenda;
+            $this->tanggal_surat   = $surat->tanggal_surat;
+            $this->no_surat        = $surat->no_surat;
+            $this->pengirim_surat  = $surat->pengirim;
+            $this->perihal_surat   = $surat->perihal;
+            $this->tk_keamanan     = $surat->tk_keamanan;
+            $this->temp_file_surat = $surat->relasiBerkas->max()->tautan;
         }
     }
 
@@ -80,10 +81,14 @@ class TambahEditSurat extends Component
         return redirect(env('APP_URL') . $this->routing . '/' . $this->role);
     }
 
-    public function edit()
+    public function edit(RepositoriSurat $repositoriSurat)
     {
         $this->validate();
 
-        $this->update($this);
+        $pesan = $repositoriSurat->update($this);
+
+        session()->flash('messages', $pesan);
+
+        return redirect(env('APP_URL') . $this->routing . '/' . $this->role);
     }
 }

@@ -30,14 +30,9 @@ class SuratTableSeeder extends Seeder
             'unit_fungsi_id' => 11
         ]);
 
-        $berkas1 = Berkas::create([
+        Berkas::create([
             'surat_id' => $surat1->id,
             'tautan'   => '1B5OiUNJObZZCrx_AV2BP8rrsMnUeAf7O'
-        ]);
-
-        Pemeriksaan::create([
-            'surat_id'  => $surat1->id,
-            'berkas_id' => $berkas1->id
         ]);
 
         $surat2 = Surat::create([
