@@ -159,6 +159,9 @@ class RepositoriSurat
 
     private function storeCheck($surat, $berkas)
     {
-        Pemeriksaan::create(['surat_id' => $surat->id, 'berkas_id' => $berkas->id]);
+        Pemeriksaan::create([
+            'surat_id'  => $surat->id,
+            'berkas_id' => is_null($berkas) ? $surat->relasiBerkas->max()->id : $berkas->id
+        ]);
     }
 }
