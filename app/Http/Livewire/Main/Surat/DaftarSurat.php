@@ -20,7 +20,7 @@ class DaftarSurat extends Component
     public function mount()
     {
         $this->tipe = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
-        $this->role = Auth::user()->roles[0]->name;
+        $this->role = Auth::user()->roles->sortDesc()->max()->name;
         $this->routing = $this->tipe == "sm" ? "surat-masuk" : "surat-keluar";
 
         switch ($this->role)
@@ -30,6 +30,12 @@ class DaftarSurat extends Component
                 break;
             case 'sekretaris':
                 $this->daftar_surat = $this->getSecretaryMails($this->tipe);
+                break;
+            case 'kf':
+                $this->daftar_surat = $this->getKfMails($this->tipe);
+                break;
+            case 'staf':
+                $this->daftar_surat = $this->getStafMails($this->tipe);
                 break;
             default;
         }

@@ -2,35 +2,81 @@
 
 namespace App\Traits;
 
-use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
 use App\Models\Berkas;
-use App\Models\BerkasSurat;
 use App\Models\Pemeriksaan;
 use App\Models\Surat;
-use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use App\Models\UnitFungsi;
 
 trait SuratTrait
 {
     use GoogleDriveTrait;
 
+    public function getChiefMails($tipe)
+    {
+        if ($tipe === 'sm') {
+            $surat = Surat::query()
+                     -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
+                     -> where('tipe', $tipe)
+                     -> get();
+        } else {
+            $surat = Surat::query()
+                     -> with([
+                            'relasiPegawai',
+                            'relasiBerkas',
+                            'relasiPemeriksaan' => function($q) {
+                                $q->where('cek_kepala', 'bp');
+                            }
+                     ])
+                     -> where('tipe', $tipe)
+                     -> get();
+        }
+
+        return $surat;
+    }
+
     public function getSecretaryMails($tipe)
     {
         return Surat::query()
-            -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
-            -> where('tipe', $tipe)
-            -> get();
+                -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
+                -> where('tipe', $tipe)
+                -> get();
     }
 
-    public function getChiefMails($tipe)
+    public function getKfMails($tipe)
+    {
+        if ($tipe === 'sm') {
+            $surat = Surat::query()
+                     -> with([
+                            'relasiPegawai',
+                            'relasiBerkas',
+                            'relasiDisposisi' => function($q) {
+                                $q->where('');
+                            }
+                     ])
+                     -> where('tipe', $tipe)
+                     -> get();
+        } else {
+            $surat = Surat::query()
+                     -> with([
+                            'relasiBerkas',
+                            'relasiPegawai' => function($q) {
+                                $q->relasiUnitFungsi;
+                            },
+                            'relasiPemeriksaan' => function($q) {
+                                $q->where('cek_kf', 'bp');
+                            }
+                     ])
+                     -> where('tipe', $tipe)
+                     -> get();
+        }
+
+        return $surat;
+    }
+
+    public function getStafMails($tipe)
     {
         return Surat::query()
-            -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan' => function($q) {
-                    $q->where('cek_kepala', 'bp');
-            }, 'relasiDisposisi'])
+            -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
             -> where('tipe', $tipe)
             -> get();
     }

@@ -17,6 +17,14 @@
                     'daftar_surat' => $daftar_surat
                 ])
                 @break
+            @case('kf')
+                @include('livewire.main.surat.template-daftar-surat.template-kf', [
+                    'daftar_surat' => $daftar_surat
+                ])
+                @break
+            @case('staf')
+                @include('livewire.main.surat.template-daftar-surat.template-staf')
+                @break
             @default
 
         @endswitch

@@ -2,11 +2,17 @@
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <div class="mx-auto"></div>
-                <a href="{{ url(env('APP_URL') . $routing . '/sekretaris/tambah') }}" class="btn btn-icon icon-left btn-primary">
-                    <i class="fa-solid fa-plus"></i>
-                    Entri {{ str_replace('-',' ',ucwords($routing, '-')) }}
-                </a>
+                <h4>Daftar Surat yang Akan Diperiksa</h4>
+                <div class="card-header-form">
+                    <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -17,7 +23,6 @@
                                 <th>Tanggal Terima</th>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Status Disposisi</th>
                                 <th>Aksi</th>
                             </tr>
                             @foreach ($daftar_surat as $index => $item)
@@ -32,39 +37,26 @@
                                                 No. {{ $item->no_surat }},
                                                 <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </span>
-                                        </label><br>
-                                        <span>{!! $item->perihal !!}</span>
+                                        </label>
+                                        <span>{!! $item->perihal !!}</span><br>
+                                        @if ($item->relasiDisposisi)
+                                            <div class="badge badge-primary">Sudah Disposisi</div>
+                                        @endif
                                     </td>
                                     <td>{{ $item->pengirim }}</td>
                                     <td>
-                                        @if ($item->relasiDisposisi)
-                                            <div class="badge badge-primary">Sudah Disposisi</div>
-                                        @else
-                                            <div class="badge badge-warning">Belum Disposisi</div>
+                                        @if ($item->tipe === 'sm')
+                                            @if ($item->relasiDisposisi)
+                                                <a href="{{ env('APP_URL') . 'surat-masuk/kepala/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ env('APP_URL') . $routing . '/kepala/'. $item->id . '/disposisi' }}"
+                                                    id="disposisi" class="btn btn-success">
+                                                    <i class="fas fa-tags"></i>
+                                                </a>
+                                            @endif
                                         @endif
-                                    </td>
-                                    <td>
-                                        @switch($item->tipe)
-                                            @case('sm')
-                                                @if ($item->relasiDisposisi)
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                @else
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/edit/' . $item->id }}" id="edit" class="btn btn-icon btn-warning">
-                                                        <i class="fas fa-pencil"></i>
-                                                    </a>
-                                                    <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                @endif
-                                                @break
-                                            @case('sk')
-                                                @break
-                                        @endswitch
                                     </td>
                                 </tr>
                             @endforeach
@@ -100,13 +92,8 @@
         placement: 'bottom',
         arrow: true
     })
-    tippy('#edit', {
-        content: 'Edit Surat',
-        placement: 'bottom',
-        arrow: true
-    })
-    tippy('#hapus', {
-        content: 'Hapus Surat',
+    tippy('#disposisi', {
+        content: 'Disposisi Surat',
         placement: 'bottom',
         arrow: true
     })

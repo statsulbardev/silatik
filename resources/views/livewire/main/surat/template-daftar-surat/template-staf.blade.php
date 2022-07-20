@@ -3,9 +3,9 @@
         <div class="card">
             <div class="card-header">
                 <div class="mx-auto"></div>
-                <a href="{{ url(env('APP_URL') . $routing . '/sekretaris/tambah') }}" class="btn btn-icon icon-left btn-primary">
+                <a href="{{ url(env('APP_URL') . $routing . '/staf/tambah') }}" class="btn btn-icon icon-left btn-primary">
                     <i class="fa-solid fa-plus"></i>
-                    Entri {{ str_replace('-',' ',ucwords($routing, '-')) }}
+                    Entri {{ str_replace('-', ' ', ucwords($routing, '-')) }}
                 </a>
             </div>
             <div class="card-body">
@@ -46,23 +46,23 @@
                                     <td>
                                         @switch($item->tipe)
                                             @case('sm')
+                                                @break
+                                            @case('sk')
                                                 @if ($item->relasiDisposisi)
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
+                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 @else
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
+                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/edit/' . $item->id }}" id="edit" class="btn btn-icon btn-warning">
+                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/edit/' . $item->id) }}" id="edit" class="btn btn-icon btn-warning">
                                                         <i class="fas fa-pencil"></i>
                                                     </a>
                                                     <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 @endif
-                                                @break
-                                            @case('sk')
                                                 @break
                                         @endswitch
                                     </td>
@@ -92,23 +92,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script>
-    tippy('#lihat', {
-        content: 'Lihat Surat',
-        placement: 'bottom',
-        arrow: true
-    })
-    tippy('#edit', {
-        content: 'Edit Surat',
-        placement: 'bottom',
-        arrow: true
-    })
-    tippy('#hapus', {
-        content: 'Hapus Surat',
-        placement: 'bottom',
-        arrow: true
-    })
-</script>
-@endpush

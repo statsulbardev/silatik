@@ -1,4 +1,4 @@
-@section('title', 'Surat No. ' . $surat->no_surat)
+@section('title', 'Surat ' . $tipe .' No. ' . $surat->no_surat)
 
 @section('styles')
 <style>
@@ -8,7 +8,7 @@
 
 <div>
     <section class="section">
-        @include('components.partials.header', ['judul' => 'Surat No. ' . $surat->no_surat])
+        @include('components.partials.header', ['judul' => 'Surat ' . $tipe . ' No. ' . $surat->no_surat])
 
         <div class="card-columns">
             {{-- Informasi Surat --}}
@@ -94,55 +94,109 @@
                 </div>
             </div>
 
-            {{-- History Tindak Lanjut / Disposisi --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4>History Tindak Lanjut / Disposisi</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th>Dari</th>
-                                <th>Kepada</th>
-                                <th>Ket</th>
-                                <th>Disposisi</th>
-                            </tr>
-                            @if ($surat->relasiDisposisi)
-                                <tr>
-                                    <td>
-                                        Kepala BPS Provinsi Sulawesi Barat
-                                    </td>
-                                    <td>
-                                        @if (!is_null($surat->relasiDisposisi->unit_fungsi_penerima))
-                                            <div class="my-3">
-                                                <span class="font-weight-bold text-primary">{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+            @switch(strtolower($tipe))
+                @case("masuk")
+                    {{-- History Tindak Lanjut / Disposisi --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>History Tindak Lanjut / Disposisi</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th>Dari</th>
+                                        <th>Kepada</th>
+                                        <th>Ket</th>
+                                        <th>Disposisi</th>
+                                    </tr>
+                                    @if ($surat->relasiDisposisi)
+                                        <tr>
+                                            <td>
+                                                Kepala BPS Provinsi Sulawesi Barat
+                                            </td>
+                                            <td>
+                                                @if (!is_null($surat->relasiDisposisi->unit_fungsi_penerima))
+                                                    <div class="my-3">
+                                                        <span class="font-weight-bold text-primary">{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+                                                        <ul class="pl-3">
+                                                        @foreach ($surat->relasiDisposisi->unit_fungsi_penerima as $index => $item)
+                                                            <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                        @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @else
+                                                    <span>{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {!! $surat->relasiDisposisi->catatan !!}
+                                            </td>
+                                            <td>
                                                 <ul class="pl-3">
-                                                @foreach ($surat->relasiDisposisi->unit_fungsi_penerima as $index => $item)
-                                                    <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                                @endforeach
+                                                    @foreach ($surat->relasiDisposisi->poin as $item)
+                                                        <li>{{ $item }}</li>
+                                                    @endforeach
                                                 </ul>
-                                            </div>
-                                        @else
-                                            <span>{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {!! $surat->relasiDisposisi->catatan !!}
-                                    </td>
-                                    <td>
-                                        <ul class="pl-3">
-                                            @foreach ($surat->relasiDisposisi->poin as $item)
-                                                <li>{{ $item }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
-                                </tr>
-                            @endif
-                        </table>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    @break
+                @case("keluar")
+                    {{-- History Pemeriksaan --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>History Pemeriksaan</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th>Dari</th>
+                                        <th>Kepada</th>
+                                        <th>Ket</th>
+                                    </tr>
+                                    {{-- @if ($surat->relasiDisposisi)
+                                        <tr>
+                                            <td>
+                                                Kepala BPS Provinsi Sulawesi Barat
+                                            </td>
+                                            <td>
+                                                @if (!is_null($surat->relasiDisposisi->unit_fungsi_penerima))
+                                                    <div class="my-3">
+                                                        <span class="font-weight-bold text-primary">{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+                                                        <ul class="pl-3">
+                                                        @foreach ($surat->relasiDisposisi->unit_fungsi_penerima as $index => $item)
+                                                            <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                        @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @else
+                                                    <span>{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {!! $surat->relasiDisposisi->catatan !!}
+                                            </td>
+                                            <td>
+                                                <ul class="pl-3">
+                                                    @foreach ($surat->relasiDisposisi->poin as $item)
+                                                        <li>{{ $item }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endif --}}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @break
+            @endswitch
         </div>
     </section>
 </div>

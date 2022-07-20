@@ -34,6 +34,8 @@ class PegawaiTableSeeder extends Seeder
                     'unit_kerja_id'  => $user->unit_kerja_id,
                     'unit_fungsi_id' => $user->unit_fungsi_id
                 ]);
+
+                $temp->assignRole([$user->role, 'admin']);
             } else {
                 $temp = Pegawai::create([
                     'nama'           => $user->nama,
@@ -46,9 +48,9 @@ class PegawaiTableSeeder extends Seeder
                     'unit_kerja_id'  => $user->unit_kerja_id,
                     'unit_fungsi_id' => $user->unit_fungsi_id
                 ]);
-            }
 
-            $temp->assignRole($user->role);
+                $temp->assignRole($user->role);
+            }
         }
     }
 }

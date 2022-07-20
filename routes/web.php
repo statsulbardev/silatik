@@ -16,22 +16,35 @@ Route::get('login', Login::class)->name('login');
 Route::group(['middleware' => 'auth'], function() {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
 
-    // Routing surat masuk untuk kepala bps
+    /*--------------------------------------- Surat Masuk ---------------------------------------*/
+
+    // Kepala BPS
     Route::get('surat-masuk/kepala', DaftarSurat::class)->name('kepala-surat-masuk');
     Route::get('surat-masuk/kepala/{surat}/disposisi', Disposisi::class)->name('kepala-disposisi-surat-masuk');
-    Route::get('surat-masuk/kepala/{surat}', DetailSurat::class)->name('detail-kepala-surat-masuk');
+    Route::get('surat-masuk/kepala/{surat}', DetailSurat::class)->name('kepala-detail-surat-masuk');
 
-    // Routing surat masuk untuk sekretaris
+    // Sekretaris
     Route::get('surat-masuk/sekretaris', DaftarSurat::class)->name('sekretaris-surat-masuk');
     Route::get('surat-masuk/sekretaris/tambah', TambahEditSurat::class)->name('sekretaris-tambah-surat-masuk');
     Route::get('surat-masuk/sekretaris/edit/{surat}', TambahEditSurat::class)->name('sekretaris-edit-surat-masuk');
     Route::get('surat-masuk/sekretaris/{surat}', DetailSurat::class)->name('sekretaris-detail-surat-masuk');
 
-    // Routing surat masuk untuk kf
+    // Kabag/Subag Umum
 
-    Route::get('surat-keluar', DaftarSurat::class)->name('surat-keluar');
-    Route::get('surat-keluar/tambah', TambahEditSurat::class)->name('tambah-surat-keluar');
-    Route::get('surat-keluar/edit/{surat}', TambahEditSurat::class)->name('edit-surat-keluar');
-    Route::get('surat-masuk/{surat}/disposisi', Disposisi::class)->name('disposisi-surat-masuk');
-    Route::get('surat-keluar/{surat}/disposisi', Disposisi::class)->name('disposisi-surat-keluar');
+    // Koordinator Fungsi
+
+    // Subkoordinator Fungsi
+
+    // Staf
+
+    /*--------------------------------------- Surat Keluar ---------------------------------------*/
+
+    // Koordinator Fungsi
+    Route::get('surat-keluar/kf', DaftarSurat::class)->name('kf-surat-keluar');
+
+    // Staf
+    Route::get('surat-keluar/staf', DaftarSurat::class)->name('staf-surat-keluar');
+    Route::get('surat-keluar/staf/tambah', TambahEditSurat::class)->name('staf-tambah-surat-keluar');
+    Route::get('surat-keluar/staf/edit/{surat}', TambahEditSurat::class)->name('staf-edit-surat-keluar');
+    Route::get('surat-keluar/staf/{surat}', DetailSurat::class)->name('staf-detail-surat-keluar');
 });

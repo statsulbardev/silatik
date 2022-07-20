@@ -45,7 +45,7 @@ class TambahEditSurat extends Component
         $this->tipe    = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
         $this->action  = Str::contains(Route::currentRouteName(), "tambah") ? "tambah" : "edit";
         $this->routing = $this->tipe == "sm" ? "surat-masuk" : "surat-keluar";
-        $this->role    = Auth::user()->roles[0]->name;
+        $this->role    = Auth::user()->roles->sortDesc()->max()->name;
 
         $this->daftarTkKeamanan = [
             ["id" => "SR", "nama" => "Sangat Rahasia"],

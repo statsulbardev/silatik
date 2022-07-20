@@ -13,7 +13,9 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @switch(auth()->user()->roles[0]->name)
+            @switch(auth()->user()->roles->sortDesc()->max()->name)
+                @case('admin')
+                    @break
                 @case('kabps')
                     @include('components.partials.sidebar-template.template-kepala')
                     @break
@@ -23,13 +25,15 @@
                 @case('kf')
                     @include('components.partials.sidebar-template.template-kf')
                     @break
+                @case('kabag')
+                    @break
+                @case('skf')
+                    @include('components.partials.sidebar-template.template-skf')
+                    @break
+                @case('staf')
+                    @include('components.partials.sidebar-template.template-staf')
+                    @break
             @endswitch
-            <li>
-                <a href="{{ env('APP_URL') . 'surat-keluar'}}" class="nav-link">
-                    <i class="fas fa-inbox"></i>
-                    <span>Surat Keluar</span>
-                </a>
-            </li>
             <li class="menu-header">PENGATURAN</li>
         </ul>
     </aside>
