@@ -16,7 +16,7 @@ class PegawaiTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('pegawais')->truncate();
+        DB::table('pegawai')->truncate();
 
         $json = File::get('database/data/user.json');
         $data = json_decode($json);

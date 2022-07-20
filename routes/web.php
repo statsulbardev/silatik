@@ -6,6 +6,7 @@ use App\Http\Livewire\Main\Surat\DaftarSurat;
 use App\Http\Livewire\Main\Surat\Disposisi;
 use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
 use App\Http\Livewire\Main\Surat\DetailSurat;
+use App\Http\Livewire\Main\Surat\Pemeriksaan;
 use App\Http\Livewire\Main\Surat\TambahEditSurat;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Koordinator Fungsi
     Route::get('surat-keluar/kf', DaftarSurat::class)->name('kf-surat-keluar');
+    Route::get('surat-keluar/kf/{surat}/periksa', Pemeriksaan::class)->name('kf-periksa-surat-keluar');
 
     // Staf
     Route::get('surat-keluar/staf', DaftarSurat::class)->name('staf-surat-keluar');

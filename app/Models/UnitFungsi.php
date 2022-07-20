@@ -12,7 +12,7 @@ class UnitFungsi extends Model
     const CREATED_AT = 'tanggal_buat';
     const UPDATED_AT = 'tanggal_update';
 
-    protected $table = 'unit_fungsis';
+    protected $table = 'unit_fungsi';
 
     protected $fillable = ['parent', 'nama'];
 

@@ -12,7 +12,7 @@ class UnitKerja extends Model
     const CREATED_AT = 'tanggal_buat';
     const UPDATED_AT = 'tanggal_update';
 
-    protected $table = 'unit_kerjas';
+    protected $table = 'unit_kerja';
 
     protected $fillable = [ 'kode', 'nama'];
 

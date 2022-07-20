@@ -46,16 +46,11 @@
                                     <td>{{ $item->pengirim }}</td>
                                     <td>
                                         @if ($item->tipe === 'sm')
-                                            @if ($item->relasiDisposisi)
-                                                <a href="{{ env('APP_URL') . 'surat-masuk/kepala/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            @else
-                                                <a href="{{ env('APP_URL') . $routing . '/kepala/'. $item->id . '/disposisi' }}"
-                                                    id="disposisi" class="btn btn-success">
-                                                    <i class="fas fa-tags"></i>
-                                                </a>
-                                            @endif
+
+                                        @else
+                                            <a href="{{ url(env('APP_URL') . 'surat-keluar/kf/' . $item->id . '/periksa') }}" id="periksa" class="btn btn-icon btn-primary">
+                                                <i class="fas fa-tags"></i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
@@ -87,8 +82,8 @@
 
 @push('scripts')
 <script>
-    tippy('#lihat', {
-        content: 'Lihat Surat',
+    tippy('#periksa', {
+        content: 'Periksa Surat',
         placement: 'bottom',
         arrow: true
     })

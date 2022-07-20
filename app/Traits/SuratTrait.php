@@ -6,6 +6,7 @@ use App\Models\Berkas;
 use App\Models\Pemeriksaan;
 use App\Models\Surat;
 use App\Models\UnitFungsi;
+use Illuminate\Support\Facades\Auth;
 
 trait SuratTrait
 {
@@ -56,16 +57,20 @@ trait SuratTrait
                      -> where('tipe', $tipe)
                      -> get();
         } else {
+            // Cek jika KF adalah KF provinsi
+            if (Auth::user()->relasiUnitKerja->kode === "7600")
+                // untuk dicari unit fungsi dibawahnya
+                $unit_fungsi = UnitFungsi::where('parent', Auth::user()->relasiUnitFungsi->id)->pluck('id');
+
             $surat = Surat::query()
                      -> with([
                             'relasiBerkas',
-                            'relasiPegawai' => function($q) {
-                                $q->relasiUnitFungsi;
-                            },
+                            'relasiPegawai',
                             'relasiPemeriksaan' => function($q) {
                                 $q->where('cek_kf', 'bp');
                             }
                      ])
+                     -> whereIn('unit_fungsi_id', $unit_fungsi)
                      -> where('tipe', $tipe)
                      -> get();
         }

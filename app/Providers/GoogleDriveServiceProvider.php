@@ -33,7 +33,7 @@ class GoogleDriveServiceProvider extends ServiceProvider
 
             $service = new \Google_Service_Drive($client);
 
-            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, env('GOOGLE_DRIVE_FOLDER_ROOT'));
+            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, config('googleid.folder_root'));
 
             return new \League\Flysystem\Filesystem($adapter);
         });

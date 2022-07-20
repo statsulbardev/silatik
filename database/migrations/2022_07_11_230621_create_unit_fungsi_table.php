@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUnitFungsisTable extends Migration
+class CreateUnitFungsiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUnitFungsisTable extends Migration
      */
     public function up()
     {
-        Schema::create('unit_fungsis', function (Blueprint $table) {
+        Schema::create('unit_fungsi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent');
             $table->string('nama');
@@ -29,6 +29,6 @@ class CreateUnitFungsisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit_fungsis');
+        Schema::dropIfExists('unit_fungsi');
     }
 }

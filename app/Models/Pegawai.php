@@ -14,7 +14,7 @@ class Pegawai extends Authenticatable
     const CREATED_AT = 'tanggal_buat';
     const UPDATED_AT = 'tanggal_update';
 
-    protected $table = 'pegawais';
+    protected $table = 'pegawai';
 
     protected $fillable = [
         'nama',
