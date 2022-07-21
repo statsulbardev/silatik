@@ -15,14 +15,20 @@
                 {{-- Nomor Surat --}}
                 <x-forms.input-text judul='Nomor Surat' model='no_surat' tipe='text' />
 
-                {{-- Pengirim Surat --}}
-                <x-forms.input-text judul='Pengirim Surat' model='pengirim_surat' tipe='text' />
+                @if ($tipe === "sm")
+                    {{-- Pengirim Surat --}}
+                    <x-forms.input-text judul='Pengirim Surat' model='pengirim_surat' tipe='text' />
+                @endif
 
                 {{-- Perihal Surat --}}
                 <x-forms.text-area judul='Perihal Surat' model='perihal_surat' />
 
-                {{-- Tingkat Keamanan Surat --}}
-                <x-forms.select judul='Tingkat Keamanan Surat' model='tk_keamanan' :opsi="$daftarTkKeamanan" />
+                @if ($tipe === "sm")
+                    {{-- Tingkat Keamanan Surat --}}
+                    <x-forms.select judul='Tingkat Keamanan Surat' model='tk_keamanan' :opsi="$daftarTkKeamanan" />
+                @else
+                    <x-forms.multi-select judul='Unit Kerja Tujuan' model='unitKerja' placeholdler='Pilih Unit Kerja' :opsi="$daftarUnitKerja" />
+                @endif
 
                 {{-- File Surat --}}
                 <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
