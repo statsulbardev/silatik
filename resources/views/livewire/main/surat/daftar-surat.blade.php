@@ -1,29 +1,43 @@
-@section('title', 'Daftar ' . str_replace('-',' ',ucwords($routing, '-')))
+@section('title', 'Daftar ' . $judul)
 
 <div>
     <section class="section">
         @include('components.notifications.flash')
 
-        @include('components.partials.header', [ 'judul' =>  str_replace('-',' ',ucwords($routing, '-')) ])
+        @include('components.partials.header', [ 'judul' =>  $judul])
 
         @switch($role)
             @case('kabps')
-                @include('livewire.main.surat.template-daftar-surat.template-kepala', [
-                    'daftar_surat' => $daftar_surat
-                ])
+                @if ($tipe == 'sm')
+                    @include('livewire.main.surat.template-daftar-surat.surat-masuk-kepala', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @else
+                @endif
                 @break
             @case('sekretaris')
-                @include('livewire.main.surat.template-daftar-surat.template-sekretaris', [
-                    'daftar_surat' => $daftar_surat
-                ])
+                @if ($tipe == 'sm')
+                    @include('livewire.main.surat.template-daftar-surat.surat-masuk-sekretaris', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @else
+                @endif
                 @break
             @case('kf')
-                @include('livewire.main.surat.template-daftar-surat.template-kf', [
-                    'daftar_surat' => $daftar_surat
-                ])
+                @if ($tipe == 'sm')
+                    @include('livewire.main.surat.template-daftar-surat.surat-masuk-kf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @else
+                @endif
                 @break
             @case('staf')
-                @include('livewire.main.surat.template-daftar-surat.template-staf')
+                @if ($tipe == 'sm')
+                @else
+                    @include('livewire.main.surat.template-daftar-surat.surat-keluar-staf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @endif
                 @break
             @default
 
