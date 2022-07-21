@@ -17,6 +17,8 @@ class CreatePemeriksaanTable extends Migration
             $table->id();
             $table->unsignedBigInteger('surat_id');
             $table->unsignedBigInteger('berkas_id');
+            $table->json('unit_kerja_id');
+            $table->json('unit_fungsi_id')->nullable();
             $table->char('cek_kepala')->default('bp');
             $table->text('catatan_kepala')->nullable();
             $table->timestamp('tgl_cek_kepala')->nullable();
