@@ -4,7 +4,6 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Main\Dashboard;
 use App\Http\Livewire\Main\Surat\DaftarSurat;
 use App\Http\Livewire\Main\Surat\Disposisi;
-use App\Http\Livewire\Main\Surat\DaftarPemeriksaan;
 use App\Http\Livewire\Main\Surat\DetailSurat;
 use App\Http\Livewire\Main\Surat\Pemeriksaan;
 use App\Http\Livewire\Main\Surat\TambahEditSurat;
@@ -21,6 +20,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Kepala BPS
     Route::get('surat-masuk/kepala', DaftarSurat::class)->name('kepala-surat-masuk');
+    Route::get('surat-masuk/kepala/disposisi', DaftarSurat::class)->name('kepala-disposisi-daftar-surat-masuk');
     Route::get('surat-masuk/kepala/{surat}/disposisi', Disposisi::class)->name('kepala-disposisi-surat-masuk');
     Route::get('surat-masuk/kepala/{surat}', DetailSurat::class)->name('kepala-detail-surat-masuk');
 
@@ -31,14 +31,26 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('surat-masuk/sekretaris/{surat}', DetailSurat::class)->name('sekretaris-detail-surat-masuk');
 
     // Kabag/Subag Umum
+    Route::get('surat-masuk/kabag', DaftarSurat::class)->name('kabag-surat-masuk');
+    Route::get('surat-masuk/kabag/{surat}', DetailSurat::class)->name('kabag-detail-surat-masuk');
 
     // Koordinator Fungsi
+    Route::get('surat-masuk/kf', DaftarSurat::class)->name('kf-surat-masuk');
+    Route::get('surat-masuk/kf/{surat}', DetailSurat::class)->name('kf-detail-surat-masuk');
 
     // Subkoordinator Fungsi
+    Route::get('surat-masuk/skf', DaftarSurat::class)->name('skf-surat-masuk');
+    Route::get('surat-masuk/skf/{surat}', DetailSurat::class)->name('skf-detail-surat-masuk');
 
     // Staf
+    Route::get('surat-masuk/staf', DaftarSurat::class)->name('staf-surat-masuk');
+    Route::get('surat-masuk/skf/{surat}', DetailSurat::class)->name('staf-detail-surat-masuk');
 
     /*--------------------------------------- Surat Keluar ---------------------------------------*/
+
+    // Kepala BPS
+    Route::get('surat-keluar/kepala', DaftarSurat::class)->name('kepala-surat-keluar');
+    Route::get('surat-keluar/kepala/{surat}/periksa', Pemeriksaan::class)->name('kepala-periksa-surat-keluar');
 
     // Koordinator Fungsi
     Route::get('surat-keluar/kf', DaftarSurat::class)->name('kf-surat-keluar');
