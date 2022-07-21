@@ -54,8 +54,9 @@ class SuratTableSeeder extends Seeder
         ]);
 
         Pemeriksaan::create([
-            'surat_id'  => $surat2->id,
-            'berkas_id' => $berkas2->id
+            'surat_id'      => $surat2->id,
+            'berkas_id'     => $berkas2->id,
+            'unit_kerja_id' => ["2", "3", "4", "5", "6"]
         ]);
     }
 }
