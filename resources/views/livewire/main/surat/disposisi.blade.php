@@ -88,7 +88,7 @@
                     <div style="width: 22%" class="mb-4 mx-auto">
                         @include('components.icons.pdf-file')
                     </div>
-                    <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
+                    <a href="{{ google_view_file($surat->relasiBerkas->sortDesc()->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
                         <i class="fas fa-eye"></i>
                         Lihat Berkas
                     </a>
@@ -141,37 +141,20 @@
                                 <span class="font-weight-bold">Kepada</span>
                             </div>
                             <div class="col-12 col-md-10 col-lg-10">
-                                {{-- Unit Kerja --}}
-                                <label class="font-weight-bold border-bottom mb-3">1. Unit Kerja</label>
-                                <x-forms.select model='unitKerja' :opsi="$daftarUnitKerja" />
-
-                                {{-- Dipersiapkan untuk select multi satker --}}
-                                {{-- <div class="form-inline mb-4">
-                                    @if (count($penerima) > 0)
-                                        @foreach ($penerima as $index => $item)
-                                            <span class="badge badge-primary {{ $index > 0 ? 'ml-2' : '' }}">
-                                                {{ \App\Models\UnitFungsi::find($item)->nama }}
-                                            </span>
-                                        @endforeach
-                                    @endif
-                                </div> --}}
-
                                 {{-- Unit Fungsi --}}
-                                <label class="font-weight-bold border-bottom mb-3">2. Unit Fungsi</label>
                                 <div class="row mb-4">
-                                    <x-forms.checkbox judul='Kepala BPS' model='penerima' nilai='1' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Bagian / Subbagian Umum' model='penerima' nilai='2' style='col-12 col-md-6 col-lg-6' />
-                                </div>
-                                <div class="row mb-4">
+                                    <x-forms.checkbox judul='Bagian Umum' model='penerima' nilai='2' style='col-12 col-md-6 col-lg-6' />
                                     <x-forms.checkbox judul='Fungsi Statistik Sosial' model='penerima' nilai='3' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
                                     <x-forms.checkbox judul='Fungsi Statistik Produksi' model='penerima' nilai='4' style='col-12 col-md-6 col-lg-6' />
-                                </div>
-                                <div class="row mb-4">
                                     <x-forms.checkbox judul='Fungsi Statistik Distribusi' model='penerima' nilai='5' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Fungsi Nerwilis' model='penerima' nilai='6' style='col-12 col-md-6 col-lg-6' />
                                 </div>
                                 <div class="row mb-4">
+                                    <x-forms.checkbox judul='Fungsi Nerwilis' model='penerima' nilai='6' style='col-12 col-md-6 col-lg-6' />
                                     <x-forms.checkbox judul='Fungsi IPDS' model='penerima' nilai='7' style='col-12 col-md-6 col-lg-6' />
+                                </div>
+                                <div class="row mb-4">
                                 </div>
                             </div>
                         </div>

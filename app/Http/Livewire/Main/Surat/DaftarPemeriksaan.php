@@ -14,15 +14,15 @@ class DaftarPemeriksaan extends Component
     public $tipe;
     public $daftar_surat;
 
-    public function mount()
-    {
-        $this->tipe = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
+    // public function mount()
+    // {
+    //     $this->tipe = Str::contains(Route::currentRouteName(), "masuk") ? "sm" : "sk";
 
-        $this->daftar_surat = $this->getChiefMails($this->tipe);
-    }
+    //     $this->daftar_surat = $this->getChiefMails($this->tipe);
+    // }
 
-    public function render()
-    {
-        return view('livewire.main.surat.daftar-pemeriksaan')->layout('layouts.main');
-    }
+    // public function render()
+    // {
+    //     return view('livewire.main.surat.daftar-pemeriksaan')->layout('layouts.main');
+    // }
 }

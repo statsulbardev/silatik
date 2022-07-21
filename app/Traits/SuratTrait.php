@@ -2,11 +2,13 @@
 
 namespace App\Traits;
 
+use App\Models\Disposisi;
 use App\Models\Berkas;
 use App\Models\Pemeriksaan;
 use App\Models\Surat;
 use App\Models\UnitFungsi;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 trait SuratTrait
 {
@@ -14,21 +16,16 @@ trait SuratTrait
 
     public function getChiefMails($tipe)
     {
-        if ($tipe === 'sm') {
+        if ($tipe === "sm") {
             $surat = Surat::query()
-                     -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
-                     -> where('tipe', $tipe)
+                     -> with(['relasiPegawai', 'relasiBerkas'])
+                     -> Where('tipe', $tipe)
                      -> get();
         } else {
-            $surat = Surat::query()
-                     -> with([
-                            'relasiPegawai',
-                            'relasiBerkas',
-                            'relasiPemeriksaan' => function($q) {
-                                $q->where('cek_kepala', 'bp');
-                            }
-                     ])
-                     -> where('tipe', $tipe)
+            $surat = DB::table('pemeriksaan')
+                     -> leftJoin('surat', 'pemeriksaan.surat_id', '=', 'surat.id')
+                     -> where('surat.unit_kerja_id', Auth::user()->relasiUnitKerja->id)
+                     -> where('cek_kepala', 'bp')
                      -> get();
         }
 
@@ -43,21 +40,15 @@ trait SuratTrait
                 -> get();
     }
 
-    public function getKfMails($tipe)
+    public function getKabagMails($tipe)
     {
         if ($tipe === 'sm') {
-            $surat = Surat::query()
-                     -> with([
-                            'relasiPegawai',
-                            'relasiBerkas',
-                            'relasiDisposisi' => function($q) {
-                                $q->where('');
-                            }
-                     ])
-                     -> where('tipe', $tipe)
-                     -> get();
+            $surat = DB::table('disposisi')
+                        -> leftJoin('surat', 'disposisi.surat_id', '=', 'surat.id')
+                        -> where('unit_kerja_penerima', (string) Auth::user()->relasiUnitKerja->id)
+                        -> whereJsonContains('unit_fungsi_penerima', (string) Auth::user()->relasiUnitFungsi->id)
+                        -> get();
         } else {
-            // Cek jika KF adalah KF provinsi
             if (Auth::user()->relasiUnitKerja->kode === "7600")
                 // untuk dicari unit fungsi dibawahnya
                 $unit_fungsi = UnitFungsi::where('parent', Auth::user()->relasiUnitFungsi->id)->pluck('id');
@@ -78,10 +69,37 @@ trait SuratTrait
         return $surat;
     }
 
+    public function getKfMails($tipe)
+    {
+        if ($tipe === 'sm') {
+            // $val = array_map('strval', UnitFungsi::where('parent', Auth::user()->relasiUnitFungsi->id)->pluck('id')->toArray());
+
+            $surat = DB::table('disposisi')
+                        -> leftJoin('surat', 'disposisi.surat_id', '=', 'surat.id')
+                        -> where('unit_kerja_penerima', Auth::user()->relasiUnitKerja->id)
+                        -> whereJsonContains('unit_fungsi_penerima', (string) Auth::user()->relasiUnitFungsi->id)
+                        -> get();
+        } else {
+            // Cek jika KF adalah KF provinsi
+            if (Auth::user()->relasiUnitKerja->kode === "7600")
+                // untuk dicari unit fungsi dibawahnya
+                $unit_fungsi = UnitFungsi::where('parent', Auth::user()->relasiUnitFungsi->id)->pluck('id');
+
+            $surat = DB::table('pemeriksaan')
+                     -> leftJoin('surat', 'pemeriksaan.surat_id', '=', 'surat.id')
+                     -> whereIn('surat.unit_fungsi_id', $unit_fungsi)
+                     -> where('cek_kf', 'bp')
+                     -> get();
+        }
+
+        return $surat;
+    }
+
     public function getStafMails($tipe)
     {
         return Surat::query()
             -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
+            -> where('pegawai_id', Auth::user()->id)
             -> where('tipe', $tipe)
             -> get();
     }

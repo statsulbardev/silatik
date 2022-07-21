@@ -15,32 +15,19 @@ class Disposisi extends Component
     public $surat;
     public $judul;
     public $role;
-    public $redirectUrl;
-    public $daftarUnitKerja;
-    public $unitKerja;
     public $poin = [];
     public $penerima = [];
     public $catatan;
 
     protected $rules = [
-        'unitKerja'  => 'required',
         'catatan'    => 'required|min:5'
     ];
 
     public function mount(Surat $surat)
     {
-        $this->surat = $surat;
-        $this->role  = Auth::user()->roles[0]->name;
-
-        if (Str::contains(Route::currentRouteName(), "masuk")) {
-            $this->judul = "Surat Masuk";
-            $this->redirectUrl = "surat-masuk";
-        } else {
-            $this->judul = "Surat Keluar";
-            $this->redirectUrl = "surat-keluar";
-        }
-
-        $this->daftarUnitKerja  = UnitKerja::get(['id', 'nama'])->toArray();
+        $this->surat    = $surat;
+        $this->role     = Auth::user()->roles[0]->name;
+        $this->judul    = "Surat Masuk";
     }
 
     public function render()
@@ -61,6 +48,6 @@ class Disposisi extends Component
 
         session()->flash('messages', $result);
 
-        return redirect(env('APP_URL'). $this->redirectUrl . '/kepala');
+        return redirect(url(env('APP_URL'). 'surat-masuk/kepala/disposisi'));
     }
 }
