@@ -48,7 +48,7 @@ class RepositoriSurat
                     $path   = $this->uploadFileToDrive($data);
                     $surat  = $this->storeMail($data);
                     $berkas = $this->storeFile($path, $surat);
-                    $this->storeCheck($surat, $berkas);
+                    $this->storeCheck($surat, $berkas, $data);
 
                     DB::commit();
 
@@ -157,13 +157,13 @@ class RepositoriSurat
         return $berkas;
     }
 
-    private function storeCheck($surat, $berkas)
+    private function storeCheck($surat, $berkas, $data)
     {
         Pemeriksaan::create([
             'surat_id'       => $surat->id,
             'berkas_id'      => is_null($berkas) ? $surat->relasiBerkas->max()->id : $berkas->id,
-            'unit_kerja_id'  =>
-            'unit_fungsi_id' =>
+            'unit_kerja_id'  => $data->unitKerja,
+            'unit_fungsi_id' => empty($data->unitFungsi) ? null : $data->unitFungsi
         ]);
     }
 }

@@ -20,7 +20,7 @@ class RepositoriPemeriksaan
                     Pemeriksaan::where('surat_id', $data->surat->id)->update([
                         'cek_kepala'     => $data->poin,
                         'catatan_kepala' => $data->catatan,
-                        'tg_cek_kepala'  => Carbon::now()
+                        'tgl_cek_kepala' => Carbon::now()
                     ]);
 
                     break;

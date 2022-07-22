@@ -4,10 +4,10 @@
             {{-- Judul --}}
             <div class="card-header">
                 <h4>
-                    @if (str_contains($nama_routing, "disposisi"))
-                        Daftar surat yang akan di disposisi
+                    @if (str_contains($nama_routing, "periksa"))
+                        Daftar surat keluar yang akan diperiksa
                     @else
-                        Daftar surat yang telah di disposisi
+                        Daftar surat keluar yang telah diperiksa
                     @endif
                 </h4>
                 <div class="card-header-form">
@@ -31,14 +31,14 @@
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
                                 <th>Tanggal Diterima</th>
-                                <th>Status</th>
+                                <th>Status Pemeriksaan</th>
                                 <th>Aksi</th>
                             </tr>
-                            @if (str_contains($nama_routing, "disposisi"))
+                            @if (str_contains($nama_routing, "periksa"))
                                 @foreach ($daftar_surat as $item )
-                                    @if (is_null($item->relasiDisposisi))
+                                    @if ($item->cek_kepala == 'bp' && $item->cek_kf == 'op')
                                         <tr>
-                                            {{-- Nomor Surat --}}
+                                            {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
@@ -59,11 +59,13 @@
                                             </td>
 
                                             {{-- Status --}}
-                                            <td><span class="badge badge-warning">Belum Disposisi</span></td>
+                                            <td>
+                                                <span class="badge badge-warning">Belum Diperiksa</span>
+                                            </td>
 
                                             {{-- Aksi --}}
                                             <td>
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kepala/'. $item->id . '/disposisi') }}" id="disposisi" class="btn btn-icon btn-warning">
+                                                <a href="{{ url(env('APP_URL') . 'surat-keluar/kepala/'. $item->id . '/periksa') }}" id="periksa" class="btn btn-icon btn-warning">
                                                     <i class="fas fa-tags"></i>
                                                 </a>
                                             </td>
@@ -72,9 +74,9 @@
                                 @endforeach
                             @else
                                 @foreach ($daftar_surat as $item)
-                                    @if($item->relasiDisposisi)
+                                    @if($item->cek_kepala == 'op')
                                         <tr>
-                                            {{-- Nomor Surat --}}
+                                            {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
@@ -95,11 +97,13 @@
                                             </td>
 
                                             {{-- Status --}}
-                                            <td><span class="badge badge-primary">Sudah Disposisi</span></td>
+                                            <td>
+                                                <span class="badge {{ $item->cek_kepala == 'op' ? 'badge-primary' : 'badge-danger' }}">{{ $item->cek_kepala == 'op' ? 'Diterima' : 'Ditolak' }}</span>
+                                            </td>
 
                                             {{-- Aksi --}}
                                             <td>
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kepala/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <a href="{{ url(env('APP_URL') . 'surat-keluar/kepala/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             </td>
@@ -141,8 +145,8 @@
         placement: 'bottom',
         arrow: true
     })
-    tippy('#disposisi', {
-        content: 'Disposisi Surat',
+    tippy('#periksa', {
+        content: 'periksa Surat',
         placement: 'bottom',
         arrow: true
     })

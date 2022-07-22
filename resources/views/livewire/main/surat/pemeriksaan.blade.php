@@ -143,7 +143,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="badge badge-primary">Selesai Diperiksa</span>
+                                            <span class="badge badge-primary">Diterima</span>
                                         </td>
                                         <td>
                                             @php

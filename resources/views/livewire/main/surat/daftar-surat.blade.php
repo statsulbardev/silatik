@@ -13,6 +13,9 @@
                         'daftar_surat' => $daftar_surat
                     ])
                 @else
+                    @include('livewire.main.surat.template-daftar-surat.surat-keluar-kepala', [
+                        'daftar_surat' => $daftar_surat
+                    ])
                 @endif
                 @break
             @case('sekretaris')
@@ -29,6 +32,9 @@
                         'daftar_surat' => $daftar_surat
                     ])
                 @else
+                    @include('livewire.main.surat.template-daftar-surat.surat-keluar-kf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
                 @endif
                 @break
             @case('staf')

@@ -27,7 +27,22 @@
                     {{-- Tingkat Keamanan Surat --}}
                     <x-forms.select judul='Tingkat Keamanan Surat' model='tk_keamanan' :opsi="$daftarTkKeamanan" />
                 @else
-                    <x-forms.multi-select judul='Unit Kerja Tujuan' model='unitKerja' placeholdler='Pilih Unit Kerja' :opsi="$daftarUnitKerja" />
+                    <x-forms.multi-select judul='Unit Kerja Tujuan' model='unitKerja' placeholder='Pilih Unit Kerja' :opsi="$daftarUnitKerja" />
+
+                    {{-- Unit Fungsi --}}
+                    <label style="font-weight:600;color:#34395e;font-size:12px;letter-spacing:0.5px;" class="mb-3">Unit Fungsi Tujuan(Opsional)</label>
+                    <div class="row mb-4">
+                        <x-forms.checkbox judul='Bagian Umum' model='unitFungsi' nilai='2' style='col-12 col-md-6 col-lg-6' />
+                        <x-forms.checkbox judul='Fungsi Statistik Sosial' model='unitFungsi' nilai='3' style='col-12 col-md-6 col-lg-6' />
+                    </div>
+                    <div class="row mb-4">
+                        <x-forms.checkbox judul='Fungsi Statistik Produksi' model='unitFungsi' nilai='4' style='col-12 col-md-6 col-lg-6' />
+                        <x-forms.checkbox judul='Fungsi Statistik Distribusi' model='unitFungsi' nilai='5' style='col-12 col-md-6 col-lg-6' />
+                    </div>
+                    <div class="row mb-4">
+                        <x-forms.checkbox judul='Fungsi Nerwilis' model='unitFungsi' nilai='6' style='col-12 col-md-6 col-lg-6' />
+                        <x-forms.checkbox judul='Fungsi IPDS' model='unitFungsi' nilai='7' style='col-12 col-md-6 col-lg-6' />
+                    </div>
                 @endif
 
                 {{-- File Surat --}}

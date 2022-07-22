@@ -154,8 +154,6 @@
                                     <x-forms.checkbox judul='Fungsi Nerwilis' model='penerima' nilai='6' style='col-12 col-md-6 col-lg-6' />
                                     <x-forms.checkbox judul='Fungsi IPDS' model='penerima' nilai='7' style='col-12 col-md-6 col-lg-6' />
                                 </div>
-                                <div class="row mb-4">
-                                </div>
                             </div>
                         </div>
                         {{-- Keterangan --}}

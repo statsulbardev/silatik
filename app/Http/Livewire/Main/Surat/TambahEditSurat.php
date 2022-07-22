@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Main\Surat;
 
 use App\Traits\SuratTrait;
 use App\Models\Surat;
+use App\Models\UnitFungsi;
 use App\Models\UnitKerja;
 use App\Repositories\RepositoriSurat;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,8 @@ class TambahEditSurat extends Component
     public $temp_file_surat;
     public $tipe;
     public $tk_keamanan;
+    public $unitKerja;
+    public $unitFungsi = [];
 
     protected $rules = [
         'no_agenda'      => 'required|max:3',
@@ -76,7 +79,10 @@ class TambahEditSurat extends Component
 
             if (Str::contains($this->nama_routing, "tambah")) {
                 $this->action = "tambah";
-                $this->daftarUnitKerja = UnitKerja::all(['id', 'nama']);
+                $this->pengirim_surat = "BPS Provinsi Sulawesi Barat";
+                $this->tk_keamanan = "B";
+                $this->daftarUnitKerja  = UnitKerja::all(['id', 'nama']);
+                $this->daftarUnitFungsi = UnitFungsi::take(7)->get(['id', 'nama']);
             } else {
                 $this->action = "edit";
             }
@@ -92,6 +98,7 @@ class TambahEditSurat extends Component
 
     public function create(RepositoriSurat $repositoriSurat)
     {
+        // dd($this->unitFungsi);
         $this->validate();
 
         $pesan = $repositoriSurat->store($this);

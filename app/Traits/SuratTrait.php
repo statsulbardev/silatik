@@ -25,7 +25,6 @@ trait SuratTrait
             $surat = DB::table('pemeriksaan')
                      -> leftJoin('surat', 'pemeriksaan.surat_id', '=', 'surat.id')
                      -> where('surat.unit_kerja_id', Auth::user()->relasiUnitKerja->id)
-                     -> where('cek_kepala', 'bp')
                      -> get();
         }
 
@@ -88,7 +87,6 @@ trait SuratTrait
             $surat = DB::table('pemeriksaan')
                      -> leftJoin('surat', 'pemeriksaan.surat_id', '=', 'surat.id')
                      -> whereIn('surat.unit_fungsi_id', $unit_fungsi)
-                     -> where('cek_kf', 'bp')
                      -> get();
         }
 

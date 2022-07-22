@@ -3,13 +3,7 @@
         <div class="card">
             {{-- Judul --}}
             <div class="card-header">
-                <h4>
-                    @if (str_contains($nama_routing, "disposisi"))
-                        Daftar surat yang akan di disposisi
-                    @else
-                        Daftar surat yang telah di disposisi
-                    @endif
-                </h4>
+                <h4>Daftar Surat {{ auth()->user()->relasiUnitFungsi->nama }}</h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">
@@ -29,16 +23,16 @@
                         <tbody>
                             <tr>
                                 <th>Informasi Surat</th>
-                                <th>Pengirim</th>
-                                <th>Tanggal Diterima</th>
-                                <th>Status</th>
+                                <th>Asal Surat</th>
+                                <th>Tanggal Terima</th>
+                                <th>Status Pemeriksaan</th>
                                 <th>Aksi</th>
                             </tr>
-                            @if (str_contains($nama_routing, "disposisi"))
-                                @foreach ($daftar_surat as $item )
-                                    @if (is_null($item->relasiDisposisi))
+                            @if (str_contains($nama_routing, "periksa"))
+                                @foreach ($daftar_surat as $index => $item)
+                                    @if($item->cek_kf == 'bp')
                                         <tr>
-                                            {{-- Nomor Surat --}}
+                                            {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
@@ -50,20 +44,22 @@
                                             </td>
 
                                             {{-- Pengirim Surat --}}
-                                            <td>{{ $item->pengirim }}</td>
+                                            <td>{{ \App\Models\UnitFungsi::where('id', $item->unit_fungsi_id)->pluck('nama')[0] }}</td>
 
-                                            {{-- Tanggal Surat Dibuat/Dientri --}}
+                                            {{-- Tanggal Surat Diterima --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
                                                 {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                             </td>
 
                                             {{-- Status --}}
-                                            <td><span class="badge badge-warning">Belum Disposisi</span></td>
+                                            <td>
+                                                <span class="badge badge-warning">Belum Diperiksa</span>
+                                            </td>
 
                                             {{-- Aksi --}}
                                             <td>
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kepala/'. $item->id . '/disposisi') }}" id="disposisi" class="btn btn-icon btn-warning">
+                                                <a href="{{ url(env('APP_URL') . 'surat-keluar/kf/' . $item->id . '/periksa') }}" id="periksa" class="btn btn-icon btn-warning">
                                                     <i class="fas fa-tags"></i>
                                                 </a>
                                             </td>
@@ -71,10 +67,10 @@
                                     @endif
                                 @endforeach
                             @else
-                                @foreach ($daftar_surat as $item)
-                                    @if($item->relasiDisposisi)
+                                @foreach ($daftar_surat as $index => $item)
+                                    @if($item->cek_kf == 'tp' || $item->cek_kf == 'op')
                                         <tr>
-                                            {{-- Nomor Surat --}}
+                                            {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
@@ -86,20 +82,22 @@
                                             </td>
 
                                             {{-- Pengirim Surat --}}
-                                            <td>{{ $item->pengirim }}</td>
+                                            <td>{{ \App\Models\UnitFungsi::where('id', $item->unit_fungsi_id)->pluck('nama')[0] }}</td>
 
-                                            {{-- Tanggal Surat Dibuat/Dientri --}}
+                                            {{-- Tanggal Surat Diterima --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
                                                 {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                             </td>
 
-                                            {{-- Status --}}
-                                            <td><span class="badge badge-primary">Sudah Disposisi</span></td>
+                                            {{-- Status Pemeriksaan --}}
+                                            <td>
+                                                <span class="badge {{ $item->cek_kf == 'op' ? 'badge-primary' : 'badge-danger' }}">{{ $item->cek_kf == 'op' ? 'Diterima' : 'Ditolak' }}</span>
+                                            </td>
 
                                             {{-- Aksi --}}
                                             <td>
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kepala/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <a href="{{ url(env('APP_URL') . 'surat-keluar/kf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             </td>
@@ -111,8 +109,6 @@
                     </table>
                 </div>
             </div>
-
-            {{-- Pagination --}}
             <div class="card-footer text-right">
                 <nav class="d-inline-block">
                     <ul class="pagination mb-0">
@@ -136,13 +132,13 @@
 
 @push('scripts')
 <script>
-    tippy('#lihat', {
-        content: 'Lihat Surat',
+    tippy('#periksa', {
+        content: 'Periksa Surat',
         placement: 'bottom',
         arrow: true
     })
-    tippy('#disposisi', {
-        content: 'Disposisi Surat',
+    tippy('#lihat', {
+        content: 'Lihat Surat',
         placement: 'bottom',
         arrow: true
     })
