@@ -56,6 +56,12 @@ Route::group(['middleware' => 'auth'], function() {
         // Surat Masuk
         Route::get('surat-masuk/kabag', DaftarSurat::class)->name('kabag-surat-masuk');
         Route::get('surat-masuk/kabag/{surat}', DetailSurat::class)->name('kabag-detail-surat-masuk');
+
+        // Surat Keluar
+        Route::get('surat-keluar/kabag', DaftarSurat::class)->name('kabag-surat-keluar');
+        Route::get('surat-keluar/kabag/periksa', DaftarSurat::class)->name('kabag-periksa-daftar-surat-keluar');
+        Route::get('surat-keluar/kabag/{surat}', DetailSurat::class)->name('kabag-detail-surat-keluar');
+        Route::get('surat-keluar/kabag/{surat}/periksa', Pemeriksaan::class)->name('kabag-periksa-surat-keluar');
     });
 
     Route::group(['middleware' => ['role:skf']], function() {
