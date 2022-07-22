@@ -26,6 +26,7 @@
                     @include('components.partials.sidebar-template.template-kf')
                     @break
                 @case('kabag')
+                    @include('components.partials.sidebar-template.template-kabag')
                     @break
                 @case('skf')
                     @include('components.partials.sidebar-template.template-skf')
@@ -34,7 +35,6 @@
                     @include('components.partials.sidebar-template.template-staf')
                     @break
             @endswitch
-            <li class="menu-header">PENGATURAN</li>
         </ul>
     </aside>
   </div>

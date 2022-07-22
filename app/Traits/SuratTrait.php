@@ -44,7 +44,7 @@ trait SuratTrait
         if ($tipe === 'sm') {
             $surat = DB::table('disposisi')
                         -> leftJoin('surat', 'disposisi.surat_id', '=', 'surat.id')
-                        -> where('unit_kerja_penerima', (string) Auth::user()->relasiUnitKerja->id)
+                        -> where('unit_kerja_penerima', Auth::user()->relasiUnitKerja->id)
                         -> whereJsonContains('unit_fungsi_penerima', (string) Auth::user()->relasiUnitFungsi->id)
                         -> get();
         } else {
@@ -52,16 +52,9 @@ trait SuratTrait
                 // untuk dicari unit fungsi dibawahnya
                 $unit_fungsi = UnitFungsi::where('parent', Auth::user()->relasiUnitFungsi->id)->pluck('id');
 
-            $surat = Surat::query()
-                     -> with([
-                            'relasiBerkas',
-                            'relasiPegawai',
-                            'relasiPemeriksaan' => function($q) {
-                                $q->where('cek_kf', 'bp');
-                            }
-                     ])
-                     -> whereIn('unit_fungsi_id', $unit_fungsi)
-                     -> where('tipe', $tipe)
+            $surat = DB::table('pemeriksaan')
+                     -> leftJoin('surat', 'pemeriksaan.surat_id', '=', 'surat.id')
+                     -> whereIn('surat.unit_fungsi_id', $unit_fungsi)
                      -> get();
         }
 
