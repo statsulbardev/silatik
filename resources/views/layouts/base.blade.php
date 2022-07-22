@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{ secure_asset(env('APP_URL') . 'vendor/stisla/css/components.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/trix@1.3.1/dist/trix.css">
 
+    <link rel="icon" type="image/x-icon" href="{{ secure_asset(env('APP_URL') . 'icons/fav-silatik.png') }}">
+
     {{-- Custom Styles --}}
     @yield('styles')
 
