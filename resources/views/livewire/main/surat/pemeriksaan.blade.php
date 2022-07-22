@@ -87,6 +87,45 @@
                 </div>
             </div>
 
+            {{-- Tujuan Pengiriman Surat --}}
+            <div class="card">
+                <div class="card-header">
+                    <h4>Tujuan Pengiriman Surat</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Dari</th>
+                                <th>Kepada Unit Kerja</th>
+                                <th>Kepada Unit Fungsi</th>
+                            </tr>
+                            <tr>
+                                <td>{{ $surat->pengirim }}</td>
+                                <td>
+                                    <ul class="pl-3">
+                                        @foreach ($surat->relasiPemeriksaan->sortDesc()->max()->unit_kerja_id as $item)
+                                            <li>{{ \App\Models\UnitKerja::where('id', $item)->pluck('nama')[0] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    @if (is_null($surat->relasiPemeriksaan->sortDesc()->max()->unit_fungsi_id))
+                                        -
+                                    @else
+                                        <ul class="pl-3">
+                                            @foreach ($surat->relasiPemeriksaan->sortDesc()->max()->unit_fungsi_id as $item)
+                                                <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             {{-- History Pemeriksaan --}}
             @if ($role === 'kepala')
                 <div class="card">
@@ -145,8 +184,14 @@
                             </div>
                             <div class="col-12 col-md-10 col-lg-10">
                                 <div class="row mb-4">
-                                    <x-forms.checkbox judul='Diterima' model='poin' nilai='op' style='col-12 col-md-6 col-lg-6' />
-                                    <x-forms.checkbox judul='Ditolak' model='poin' nilai='tp' style='col-12 col-md-6 col-lg-6' />
+                                    <div class="ml-3 custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="diterima" name="poinRadio" class="custom-control-input" wire:model.defer="poin" value="op">
+                                        <label class="custom-control-label" for="diterima">Diterima</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="ditolak" name="poinRadio" class="custom-control-input" wire:model.defer="poin" value="tp">
+                                        <label class="custom-control-label" for="ditolak">Ditolak</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
