@@ -44,7 +44,7 @@ trait SuratTrait
         if ($tipe === 'sm') {
             $surat = DB::table('disposisi')
                         -> leftJoin('surat', 'disposisi.surat_id', '=', 'surat.id')
-                        -> where('unit_kerja_penerima', Auth::user()->relasiUnitKerja->id)
+                        -> whereJsonContains('unit_kerja_penerima', (string) Auth::user()->relasiUnitKerja->id)
                         -> whereJsonContains('unit_fungsi_penerima', (string) Auth::user()->relasiUnitFungsi->id)
                         -> get();
         } else {
@@ -68,7 +68,7 @@ trait SuratTrait
 
             $surat = DB::table('disposisi')
                         -> leftJoin('surat', 'disposisi.surat_id', '=', 'surat.id')
-                        -> where('unit_kerja_penerima', Auth::user()->relasiUnitKerja->id)
+                        -> whereJsonContains('unit_kerja_penerima', (string) Auth::user()->relasiUnitKerja->id)
                         -> whereJsonContains('unit_fungsi_penerima', (string) Auth::user()->relasiUnitFungsi->id)
                         -> get();
         } else {
