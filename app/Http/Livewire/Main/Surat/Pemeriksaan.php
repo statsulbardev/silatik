@@ -20,7 +20,7 @@ class Pemeriksaan extends Component
 
     protected $rules = [
         'poin'    => 'required',
-        'catatan' => 'required|min:3'
+        'catatan' => 'nullable|min:3'
     ];
 
     public function mount(Surat $surat)

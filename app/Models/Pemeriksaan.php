@@ -34,7 +34,7 @@ class Pemeriksaan extends Model
 
     public function relasiSurat()
     {
-        return $this->hasOne(Surat::class, 'id', 'surat_id');
+        return $this->belongsTo(Surat::class, 'id', 'surat_id');
     }
 
     public function relasiBerkas()
