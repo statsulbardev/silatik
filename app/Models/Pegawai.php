@@ -21,6 +21,7 @@ class Pegawai extends Authenticatable
         'username',
         'email',
         'password',
+        'ubah_password',
         'nip_bps',
         'nip_bkn',
         'aktif',
