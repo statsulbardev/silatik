@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class DaftarSurat extends Component
 {
-    use SuratTrait;
+    use SuratTrait, WithPagination;
 
     public $tipe;
     public $role;
@@ -35,7 +36,7 @@ class DaftarSurat extends Component
         switch ($this->role)
         {
             case 'kabps':
-                $this->daftar_surat = $this->getChiefMails($this->tipe);
+                $this->daftar_surat = $this->getChiefMails($this->tipe, $this->nama_routing);
                 break;
             case 'sekretaris':
                 $this->daftar_surat = $this->getSecretaryMails($this->tipe);
@@ -44,7 +45,7 @@ class DaftarSurat extends Component
                 $this->daftar_surat = $this->getKabagMails($this->tipe);
                 break;
             case 'kf':
-                $this->daftar_surat = $this->getKfMails($this->tipe);
+                $this->daftar_surat = $this->getKfMails($this->tipe, $this->nama_routing);
                 break;
             case 'staf':
                 $this->daftar_surat = $this->getStafMails($this->tipe);

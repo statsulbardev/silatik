@@ -22,10 +22,10 @@
                                 <th>No.</th>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Tanggal Terima</th>
+                                <th>Tanggal Surat</th>
                                 <th>Aksi</th>
                             </tr>
-                            @foreach ($daftar_surat as $index => $item)
+                            @foreach ($daftar_surat->paginate(20) as $index => $item)
                                 <tr>
                                     {{-- No. Index --}}
                                     <td>{{ $index + 1 }}</td>
@@ -34,8 +34,7 @@
                                     <td>
                                         <label class="text-primary">
                                             <span style="letter-spacing: 1px">
-                                                No. {{ $item->no_surat }},
-                                                <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                No. {{ $item->no_surat }}
                                             </span>
                                         </label>
                                         <span>{!! $item->perihal !!}</span>
@@ -47,7 +46,7 @@
                                     {{-- Tanggal Surat Diterima --}}
                                     <td>
                                         <i class="fas fa-calendar"></i>&nbsp;
-                                        {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                        {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                     </td>
 
                                     {{-- Aksi --}}
@@ -63,21 +62,7 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                <nav class="d-inline-block">
-                    <ul class="pagination mb-0">
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $daftar_surat->paginate(20)->links('vendor.pagination.silatik') }}
             </div>
         </div>
     </div>

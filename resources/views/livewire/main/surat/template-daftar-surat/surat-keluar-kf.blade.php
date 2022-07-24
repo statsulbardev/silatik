@@ -24,20 +24,19 @@
                             <tr>
                                 <th>Informasi Surat</th>
                                 <th>Asal Surat</th>
-                                <th>Tanggal Terima</th>
+                                <th>Tanggal Surat</th>
                                 <th>Status Pemeriksaan</th>
                                 <th>Aksi</th>
                             </tr>
                             @if (str_contains($nama_routing, "periksa"))
-                                @foreach ($daftar_surat as $index => $item)
-                                    @if($item->cek_kf == 'bp')
+                                @foreach ($daftar_surat->paginate(20) as $index => $item)
+                                    @if($item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'bp')
                                         <tr>
                                             {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
-                                                        No. {{ $item->no_surat }},
-                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                        No. {{ $item->no_surat }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -49,7 +48,7 @@
                                             {{-- Tanggal Surat Diterima --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </td>
 
                                             {{-- Status --}}
@@ -67,15 +66,14 @@
                                     @endif
                                 @endforeach
                             @else
-                                @foreach ($daftar_surat as $index => $item)
-                                    @if($item->cek_kf == 'tp' || $item->cek_kf == 'op')
+                                @foreach ($daftar_surat->paginate(20) as $index => $item)
+                                    @if($item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'tp' || $item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op')
                                         <tr>
                                             {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
-                                                        No. {{ $item->no_surat }},
-                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                        No. {{ $item->no_surat }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -87,12 +85,14 @@
                                             {{-- Tanggal Surat Diterima --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </td>
 
                                             {{-- Status Pemeriksaan --}}
                                             <td>
-                                                <span class="badge {{ $item->cek_kf == 'op' ? 'badge-primary' : 'badge-danger' }}">{{ $item->cek_kf == 'op' ? 'Diterima' : 'Ditolak' }}</span>
+                                                <span class="badge {{ $item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op' ? 'badge-primary' : 'badge-danger' }}">
+                                                    {{ $item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op' ? 'Diterima' : 'Ditolak' }}
+                                                </span>
                                             </td>
 
                                             {{-- Aksi --}}
@@ -110,21 +110,7 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                <nav class="d-inline-block">
-                    <ul class="pagination mb-0">
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $daftar_surat->paginate(20)->links('vendor.pagination.silatik') }}
             </div>
         </div>
     </div>

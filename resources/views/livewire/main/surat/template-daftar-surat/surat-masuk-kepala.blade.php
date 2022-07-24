@@ -12,12 +12,12 @@
                 </h4>
                 <div class="card-header-form">
                     <form>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-btn">
-                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <div class="input-group-btn">
+                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                            </div>
                         </div>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -30,20 +30,19 @@
                             <tr>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Tanggal Diterima</th>
+                                <th>Tanggal Surat</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                             @if (str_contains($nama_routing, "disposisi"))
-                                @foreach ($daftar_surat as $item )
+                                @foreach ($daftar_surat->paginate(20) as $item)
                                     @if (is_null($item->relasiDisposisi))
                                         <tr>
                                             {{-- Nomor Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
-                                                        No. {{ $item->no_surat }},
-                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                        No. {{ $item->no_surat }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -55,7 +54,7 @@
                                             {{-- Tanggal Surat Dibuat/Dientri --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </td>
 
                                             {{-- Status --}}
@@ -71,7 +70,7 @@
                                     @endif
                                 @endforeach
                             @else
-                                @foreach ($daftar_surat as $item)
+                                @foreach ($daftar_surat->paginate(20) as $item)
                                     @if($item->relasiDisposisi)
                                         <tr>
                                             {{-- Nomor Surat --}}
@@ -79,7 +78,6 @@
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
                                                         No. {{ $item->no_surat }},
-                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -91,7 +89,7 @@
                                             {{-- Tanggal Surat Dibuat/Dientri --}}
                                             <td>
                                                 <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </td>
 
                                             {{-- Status --}}
@@ -114,21 +112,7 @@
 
             {{-- Pagination --}}
             <div class="card-footer text-right">
-                <nav class="d-inline-block">
-                    <ul class="pagination mb-0">
-                        <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $daftar_surat->paginate(20)->links('vendor.pagination.silatik') }}
             </div>
         </div>
     </div>

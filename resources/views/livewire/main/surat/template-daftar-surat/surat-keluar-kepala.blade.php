@@ -30,20 +30,19 @@
                             <tr>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Tanggal Diterima</th>
+                                <th>Tanggal Surat</th>
                                 <th>Status Pemeriksaan</th>
                                 <th>Aksi</th>
                             </tr>
                             @if (str_contains($nama_routing, "periksa"))
-                                @foreach ($daftar_surat as $item )
-                                    @if ($item->cek_kepala == 'bp' && $item->cek_kf == 'op')
+                                @foreach ($daftar_surat->paginate(20) as $item )
+                                    @if ($item->relasiPemeriksaan->sortDesc()->max()->cek_kepala == 'bp' && $item->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op')
                                         <tr>
                                             {{-- Informasi Surat --}}
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
-                                                        No. {{ $item->no_surat }},
-                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                        No. {{ $item->no_surat }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -54,8 +53,7 @@
 
                                             {{-- Tanggal Surat Dibuat/Dientri --}}
                                             <td>
-                                                <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </td>
 
                                             {{-- Status --}}
@@ -73,8 +71,8 @@
                                     @endif
                                 @endforeach
                             @else
-                                @foreach ($daftar_surat as $item)
-                                    @if($item->cek_kepala == 'op')
+                                @foreach ($daftar_surat->paginate(20) as $item)
+                                    @if($item->relasiPemeriksaan->sortDesc()->max()->cek_kepala == 'op')
                                         <tr>
                                             {{-- Informasi Surat --}}
                                             <td>
