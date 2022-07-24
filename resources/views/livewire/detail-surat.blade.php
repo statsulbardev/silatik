@@ -201,8 +201,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="badge {{ $surat->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op' ? 'badge-primary' : 'badge-danger' }}">
-                                                {{ $surat->relasiPemeriksaan->sortDesc()->max()->cek_kf == 'op' ? 'Diterima' : 'Ditolak' }}
+                                            <span class="badge {{
+                                                [
+                                                    "op" => "badge-primary",
+                                                    "tp" => "badge-danger",
+                                                    "bp" => "badge-warning"
+                                                ][$surat->relasiPemeriksaan->sortDesc()->max()->cek_kf]
+                                            }}">
+                                                {{
+                                                    [
+                                                        "op" => "Diterima",
+                                                        "tp" => "Ditolak",
+                                                        "bp" => "Belum Diperiksa"
+                                                    ][$surat->relasiPemeriksaan->sortDesc()->max()->cek_kf]
+                                                }}
                                             </span>
                                         </td>
                                         <td>
@@ -219,14 +231,28 @@
                                         </td>
                                         <td>
                                             {{
-                                                DateFormat::convertDateTime($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kf)
+                                                is_null($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kf)
+                                                    ? '-'
+                                                    : DateFormat::convertDateTime($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kf)
                                             }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="badge {{ $surat->relasiPemeriksaan->sortDesc()->max()->cek_kepala == 'op' ? 'badge-primary' : 'badge-danger' }}">
-                                                {{ $surat->relasiPemeriksaan->sortDesc()->max()->cek_kepala == 'op' ? 'Diterima' : 'Ditolak' }}
+                                            <span class="badge {{
+                                                [
+                                                    "op" => "badge-primary",
+                                                    "tp" => "badge-danger",
+                                                    "bp" => "badge-warning"
+                                                ][$surat->relasiPemeriksaan->sortDesc()->max()->cek_kepala]
+                                            }}">
+                                                {{
+                                                    [
+                                                        "op" => "Diterima",
+                                                        "tp" => "Ditolak",
+                                                        "bp" => "Belum Diperiksa"
+                                                    ][$surat->relasiPemeriksaan->sortDesc()->max()->cek_kepala]
+                                                }}
                                             </span>
                                         </td>
                                         <td>
@@ -234,7 +260,9 @@
                                         </td>
                                         <td>
                                             {{
-                                                DateFormat::convertDateTime($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kepala)
+                                                is_null($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kepala)
+                                                    ? '-'
+                                                    : DateFormat::convertDateTime($surat->relasiPemeriksaan->sortDesc()->max()->tgl_cek_kepala)
                                             }}
                                         </td>
                                     </tr>
