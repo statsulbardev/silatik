@@ -6,6 +6,7 @@ use App\Models\Disposisi;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class DisposisiTableSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class DisposisiTableSeeder extends Seeder
                 "poin"                 => $disposisi->poin,
                 'unit_kerja_penerima'  => $disposisi->unit_kerja_penerima,
                 'unit_fungsi_penerima' => $disposisi->unit_fungsi_penerima,
-                "kode_paraf"           => sha1('surat76'),
+                "kode_paraf"           => Str::random(10),
                 'catatan'              => $disposisi->catatan
             ]);
         }
