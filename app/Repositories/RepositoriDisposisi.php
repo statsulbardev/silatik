@@ -18,9 +18,9 @@ class RepositoriDisposisi
             Disposisi::create([
                 'surat_id'             => $data->surat->id,
                 'poin'                 => $data->poin,
-                'unit_kerja_penerima'  => 1,
+                'unit_kerja_penerima'  => ["1"],
                 'unit_fungsi_penerima' => $data->penerima,
-                'kode_paraf'           => Str::random(15),
+                'kode_paraf'           => Str::random(10),
                 'catatan'              => $data->catatan
             ]);
 
