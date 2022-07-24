@@ -19,6 +19,7 @@ class CreatePegawaiTable extends Migration
             $table->string('username')->index();
             $table->string('email')->unique()->index();
             $table->string('password');
+            $table->boolean('ubah_password')->default(false);
             $table->string('nip_bps')->index();
             $table->string('nip_bkn')->index();
             $table->boolean('aktif');

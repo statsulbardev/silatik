@@ -19,8 +19,8 @@ class CreateDisposisiTable extends Migration
             $table->json('poin');
             $table->json('unit_kerja_penerima');
             $table->json('unit_fungsi_penerima')->nullable();
-            $table->string('kode_paraf');
-            $table->text('catatan');
+            $table->string('kode_paraf')->nullable();
+            $table->text('catatan')->nullable();
             $table->timestamp('tanggal_buat');
             $table->timestamp('tanggal_update');
         });
