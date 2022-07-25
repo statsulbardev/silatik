@@ -25,7 +25,7 @@ class CreateSuratTable extends Migration
             $table->unsignedBigInteger('pegawai_id');
             $table->unsignedBigInteger('unit_kerja_id');
             $table->unsignedBigInteger('unit_fungsi_id');
-            $table->timestamp('tanggal_buat');
+            $table->timestamp('tanggal_buat')->index();
             $table->timestamp('tanggal_update');
         });
     }
