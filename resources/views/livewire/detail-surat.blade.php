@@ -113,10 +113,10 @@
                                     @if ($surat->relasiDisposisi)
                                         <tr>
                                             <td>
-                                                Kepala BPS Provinsi Sulawesi Barat
+                                                {{ $surat->pengirim }}
                                             </td>
                                             <td>
-                                                @if (!is_null($surat->relasiDisposisi->unit_fungsi_penerima))
+                                                @if (!empty($surat->relasiDisposisi->unit_fungsi_penerima))
                                                     <div class="my-3">
                                                         <span class="font-weight-bold text-primary">{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
                                                         <ul class="pl-3">
@@ -126,18 +126,27 @@
                                                         </ul>
                                                     </div>
                                                 @else
-                                                    <span>{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
+                                                    <span>
+                                                        <ul class="pl-3">
+                                                            @foreach ($surat->relasiDisposisi->unit_kerja_penerima as $item)
+                                                                <li>{{ \App\Models\UnitKerja::find((int) $item)->nama }}</li>
+                                                            @endforeach
+                                                        </ul>
                                                 @endif
                                             </td>
                                             <td>
                                                 {!! $surat->relasiDisposisi->catatan !!}
                                             </td>
                                             <td>
-                                                <ul class="pl-3">
-                                                    @foreach ($surat->relasiDisposisi->poin as $item)
-                                                        <li>{{ $item }}</li>
-                                                    @endforeach
-                                                </ul>
+                                                @if (empty($surat->relasiDisposisi->poin))
+                                                    -
+                                                @else
+                                                    <ul class="pl-3">
+                                                        @foreach ($surat->relasiDisposisi->poin as $item)
+                                                            <li>{{ $item }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endif
