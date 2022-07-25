@@ -36,7 +36,9 @@ class SuratTableSeeder extends Seeder
                 'tk_keamanan'    => $surat->tk_keamanan,
                 'pegawai_id'     => $surat->pegawai_id,
                 'unit_kerja_id'  => $surat->unit_kerja_id,
-                'unit_fungsi_id' => $surat->unit_fungsi_id
+                'unit_fungsi_id' => $surat->unit_fungsi_id,
+                'tanggal_buat'   => Carbon::parse($surat->tanggal_surat, config('app.timezone')),
+                'tanggal_update' => Carbon::parse($surat->tanggal_surat, config('app.timezone'))
             ]);
 
             Berkas::create([
