@@ -7,7 +7,11 @@
                     @if (str_contains($nama_routing, "disposisi"))
                         Daftar surat yang akan di disposisi
                     @else
-                        Daftar surat yang telah di disposisi
+                        @if (auth()->user()->unit_kerja_id > 1)
+                            Daftar Surat
+                        @else
+                            Daftar surat yang telah di disposisi
+                        @endif
                     @endif
                 </h4>
                 <div class="card-header-form">
@@ -30,8 +34,10 @@
                             <tr>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Tanggal Surat</th>
-                                <th>Status</th>
+                                <th>Tanggal Diterima</th>
+                                @if (auth()->user()->unit_kerja_id == 1)
+                                    <th>Status</th>
+                                @endif
                                 <th>Aksi</th>
                             </tr>
                             @if (str_contains($nama_routing, "disposisi"))
@@ -42,7 +48,8 @@
                                             <td>
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
-                                                        No. {{ $item->no_surat }}
+                                                        No. {{ $item->no_surat }},
+                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -53,12 +60,13 @@
 
                                             {{-- Tanggal Surat Dibuat/Dientri --}}
                                             <td>
-                                                <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                             </td>
 
                                             {{-- Status --}}
-                                            <td><span class="badge badge-warning">Belum Disposisi</span></td>
+                                            <td>
+                                                <span class="badge badge-warning">Belum Disposisi</span>
+                                            </td>
 
                                             {{-- Aksi --}}
                                             <td>
@@ -78,6 +86,7 @@
                                                 <label class="text-primary">
                                                     <span style="letter-spacing: 1px">
                                                         No. {{ $item->no_surat }},
+                                                        <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
@@ -88,12 +97,13 @@
 
                                             {{-- Tanggal Surat Dibuat/Dientri --}}
                                             <td>
-                                                <i class="fas fa-calendar"></i>&nbsp;
-                                                {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                             </td>
 
                                             {{-- Status --}}
+                                            @if (auth()->user()->unit_kerja_id == 1)
                                             <td><span class="badge badge-primary">Sudah Disposisi</span></td>
+                                            @endif
 
                                             {{-- Aksi --}}
                                             <td>

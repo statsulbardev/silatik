@@ -19,22 +19,19 @@
                     <table class="table table-bordered table-striped table-md">
                         <tbody>
                             <tr>
-                                <th>No.</th>
                                 <th>Informasi Surat</th>
                                 <th>Pengirim</th>
-                                <th>Tanggal Surat</th>
+                                <th>Tanggal Diterima</th>
                                 <th>Aksi</th>
                             </tr>
                             @foreach ($daftar_surat->paginate(20) as $index => $item)
                                 <tr>
-                                    {{-- No. Index --}}
-                                    <td>{{ $index + 1 }}</td>
-
                                     {{-- Informasi Surat --}}
                                     <td>
                                         <label class="text-primary">
                                             <span style="letter-spacing: 1px">
-                                                No. {{ $item->no_surat }}
+                                                No. {{ $item->no_surat }},
+                                                <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                             </span>
                                         </label>
                                         <span>{!! $item->perihal !!}</span>
@@ -45,8 +42,7 @@
 
                                     {{-- Tanggal Surat Diterima --}}
                                     <td>
-                                        <i class="fas fa-calendar"></i>&nbsp;
-                                        {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                        {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                     </td>
 
                                     {{-- Aksi --}}
