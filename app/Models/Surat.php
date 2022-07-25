@@ -46,4 +46,9 @@ class Surat extends Model
     {
         return $this->hasOne(Disposisi::class, 'surat_id', 'id');
     }
+
+    public function relasiKonversiSurat()
+    {
+        return $this->hasOne(KonversiSurat::class, 'surat_id', 'id');
+    }
 }

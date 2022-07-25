@@ -42,7 +42,7 @@ class DaftarSurat extends Component
                 $this->daftar_surat = $this->getSecretaryMails($this->tipe);
                 break;
             case 'kabag':
-                $this->daftar_surat = $this->getKabagMails($this->tipe);
+                $this->daftar_surat = $this->getKabagMails($this->tipe, $this->nama_routing);
                 break;
             case 'kf':
                 $this->daftar_surat = $this->getKfMails($this->tipe, $this->nama_routing);
