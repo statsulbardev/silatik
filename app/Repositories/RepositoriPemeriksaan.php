@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Disposisi;
+use App\Models\KonversiSurat;
 use App\Models\Pemeriksaan;
 use Carbon\Carbon;
 use Exception;
@@ -40,6 +41,10 @@ class RepositoriPemeriksaan
                             'catatan'              => $unit[0]->catatan_kepala
                         ]);
                     }
+
+                    KonversiSurat::create([
+                        'surat_id' => $data->surat->id
+                    ]);
 
                     break;
                 case 'kf' :
