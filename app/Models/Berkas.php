@@ -15,7 +15,8 @@ class Berkas extends Model
 
     protected $fillable = [
         'surat_id',
-        'tautan'
+        'tautan',
+        'tanggal_buat'
     ];
 
     public $timestamps = false;
