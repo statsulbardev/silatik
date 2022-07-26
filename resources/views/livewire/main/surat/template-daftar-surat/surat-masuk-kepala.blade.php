@@ -53,6 +53,10 @@
                                                     </span>
                                                 </label>
                                                 <span>{!! $item->perihal !!}</span>
+
+                                                @if (\Carbon\Carbon::now()->diffInDays($item->tanggal_buat) < 2)
+                                                    <br><span class="badge badge-primary">Baru</span>
+                                                @endif
                                             </td>
 
                                             {{-- Pengirim Surat --}}

@@ -3,10 +3,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="mx-auto"></div>
-                <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/tambah') }}" class="btn btn-icon icon-left btn-primary">
+                {{-- <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/tambah') }}" class="btn btn-icon icon-left btn-primary">
                     <i class="fa-solid fa-plus"></i>
                     Entri
-                </a>
+                </a> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -42,27 +42,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @switch($item->tipe)
-                                            @case('sm')
-                                                @break
-                                            @case('sk')
-                                                @if ($item->relasiDisposisi)
-                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                @else
-                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ url(env('APP_URL') . 'surat-keluar/staf/edit/' . $item->id) }}" id="edit" class="btn btn-icon btn-warning">
-                                                        <i class="fas fa-pencil"></i>
-                                                    </a>
-                                                    <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                @endif
-                                                @break
-                                        @endswitch
+                                        <a href="{{ url(env('APP_URL') . 'surat-masuk/staf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -50,6 +50,9 @@
                 @break
             @case('staf')
                 @if ($tipe == 'sm')
+                    @include('livewire.main.surat.template-daftar-surat.surat-masuk-staf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
                 @else
                     @include('livewire.main.surat.template-daftar-surat.surat-keluar-staf', [
                         'daftar_surat' => $daftar_surat

@@ -205,13 +205,27 @@ trait SuratTrait
 
     public function getStafMails($tipe)
     {
+        $tempQuery = Surat::query();
+
         $user = Auth::user();
 
-        return Surat::query()
-            -> with(['relasiPegawai', 'relasiBerkas', 'relasiPemeriksaan', 'relasiDisposisi'])
-            -> where('pegawai_id', $user->id)
-            -> where('tipe', $tipe)
-            -> get();
+        $tempQuery
+            -> when($tipe === 'sm', function($query) use ($tipe, $user) {
+                    $query
+                        -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
+                        -> whereHas('relasiDisposisi', function($qr) use ($user) {
+                                $qr->whereJsonContains('unit_fungsi_penerima', (string) $user->relasiUnitFungsi->parent);
+                        })
+                        -> where('tipe', $tipe)
+                        -> latest('tanggal_buat');
+            })
+            -> when($tipe === 'sk', function($query) {
+
+            });
+
+        $surat = $tempQuery->get();
+
+        return $surat;
     }
 
     public function deleteMail($id)

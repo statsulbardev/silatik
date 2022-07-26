@@ -73,7 +73,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['role:staf']], function() {
         // Surat Masuk
         Route::get('surat-masuk/staf', DaftarSurat::class)->name('staf-surat-masuk');
-        Route::get('surat-masuk/skf/{surat}', DetailSurat::class)->name('staf-detail-surat-masuk');
+        Route::get('surat-masuk/staf/{surat}', DetailSurat::class)->name('staf-detail-surat-masuk');
 
         // Surat Keluar
         Route::get('surat-keluar/staf', DaftarSurat::class)->name('staf-surat-keluar');

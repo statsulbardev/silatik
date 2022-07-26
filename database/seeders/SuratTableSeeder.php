@@ -42,8 +42,9 @@ class SuratTableSeeder extends Seeder
             ]);
 
             Berkas::create([
-                'surat_id' => $tempSurat->id,
-                'tautan'   => $surat->tautan
+                'surat_id'     => $tempSurat->id,
+                'tautan'       => $surat->tautan,
+                'tanggal_buat' => Carbon::parse($surat->tanggal_surat, config('app.timezone'))
             ]);
         }
 
