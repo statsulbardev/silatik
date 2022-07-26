@@ -9,7 +9,7 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="mx-auto">SILATIK</h4>
+                            <h4 class="mx-auto">NEW SILATIK</h4>
                         </div>
 
                         <div class="card-body">
