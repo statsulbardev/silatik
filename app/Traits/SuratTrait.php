@@ -203,6 +203,26 @@ trait SuratTrait
         return $surat;
     }
 
+    public function getSkfMails($tipe, $nama_routing)
+    {
+        $tempQuery = Surat::query();
+
+        $tempNamaRouting = Str::contains($nama_routing, "periksa");
+
+        $tempQuery
+            ->when($tipe === "sk", function($query) {
+                $query
+                    -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'tanggal_buat');
+            })
+            ->when($tipe === "sk", function($query) {
+
+            });
+
+        $surat = $tempQuery->get();
+
+        return $surat;
+    }
+
     public function getStafMails($tipe)
     {
         $tempQuery = Surat::query();

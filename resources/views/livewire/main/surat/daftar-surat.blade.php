@@ -48,6 +48,17 @@
                     ])
                 @endif
                 @break
+            @case('skf')
+                @if ($tipe == 'sm')
+                    @include('livewire.main.surat.template-daftar-surat.surat-masuk-skf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @else
+                    @include('livewire.main.surat.template-daftar-surat.surat-keluar-skf', [
+                        'daftar_surat' => $daftar_surat
+                    ])
+                @endif
+                @break
             @case('staf')
                 @if ($tipe == 'sm')
                     @include('livewire.main.surat.template-daftar-surat.surat-masuk-staf', [
