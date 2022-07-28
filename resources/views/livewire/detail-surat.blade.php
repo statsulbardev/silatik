@@ -110,20 +110,24 @@
                                         <th>Ket</th>
                                         <th>Disposisi</th>
                                     </tr>
-                                    @if ($surat->relasiDisposisi)
+                                    @if ($surat->relasiDisposisi->unit_fungsi_koordinasi)
+                                        {{-- Untuk KF/Kabag --}}
                                         <tr>
                                             <td>
-                                                {{ $surat->pengirim }}
+                                                {{ \App\Models\UnitKerja::find($surat->unit_kerja_id)->pluck('nama')[0] }}
                                             </td>
                                             <td>
-                                                @if (!empty($surat->relasiDisposisi->unit_fungsi_penerima))
+                                                @if (!empty($surat->relasiDisposisi->unit_fungsi_koordinasi))
                                                     <div class="my-3">
-                                                        <span class="font-weight-bold text-primary">{{ \App\Models\UnitKerja::find((int) $surat->relasiDisposisi->unit_kerja_penerima)->nama }}</span>
-                                                        <ul class="pl-3">
-                                                        @foreach ($surat->relasiDisposisi->unit_fungsi_penerima as $index => $item)
-                                                            <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                                        @endforeach
-                                                        </ul>
+                                                        @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
+                                                            <ol class="pl-3">
+                                                                @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
+                                                                    <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                                @endforeach
+                                                            </ol>
+                                                        @else
+                                                            {{ \App\Models\UnitFungsi::find($surat->relasiDisposisi->unit_fungsi_koordinasi[0])->nama }}
+                                                        @endif
                                                     </div>
                                                 @else
                                                     <span>
@@ -135,7 +139,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                {!! $surat->relasiDisposisi->catatan !!}
+                                                {!! $surat->relasiDisposisi->catatan_kepala !!}
                                             </td>
                                             <td>
                                                 @if (empty($surat->relasiDisposisi->poin))
@@ -149,6 +153,58 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                        @if ($surat->relasiDisposisi->unit_fungsi_teknis)
+                                            {{-- Untuk SKF/Staf --}}
+                                            <tr>
+                                                <td>
+                                                    @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
+                                                        <ol class="pl-3">
+                                                            @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
+                                                                <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                            @endforeach
+                                                        </ol>
+                                                    @else
+                                                    @endif
+                                                    {{ \App\Models\UnitKerja::find($surat->relasiDisposisi->unit)->pluck('nama')[0] }}
+                                                </td>
+                                                <td>
+                                                    @if (!empty($surat->relasiDisposisi->unit_fungsi_koordinasi))
+                                                        <div class="my-3">
+                                                            @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
+                                                                <ol class="pl-3">
+                                                                    @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
+                                                                        <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                                    @endforeach
+                                                                </ol>
+                                                            @else
+                                                                {{ \App\Models\UnitFungsi::find($surat->relasiDisposisi->unit_fungsi_koordinasi[0])->nama }}
+                                                            @endif
+                                                        </div>
+                                                    @else
+                                                        <span>
+                                                            <ul class="pl-3">
+                                                                @foreach ($surat->relasiDisposisi->unit_kerja_penerima as $item)
+                                                                    <li>{{ \App\Models\UnitKerja::find((int) $item)->nama }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {!! $surat->relasiDisposisi->catatan_kepala !!}
+                                                </td>
+                                                <td>
+                                                    @if (empty($surat->relasiDisposisi->poin))
+                                                        -
+                                                    @else
+                                                        <ul class="pl-3">
+                                                            @foreach ($surat->relasiDisposisi->poin as $item)
+                                                                <li>{{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endif
                                 </table>
                             </div>

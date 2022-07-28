@@ -4,6 +4,10 @@
         <i class="fas fa-right-to-bracket"></i>
         <span>Daftar Surat</span>
     </a>
+    <a href="{{ url(env('APP_URL') . 'surat-masuk/kabag/disposisi') }}" class="nav-link">
+        <i class="fas fa-paper-plane"></i>
+        <span>Disposisi</span>
+    </a>
 </li>
 <li class="menu-header">SURAT KELUAR</li>
 <li>

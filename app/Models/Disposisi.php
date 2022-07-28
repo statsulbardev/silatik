@@ -18,15 +18,20 @@ class Disposisi extends Model
         'surat_id',
         'poin',
         'unit_kerja_penerima',
-        'unit_fungsi_penerima',
+        'unit_fungsi_koordinasi',
+        'tgl_disposisi_koordinasi',
+        'catatan_kepala',
+        'unit_fungsi_teknis',
+        'tgl_disposisi_teknis',
+        'catatan_kf',
         'kode_paraf',
-        'catatan'
     ];
 
     protected $casts = [
-        'poin'                 => 'array',
-        'unit_kerja_penerima'  => 'array',
-        'unit_fungsi_penerima' => 'array'
+        'poin'                   => 'array',
+        'unit_kerja_penerima'    => 'array',
+        'unit_fungsi_koordinasi' => 'array',
+        'unit_fungsi_teknis'     => 'array'
     ];
 
     public function relasiSurat()

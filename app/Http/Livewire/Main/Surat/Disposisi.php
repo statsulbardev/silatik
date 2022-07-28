@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Main\Surat;
 
 use App\Models\Surat;
+use App\Models\UnitFungsi;
 use App\Models\UnitKerja;
 use App\Repositories\RepositoriDisposisi;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class Disposisi extends Component
     public $poin = [];
     public $penerima = [];
     public $catatan;
+    public $unitFungsi;
 
     protected $rules = [
         'catatan'    => 'required|min:5'
@@ -25,9 +27,14 @@ class Disposisi extends Component
 
     public function mount(Surat $surat)
     {
-        $this->surat    = $surat;
-        $this->role     = Auth::user()->roles[0]->name;
-        $this->judul    = "Surat Masuk";
+        $user = Auth::user();
+
+        $this->surat = $surat;
+        $this->role  = $user->roles[0]->name;
+        $this->judul = "Surat Masuk";
+
+        $this->unitFungsi = !$user->hasAnyRole('kabag', 'kf')
+                          ?: UnitFungsi::where('parent', $user->unit_fungsi_id)->get();
     }
 
     public function render()
@@ -44,10 +51,22 @@ class Disposisi extends Component
     {
         $this->validate();
 
-        $result = $repositoriDisposisi->store($this);
+        switch($this->role)
+        {
+            case 'kabps' :
+                $result = $repositoriDisposisi->store($this);
 
-        session()->flash('messages', $result);
+                session()->flash('messages', $result);
 
-        return redirect(url(env('APP_URL'). 'surat-masuk/kepala/disposisi'));
+                return redirect(url(env('APP_URL'). 'surat-masuk/kepala/disposisi'));
+
+                break;
+            default:
+                $result = $repositoriDisposisi->update($this);
+
+                session()->flash('messages', $result);
+
+                return redirect(url(env('APP_URL') . 'surat-masuk/' . $this->role . '/disposisi'));
+        }
     }
 }

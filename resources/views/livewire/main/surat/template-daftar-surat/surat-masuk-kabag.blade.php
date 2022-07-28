@@ -48,9 +48,15 @@
 
                                     {{-- Aksi --}}
                                     <td>
-                                        <a href="{{ url(env('APP_URL') . 'surat-masuk/kabag/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                        @if (empty($item->relasiDisposisi->unit_fungsi_teknis))
+                                            <a href="{{ url(env('APP_URL') . 'surat-masuk/kabag/' . $item->id . '/disposisi') }}" id="disposisi" class="btn btn-icon btn-warning">
+                                                <i class="fas fa-tags"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{ url(env('APP_URL') . 'surat-masuk/kabag/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,8 +73,8 @@
 
 @push('scripts')
 <script>
-    tippy('#periksa', {
-        content: 'Periksa Surat',
+    tippy('#disposisi', {
+        content: 'Disposisi Surat',
         placement: 'bottom',
         arrow: true
     })

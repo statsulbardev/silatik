@@ -55,7 +55,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['role:kabag']], function() {
         // Surat Masuk
         Route::get('surat-masuk/kabag', DaftarSurat::class)->name('kabag-surat-masuk');
+        Route::get('surat-masuk/kabag/disposisi', DaftarSurat::class)->name('kabag-disposisi-daftar-surat-masuk');
+        Route::get('surat-masuk/kabag/{surat}/disposisi', Disposisi::class)->name('kabag-disposisi-surat-masuk');
         Route::get('surat-masuk/kabag/{surat}', DetailSurat::class)->name('kabag-detail-surat-masuk');
+
 
         // Surat Keluar
         Route::get('surat-keluar/kabag', DaftarSurat::class)->name('kabag-surat-keluar');
@@ -74,6 +77,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['role:staf']], function() {
         // Surat Masuk
         Route::get('surat-masuk/staf', DaftarSurat::class)->name('staf-surat-masuk');
+        Route::get('surat-masuk/staf/tambah', TambahEditSurat::class)->middleware('cek_umum')->name('staf-tambah-surat-masuk');
         Route::get('surat-masuk/staf/{surat}', DetailSurat::class)->name('staf-detail-surat-masuk');
 
         // Surat Keluar
