@@ -115,7 +115,7 @@ trait SuratTrait
                                 -> whereHas('relasiDisposisi', function($q) use ($user) {
                                         $q
                                             -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
-                                            -> whereJsonContains('unit_fungsi_koordinasi', (string) $user->unit_fungsi_id)
+                                            -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
                                             -> whereNull('unit_fungsi_teknis');
                                 })
                                 -> with('relasiDisposisi')
@@ -127,7 +127,7 @@ trait SuratTrait
                                 -> whereHas('relasiDisposisi', function($q) use ($user) {
                                         $q
                                             -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
-                                            -> whereJsonContains('unit_fungsi_koordinasi', (string) $user->unit_fungsi_id)
+                                            -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
                                             -> whereNotNull('unit_fungsi_teknis');
                                 })
                                 -> with('relasiDisposisi')
@@ -189,23 +189,24 @@ trait SuratTrait
                                     -> whereHas('relasiDisposisi', function($q) use ($user) {
                                             $q
                                                 -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
-                                                -> whereJsonContains('unit_fungsi_koordinasi', (string) $user->unit_fungsi_id)
-                                                -> whereNull('unit_fungsi_teknis');
+                                                -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
+                                                -> whereNull('unit_fungsi_teknis')
+                                                -> orWhereJsonDoesntContain('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
                                     })
                                     -> with('relasiDisposisi')
                                     -> latest('tanggal_buat');
                         })
                         -> when($tempDisposisi === false, function($qr) use ($user) {
-                                    return $qr
-                                        -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
-                                        -> whereHas('relasiDisposisi', function($qr) use ($user) {
-                                                $qr
-                                                    -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
-                                                    -> whereJsonContains('unit_fungsi_koordinasi', (string) $user->unit_fungsi_id)
-                                                    -> whereNotNull('unit_fungsi_teknis');
-                                        })
-                                        -> with('relasiDisposisi')
-                                        -> latest('tanggal_surat');
+                                return $qr
+                                    -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                                    -> whereHas('relasiDisposisi', function($qr) use ($user) {
+                                            $qr
+                                                -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
+                                                -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
+                                                -> whereJsonContains('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
+                                    })
+                                    -> with('relasiDisposisi')
+                                    -> latest('tanggal_surat');
                         });
             })
             -> when($tipe === "sk", function($query) use ($tipe, $tempPeriksa, $unit_fungsi) {
@@ -278,7 +279,7 @@ trait SuratTrait
                     $query
                         -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                         -> whereHas('relasiDisposisi', function($qr) use ($user) {
-                                $qr->whereJsonContains('unit_fungsi_teknis', (string) $user->unit_fungsi_id);
+                                $qr->whereJsonContains('unit_fungsi_teknis', ['unit' => (string) $user->unit_fungsi_id]);
                         })
                         -> where('tipe', $tipe)
                         -> latest('tanggal_buat');

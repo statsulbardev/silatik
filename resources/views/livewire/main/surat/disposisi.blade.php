@@ -162,7 +162,7 @@
                                     {{-- Unit Fungsi --}}
                                     @foreach ($unitFungsi as $item)
                                         <div class="row mb-4">
-                                            <x-forms.checkbox judul='{{ $item->nama }}' model='penerima' nilai='{{ $item->id }}' style='col-12 col-md-6 col-lg-6' />
+                                            <x-forms.checkbox judul='{{ $item->nama }}' model='penerima' nilai='{{ $item->id }}' style='col-12 col-md-10 col-lg-10' />
                                         </div>
                                     @endforeach
                                 </div>

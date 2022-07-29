@@ -47,9 +47,15 @@
 
                                     {{-- Aksi --}}
                                     <td>
-                                        <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                        @if (Str::contains($nama_routing, "disposisi"))
+                                            <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id . '/disposisi') }}" id="disposisi" class="btn btn-icon btn-warning">
+                                                <i class="fas fa-tags"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

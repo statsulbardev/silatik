@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => ['role:kf']], function() {
         // Surat Masuk
         Route::get('surat-masuk/kf', DaftarSurat::class)->name('kf-surat-masuk');
+        Route::get('surat-masuk/kf/disposisi', DaftarSurat::class)->name('kf-disposisi-daftar-surat-masuk');
+        Route::get('surat-masuk/kf/{surat}/disposisi', Disposisi::class)->name('kf-disposisi-surat-masuk');
         Route::get('surat-masuk/kf/{surat}', DetailSurat::class)->name('kf-detail-surat-masuk');
 
         // Surat Keluar
