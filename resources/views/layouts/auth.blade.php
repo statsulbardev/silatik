@@ -9,7 +9,10 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="mx-auto">NEW SILATIK</h4>
+                            <div class="mx-auto">
+                                <h4 class="text-center">SILATIK</h4>
+                                <span>Sistem Layanan Surat Elektronik</span>
+                            </div>
                         </div>
 
                         <div class="card-body">
