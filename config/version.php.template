@@ -15,7 +15,7 @@ return [
     /**
      * Versi Commit Terakhir.
      */
-    'commit' => '553d7a7',
+    'commit' => '8e085ac',
 
     /*
      * Versi Rilis Aplikasi
