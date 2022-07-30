@@ -109,37 +109,29 @@
                                         <th>Kepada</th>
                                         <th>Ket</th>
                                         <th>Disposisi</th>
+                                        <th>Tanggal</th>
                                     </tr>
                                     @if ($surat->relasiDisposisi->unit_fungsi_koordinasi)
                                         {{-- Untuk KF/Kabag --}}
                                         <tr>
+                                            @php
+                                                $koordinator = collect($surat->relasiDisposisi->unit_fungsi_koordinasi[0]);
+                                            @endphp
                                             <td>
                                                 {{ \App\Models\UnitKerja::find($surat->unit_kerja_id)->pluck('nama')[0] }}
                                             </td>
                                             <td>
-                                                @if (!empty($surat->relasiDisposisi->unit_fungsi_koordinasi))
-                                                    <div class="my-3">
-                                                        @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
-                                                            <ol class="pl-3">
-                                                                @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
-                                                                    <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                                                @endforeach
-                                                            </ol>
-                                                        @else
-                                                            {{ \App\Models\UnitFungsi::find($surat->relasiDisposisi->unit_fungsi_koordinasi[0])->nama }}
-                                                        @endif
-                                                    </div>
-                                                @else
-                                                    <span>
-                                                        <ul class="pl-3">
-                                                            @foreach ($surat->relasiDisposisi->unit_kerja_penerima as $item)
-                                                                <li>{{ \App\Models\UnitKerja::find((int) $item)->nama }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                @endif
+                                                @hasanyrole('kabag|kf')
+                                                    {{ \App\Models\UnitFungsi::where('id', auth()->user()->unit_fungsi_id)->pluck('nama')[0] }}
+                                                @endhasanyrole
+
+                                                @hasanyrole('skf|staf')
+                                                    {{ \App\Models\UnitFungsi::where('id', auth()->user()->relasiUnitFungsi->parent)->pluck('nama')[0] }}
+                                                @endhasanyrole
+
                                             </td>
                                             <td>
-                                                {!! $surat->relasiDisposisi->catatan_kepala !!}
+                                                {!! $surat->relasiDisposisi->unit_fungsi_koordinasi[0]['catatan'] !!}
                                             </td>
                                             <td>
                                                 @if (empty($surat->relasiDisposisi->poin))
@@ -152,45 +144,36 @@
                                                     </ul>
                                                 @endif
                                             </td>
+                                            <td>
+                                                {{
+                                                    DateFormat::convertDateTime(
+                                                        date('Y-m-d',
+                                                            strtotime(
+                                                                $surat
+                                                                    -> relasiDisposisi
+                                                                    -> unit_fungsi_koordinasi[0]['tgl_disposisi']
+                                                            )
+                                                        )
+                                                    )
+                                                }}
+                                            </td>
                                         </tr>
-                                        @if ($surat->relasiDisposisi->unit_fungsi_teknis)
+                                        @hasanyrole('skf|staf')
                                             {{-- Untuk SKF/Staf --}}
                                             <tr>
+                                                @php
+                                                    $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
+                                                              -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
+                                                @endphp
                                                 <td>
-                                                    @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
-                                                        <ol class="pl-3">
-                                                            @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
-                                                                <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                                            @endforeach
-                                                        </ol>
-                                                    @else
-                                                    @endif
-                                                    {{ \App\Models\UnitKerja::find($surat->relasiDisposisi->unit)->pluck('nama')[0] }}
+                                                    {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
                                                 </td>
                                                 <td>
-                                                    @if (!empty($surat->relasiDisposisi->unit_fungsi_koordinasi))
-                                                        <div class="my-3">
-                                                            @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi) > 1)
-                                                                <ol class="pl-3">
-                                                                    @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi as $item)
-                                                                        <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                                                    @endforeach
-                                                                </ol>
-                                                            @else
-                                                                {{ \App\Models\UnitFungsi::find($surat->relasiDisposisi->unit_fungsi_koordinasi[0])->nama }}
-                                                            @endif
-                                                        </div>
-                                                    @else
-                                                        <span>
-                                                            <ul class="pl-3">
-                                                                @foreach ($surat->relasiDisposisi->unit_kerja_penerima as $item)
-                                                                    <li>{{ \App\Models\UnitKerja::find((int) $item)->nama }}</li>
-                                                                @endforeach
-                                                            </ul>
-                                                    @endif
+                                                    {{ auth()->user()->relasiUnitFungsi->nama }}
                                                 </td>
                                                 <td>
-                                                    {!! $surat->relasiDisposisi->catatan_kepala !!}
+
+                                                    {!! $teknis->pluck('catatan')[0] !!}
                                                 </td>
                                                 <td>
                                                     @if (empty($surat->relasiDisposisi->poin))
@@ -203,8 +186,11 @@
                                                         </ul>
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
+                                                </td>
                                             </tr>
-                                        @endif
+                                        @endhasanyrole
                                     @endif
                                 </table>
                             </div>
