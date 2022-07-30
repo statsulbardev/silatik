@@ -96,106 +96,126 @@
 
             @switch(strtolower($tipe))
                 @case("masuk")
-                    {{-- History Tindak Lanjut / Disposisi --}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>History Tindak Lanjut / Disposisi</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <tr>
-                                        <th>Dari</th>
-                                        <th>Kepada</th>
-                                        <th>Ket</th>
-                                        <th>Disposisi</th>
-                                        <th>Tanggal</th>
-                                    </tr>
-                                    @if ($surat->relasiDisposisi->unit_fungsi_koordinasi)
-                                        {{-- Untuk KF/Kabag --}}
-                                        <tr>
-                                            @php
-                                                $koordinator = collect($surat->relasiDisposisi->unit_fungsi_koordinasi[0]);
-                                            @endphp
-                                            <td>
-                                                {{ \App\Models\UnitKerja::find($surat->unit_kerja_id)->pluck('nama')[0] }}
-                                            </td>
-                                            <td>
-                                                @hasanyrole('kabag|kf')
-                                                    {{ \App\Models\UnitFungsi::where('id', auth()->user()->unit_fungsi_id)->pluck('nama')[0] }}
-                                                @endhasanyrole
 
-                                                @hasanyrole('skf|staf')
-                                                    {{ \App\Models\UnitFungsi::where('id', auth()->user()->relasiUnitFungsi->parent)->pluck('nama')[0] }}
-                                                @endhasanyrole
-
-                                            </td>
-                                            <td>
-                                                {!! $surat->relasiDisposisi->unit_fungsi_koordinasi[0]['catatan'] !!}
-                                            </td>
-                                            <td>
-                                                @if (empty($surat->relasiDisposisi->poin))
-                                                    -
-                                                @else
-                                                    <ul class="pl-3">
-                                                        @foreach ($surat->relasiDisposisi->poin as $item)
-                                                            <li>{{ $item }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{
-                                                    DateFormat::convertDateTime(
-                                                        date('Y-m-d',
-                                                            strtotime(
-                                                                $surat
-                                                                    -> relasiDisposisi
-                                                                    -> unit_fungsi_koordinasi[0]['tgl_disposisi']
-                                                            )
-                                                        )
-                                                    )
-                                                }}
-                                            </td>
-                                        </tr>
-                                        @hasanyrole('skf|staf')
-                                            {{-- Untuk SKF/Staf --}}
-                                            <tr>
-                                                @php
-                                                    $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
-                                                              -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
-                                                @endphp
-                                                <td>
-                                                    {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
-                                                </td>
-                                                <td>
-                                                    {{ auth()->user()->relasiUnitFungsi->nama }}
-                                                </td>
-                                                <td>
-
-                                                    {!! $teknis->pluck('catatan')[0] !!}
-                                                </td>
-                                                <td>
-                                                    @if (empty($surat->relasiDisposisi->poin))
-                                                        -
-                                                    @else
-                                                        <ul class="pl-3">
-                                                            @foreach ($surat->relasiDisposisi->poin as $item)
-                                                                <li>{{ $item }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
-                                                </td>
-                                            </tr>
-                                        @endhasanyrole
-                                    @endif
-                                </table>
+                        {{-- History Tindak Lanjut / Disposisi --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>History Tindak Lanjut / Disposisi</h4>
                             </div>
+                            @if (!is_null($surat->relasiDisposisi))
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <th>Dari</th>
+                                                <th>Kepada</th>
+                                                <th>Ket</th>
+                                                <th>Disposisi</th>
+                                                <th>Tanggal</th>
+                                            </tr>
+                                            @if ($surat->relasiDisposisi->unit_fungsi_koordinasi)
+                                                {{-- Untuk KF/Kabag --}}
+                                                <tr>
+                                                    @php
+                                                        $koordinator = collect($surat->relasiDisposisi->unit_fungsi_koordinasi[0]);
+                                                    @endphp
+                                                    <td>
+                                                        Kepala {{ \App\Models\UnitKerja::find($surat->unit_kerja_id)->pluck('nama')[0] }}
+                                                    </td>
+                                                    <td>
+                                                        @hasanyrole('kabps')
+                                                            <ul class="pl-3">
+                                                                @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'] as $item)
+                                                                    <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endhasanyrole
+
+                                                        @hasanyrole('kabag|kf')
+                                                            {{ \App\Models\UnitFungsi::where('id', auth()->user()->unit_fungsi_id)->pluck('nama')[0] }}
+                                                        @endhasanyrole
+
+                                                        @hasanyrole('skf|staf')
+                                                            {{ \App\Models\UnitFungsi::where('id', auth()->user()->relasiUnitFungsi->parent)->pluck('nama')[0] }}
+                                                        @endhasanyrole
+
+                                                    </td>
+                                                    <td>
+                                                        {!! $surat->relasiDisposisi->unit_fungsi_koordinasi[0]['catatan'] !!}
+                                                    </td>
+                                                    <td>
+                                                        @if (empty($surat->relasiDisposisi->poin))
+                                                            -
+                                                        @else
+                                                            <ul class="pl-3">
+                                                                @foreach ($surat->relasiDisposisi->poin as $item)
+                                                                    <li>{{ $item }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        {{
+                                                            DateFormat::convertDateTime(
+                                                                date('Y-m-d',
+                                                                    strtotime(
+                                                                        $surat
+                                                                            -> relasiDisposisi
+                                                                            -> unit_fungsi_koordinasi[0]['tgl_disposisi']
+                                                                    )
+                                                                )
+                                                            )
+                                                        }}
+                                                    </td>
+                                                </tr>
+                                                @hasanyrole('skf|staf')
+                                                    {{-- Untuk SKF/Staf --}}
+                                                    <tr>
+                                                        @php
+                                                            $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
+                                                                    -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
+                                                        @endphp
+                                                        <td>
+                                                            {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
+                                                        </td>
+                                                        <td>
+                                                            {{ auth()->user()->relasiUnitFungsi->nama }}
+                                                        </td>
+                                                        <td>
+
+                                                            {!! $teknis->pluck('catatan')[0] !!}
+                                                        </td>
+                                                        <td>
+                                                            @if (empty($surat->relasiDisposisi->poin))
+                                                                -
+                                                            @else
+                                                                <ul class="pl-3">
+                                                                    @foreach ($surat->relasiDisposisi->poin as $item)
+                                                                        <li>{{ $item }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
+                                                        </td>
+                                                    </tr>
+                                                @endhasanyrole
+                                            @endif
+                                        </table>
+                                    </div>
+                                </div>
+                            @else
+                            <div class="card-body">
+                                <div class="empty-state" data-height="600" style="height: 600px;">
+                                    <img class="img-fluid" src="{{ secure_asset(env('APP_URL') . 'icons/drawkit-nature-man-colour.svg') }}" alt="image">
+                                    <p class="lead">
+                                        Belum ada tindak lanjut / disposisi dari surat ini.
+                                    </p>
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                    </div>
                     @break
                 @case("keluar")
                     {{-- Tujuan Pengiriman Surat --}}
