@@ -40,7 +40,7 @@
 
                                     {{-- Aksi --}}
                                     <td>
-                                        <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                        <a href="{{ url(env('APP_URL') . 'surat-masuk/skf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
