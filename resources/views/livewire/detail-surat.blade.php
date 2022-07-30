@@ -96,7 +96,6 @@
 
             @switch(strtolower($tipe))
                 @case("masuk")
-
                         {{-- History Tindak Lanjut / Disposisi --}}
                         <div class="card">
                             <div class="card-header">
@@ -206,14 +205,14 @@
                                     </div>
                                 </div>
                             @else
-                            <div class="card-body">
-                                <div class="empty-state" data-height="600" style="height: 600px;">
-                                    <img class="img-fluid" src="{{ secure_asset(env('APP_URL') . 'icons/drawkit-nature-man-colour.svg') }}" alt="image">
-                                    <p class="lead">
-                                        Belum ada tindak lanjut / disposisi dari surat ini.
-                                    </p>
+                                <div class="card-body">
+                                    <div class="empty-state" data-height="600" style="height: 600px;">
+                                        <img class="img-fluid" src="{{ secure_asset(env('APP_URL') . 'icons/drawkit-nature-man-colour.svg') }}" alt="image">
+                                        <p class="lead">
+                                            Belum ada tindak lanjut / disposisi dari surat ini.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     @break
