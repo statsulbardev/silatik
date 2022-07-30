@@ -25,55 +25,33 @@
                             <i class="fas fa-gears"></i>
                         </div>
                         <p class="h4 ml-2 mt-2" style="letter-spacing:1px;opacity:70%">
-                            Versi Aplikasi
+                            Versi Fremework
                         </p>
                         <p class="h5 ml-2 mt-3 font-weight-bold" style="letter-spacing:1px">
-                            1.0 Beta - Powered By Laravel {{ app()->version() }}
+                            Powered By Laravel {{ app()->version() }}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card card-statistic-2 card-primary">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-inbox"></i>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle d-flex justify-content-between">
+                        <h4>Versi Aplikasi : {{ $tag }}</h4>
+                        <span class="font-weight-bold">Versi Commit : {{ $commit }}</span>
                     </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Surat Masuk</h4>
-                        </div>
-                        <div class="card-body">
-                            10
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card card-statistic-2 card-warning">
-                    <div class="card-icon bg-warning">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Belum Disposisi</h4>
-                        </div>
-                        <div class="card-body">10</div>
+                    <div class="card-body">
+                        <h4>Daftar Perbaikan dan Peningkatan :</h4>
+                        <ol>
+                            @foreach ($deskripsi as $item)
+                                <li>{{ $item }}</li>
+                            @endforeach
+                        </ol>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card card-statistic-2 card-success">
-                    <div class="card-icon bg-success">
-                        <i class="far fa-user"></i>
-                      </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card card-danger">4</div>
-            </div>
-        </div> --}}
+        </div>
     </section>
 </div>
