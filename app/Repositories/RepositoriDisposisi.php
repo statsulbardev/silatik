@@ -17,13 +17,19 @@ class RepositoriDisposisi
         try {
             DB::beginTransaction();
 
+            $tempData = [
+                [
+                    "unit" => $data->penerima,
+                    "catatan" => $data->catatan,
+                    "tgl_disposisi" => Carbon::now()
+                ]
+            ];
+
             Disposisi::create([
                 'surat_id'                 => $data->surat->id,
                 'poin'                     => $data->poin,
                 'unit_kerja_penerima'      => ["1"],
-                'unit_fungsi_koordinasi'   => $data->penerima,
-                'tgl_disposisi_koordinasi' => Carbon::now(),
-                'catatan_kepala'           => $data->catatan,
+                'unit_fungsi_koordinasi'   => $tempData,
                 'kode_paraf'               => Str::random(10)
             ]);
 
