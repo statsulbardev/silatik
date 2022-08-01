@@ -20,7 +20,8 @@
                         </div>
                     </div>
                     <div class="simple-footer">
-                        Copyright &copy; IPDS 2022
+                        <p class="text-job text-muted">Dikembangkan Oleh : </p>
+                        <img src="{{ secure_asset(env('APP_URL') . 'icons/bps.png') }}" class="w-75" alt="">
                     </div>
                 </div>
             </div>
