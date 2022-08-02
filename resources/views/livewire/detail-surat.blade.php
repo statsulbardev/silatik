@@ -122,7 +122,7 @@
                                                         Kepala {{ \App\Models\UnitKerja::find($surat->unit_kerja_id)->pluck('nama')[0] }}
                                                     </td>
                                                     <td>
-                                                        @hasanyrole('kabps')
+                                                        @hasanyrole('kabps|sekretaris')
                                                             <ul class="pl-3">
                                                                 @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'] as $item)
                                                                     <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
@@ -205,14 +205,7 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="card-body">
-                                    <div class="empty-state" data-height="600" style="height: 600px;">
-                                        <img class="img-fluid" src="{{ secure_asset(env('APP_URL') . 'icons/drawkit-nature-man-colour.svg') }}" alt="image">
-                                        <p class="lead">
-                                            Belum ada tindak lanjut / disposisi dari surat ini.
-                                        </p>
-                                    </div>
-                                </div>
+                                @include('components.partials.not-found', ['pesan' => 'Belum ada tindak lanjut / disposisi dari surat ini.'])
                             @endif
                         </div>
                     @break
