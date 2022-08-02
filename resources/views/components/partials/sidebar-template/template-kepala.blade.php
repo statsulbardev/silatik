@@ -6,7 +6,7 @@
     </a>
     <a href="{{ route('kepala-surat-masuk') }}" class="nav-link">
         <i class="fas fa-right-to-bracket"></i>
-        <span>Daftar Surat</span>
+        <span>Kotak Surat</span>
     </a>
 </li>
 <li class="menu-header">SURAT KELUAR</li>
@@ -17,6 +17,6 @@
     </a>
     <a href="{{ route('kepala-surat-keluar') }}">
         <i class="fas fa-right-from-bracket"></i>
-        <span>Surat Keluar</span>
+        <span>Kotak Surat</span>
     </a>
 </li>
