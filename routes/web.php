@@ -7,6 +7,7 @@ use App\Http\Livewire\Main\Surat\Disposisi;
 use App\Http\Livewire\Main\Surat\DetailSurat;
 use App\Http\Livewire\Main\Surat\Pemeriksaan;
 use App\Http\Livewire\Main\Surat\TambahEditSurat;
+use App\Http\Livewire\Version\Info;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
@@ -15,6 +16,7 @@ Route::get('login', Login::class)->name('login');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('versi', Info::class)->name('versi');
 
     /*--------------------------------------- Surat Masuk ---------------------------------------*/
 
