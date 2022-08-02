@@ -17,19 +17,20 @@ class DisposisiTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('disposisi')->truncate();
+        // DB::table('disposisi')->truncate();
 
-        $disposisiJson = File::get('database/data/disposisi.json');
+        $disposisiJson = File::get('database/data/disposisi-tahap2.json');
         $disposisiJsonDecode = json_decode($disposisiJson);
 
         foreach($disposisiJsonDecode as $disposisi) {
             Disposisi::create([
-                'surat_id'             => $disposisi->surat_id,
-                "poin"                 => $disposisi->poin,
-                'unit_kerja_penerima'  => $disposisi->unit_kerja_penerima,
-                'unit_fungsi_penerima' => $disposisi->unit_fungsi_penerima,
-                "kode_paraf"           => Str::random(10),
-                'catatan'              => $disposisi->catatan
+                "surat_id"               => $disposisi->surat_id,
+                "poin"                   => $disposisi->poin,
+                "unit_kerja_penerima"    => $disposisi->unit_kerja_penerima,
+                "unit_fungsi_koordinasi" => $disposisi->unit_fungsi_koordinasi,
+                "kode_paraf"             => Str::random(10),
+                "tanggal_buat"           => $disposisi->tanggal_buat,
+                "tanggal_update"         => $disposisi->tanggal_buat
             ]);
         }
     }
