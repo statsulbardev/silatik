@@ -47,6 +47,7 @@
     <script src="https://unpkg.com/trix@1.3.1/dist/trix.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/page/bootstrap-modal.js') }}"></script>
     <script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/stisla.js') }}"></script>
     <script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/scripts.js') }}"></script>
     <script src="{{ secure_asset(env('APP_URL') . 'vendor/stisla/js/custom.js') }}"></script>
