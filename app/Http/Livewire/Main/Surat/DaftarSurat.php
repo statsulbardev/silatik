@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Main\Surat;
 
+use App\Models\SuratBaca;
 use App\Traits\SuratTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;

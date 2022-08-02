@@ -36,16 +36,13 @@
                                     <th>Informasi Surat</th>
                                     <th>Pengirim</th>
                                     <th>Tanggal Diterima</th>
-                                    @if (auth()->user()->unit_kerja_id == 1)
-                                        <th>Status</th>
-                                    @endif
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                                 @if (str_contains($nama_routing, "disposisi"))
                                     @foreach ($daftar_surat->paginate(20) as $item)
                                         @if (is_null($item->relasiDisposisi))
                                             <tr>
-                                                {{-- Nomor Surat --}}
                                                 <td>
                                                     <label class="text-primary">
                                                         <span style="letter-spacing: 1px">
@@ -53,7 +50,7 @@
                                                             <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                         </span>
                                                     </label>
-                                                    <span>{!! $item->perihal !!}</span>
+                                                    <span><div>{!! $item->perihal !!}</div></span>
 
                                                     @if (\Carbon\Carbon::now()->diffInDays($item->tanggal_buat) < 2)
                                                         <br><span class="badge badge-primary">Baru</span>
@@ -86,7 +83,6 @@
                                     @foreach ($daftar_surat->paginate(20) as $item)
                                         @if($item->relasiDisposisi)
                                             <tr>
-                                                {{-- Nomor Surat --}}
                                                 <td>
                                                     <label class="text-primary">
                                                         <span style="letter-spacing: 1px">
@@ -94,7 +90,12 @@
                                                             <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                         </span>
                                                     </label>
-                                                    <span>{!! $item->perihal !!}</span>
+                                                    <span><div>{!! $item->perihal !!}</div></span><br>
+                                                    <a href={{ route('kepala-detail-surat-masuk', $item->id) }} class="badge {{ is_null($item->relasiSuratBaca) ? 'badge-danger' : 'badge-primary' }} mb-1 text-white" style="cursor: pointer">
+                                                        <i class="fas fa-check-double"></i> Dibaca
+                                                        {{ is_null($item->relasiSuratBaca) ? 0 : count($item->relasiSuratBaca->pegawai_id) }}
+                                                        Orang
+                                                    </a>
                                                 </td>
 
                                                 {{-- Pengirim Surat --}}
@@ -106,9 +107,7 @@
                                                 </td>
 
                                                 {{-- Status --}}
-                                                @if (auth()->user()->unit_kerja_id == 1)
                                                 <td><span class="badge badge-primary">Sudah Disposisi</span></td>
-                                                @endif
 
                                                 {{-- Aksi --}}
                                                 <td>

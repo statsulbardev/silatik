@@ -87,7 +87,7 @@
                         <div style="width: 22%" class="my-4 mx-auto">
                             @include('components.icons.pdf-file')
                         </div>
-                        <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
+                        <a wire:click="hasRead({{ auth()->user()->id }}, {{ $surat->id }})" href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
                             <i class="fas fa-eye"></i> Lihat Berkas
                         </a>
                     </div>
@@ -208,6 +208,35 @@
                                 @include('components.partials.not-found', ['pesan' => 'Belum ada tindak lanjut / disposisi dari surat ini.'])
                             @endif
                         </div>
+
+                        {{-- Riwayat Pembaca --}}
+                        @if (count($pembaca) > 0)
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Pegawai yang Telah Membaca Surat Ini</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Nama Pegawai</th>
+                                                    <th>Tanggal Dibaca</th>
+                                                </tr>
+                                                @foreach ($pembaca as $index => $item)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ \App\Models\Pegawai::find($item['id'])->nama }}</td>
+                                                        <td>{{ DateFormat::convertDateTime(date("Y-m-d", strtotime($item['tgl_baca']))) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @break
                 @case("keluar")
                     {{-- Tujuan Pengiriman Surat --}}
