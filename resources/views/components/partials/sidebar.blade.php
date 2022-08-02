@@ -1,14 +1,14 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ env('APP_URL') . 'dashboard' }}">SILATIK</a>
+            <a href="{{ route('dashboard') }}">SILATIK</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
+            <a href="{{ route('dashboard') }}">St</a>
         </div>
         <ul class="sidebar-menu">
             <li class="active">
-                <a href="{{ env('APP_URL') . 'dashboard' }}" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span>
                 </a>
