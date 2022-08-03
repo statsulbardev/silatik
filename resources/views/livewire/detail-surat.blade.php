@@ -123,11 +123,15 @@
                                                     </td>
                                                     <td>
                                                         @hasanyrole('kabps|sekretaris')
-                                                            <ul class="pl-3">
-                                                                @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'] as $item)
-                                                                    <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
-                                                                @endforeach
-                                                            </ul>
+                                                            @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit']) > 1)
+                                                                <ul class="pl-3">
+                                                                    @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'] as $item)
+                                                                        <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @else
+                                                            {{ \App\Models\UnitFungsi::where('id', $surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'])->pluck('nama')[0] }}
+                                                            @endif
                                                         @endhasanyrole
 
                                                         @hasanyrole('kabag|kf')
@@ -175,13 +179,29 @@
                                                             if (auth()->user()->hasRole('kabag|kf')) {
                                                                 $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
                                                                     -> where('unit_koordinator', auth()->user()->unit_fungsi_id);
+                                                            } elseif(auth()->user()->hasRole('kabps')) {
+                                                                $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis);
                                                             } else {
                                                                 $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
                                                                     -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
                                                             }
                                                         @endphp
                                                         <td>
-                                                            {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
+                                                            @hasrole('kabps')
+                                                                @if (count($teknis) > 1)
+                                                                    <ul class="pl-3">
+                                                                        @foreach ($teknis as $item)
+                                                                            <li>{{ \App\Models\UnitFungsi::find((int) $item['unit_koordinator'])->nama }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @else
+                                                                    {{ \App\Models\UnitFungsi::find((int) $teknis[0]['unit_koordinator'])->nama }}
+                                                                @endif
+                                                            @endhasrole
+
+                                                            @hasanyrole('sekretaris|staf|skf|kabag|kf')
+                                                                {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
+                                                            @endhasanyrole
                                                         </td>
                                                         <td>
                                                             @if (count($teknis->pluck('unit_penerima')[0]) > 1)
