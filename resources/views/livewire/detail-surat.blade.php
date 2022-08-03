@@ -167,21 +167,34 @@
                                                         }}
                                                     </td>
                                                 </tr>
-                                                @hasanyrole('skf|staf')
-                                                    {{-- Untuk SKF/Staf --}}
+
+                                                {{-- Cek jika KF/Kabag yang bersangkutan sudah mendisposisikan ke bawahannya --}}
+                                                @if ($surat->relasiDisposisi->unit_fungsi_teknis)
                                                     <tr>
                                                         @php
-                                                            $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
+                                                            if (auth()->user()->hasRole('kabag|kf')) {
+                                                                $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
+                                                                    -> where('unit_koordinator', auth()->user()->unit_fungsi_id);
+                                                            } else {
+                                                                $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
                                                                     -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
+                                                            }
                                                         @endphp
                                                         <td>
                                                             {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
                                                         </td>
                                                         <td>
-                                                            {{ auth()->user()->relasiUnitFungsi->nama }}
+                                                            @if (count($teknis->pluck('unit_penerima')[0]) > 1)
+                                                                <ul>
+                                                                    @foreach ($teknis->pluck('unit_penerima')[0] as $item)
+                                                                        <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @else
+                                                                {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_penerima')[0][0])->nama }}
+                                                            @endif
                                                         </td>
                                                         <td>
-
                                                             {!! $teknis->pluck('catatan')[0] !!}
                                                         </td>
                                                         <td>
@@ -199,7 +212,7 @@
                                                             {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
                                                         </td>
                                                     </tr>
-                                                @endhasanyrole
+                                                @endif
                                             @endif
                                         </table>
                                     </div>

@@ -35,7 +35,12 @@
                                                     <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                 </span>
                                             </label>
-                                            <span>{!! $item->perihal !!}</span>
+                                            <span><div>{!! $item->perihal !!}</div></span><br>
+
+                                            @include('components.partials.orang-baca', [
+                                                'route' => 'kf-detail-surat-masuk',
+                                                'surat' => $item
+                                            ])
                                         </td>
 
                                         {{-- Pengirim Surat --}}

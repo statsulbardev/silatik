@@ -51,10 +51,6 @@
                                                         </span>
                                                     </label>
                                                     <span><div>{!! $item->perihal !!}</div></span>
-
-                                                    @if (\Carbon\Carbon::now()->diffInDays($item->tanggal_buat) < 2)
-                                                        <br><span class="badge badge-primary">Baru</span>
-                                                    @endif
                                                 </td>
 
                                                 {{-- Pengirim Surat --}}
@@ -91,11 +87,11 @@
                                                         </span>
                                                     </label>
                                                     <span><div>{!! $item->perihal !!}</div></span><br>
-                                                    <a href={{ route('kepala-detail-surat-masuk', $item->id) }} class="badge {{ is_null($item->relasiSuratBaca) ? 'badge-danger' : 'badge-primary' }} mb-1 text-white" style="cursor: pointer">
-                                                        <i class="fas fa-check-double"></i> Dibaca
-                                                        {{ is_null($item->relasiSuratBaca) ? 0 : count($item->relasiSuratBaca->pegawai_id) }}
-                                                        Orang
-                                                    </a>
+
+                                                    @include('components.partials.orang-baca', [
+                                                        'route' => 'kepala-detail-surat-masuk',
+                                                        'surat' => $item
+                                                    ])
                                                 </td>
 
                                                 {{-- Pengirim Surat --}}
