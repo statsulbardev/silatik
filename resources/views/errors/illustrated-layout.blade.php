@@ -460,8 +460,8 @@
         <div class="md:flex min-h-screen">
             <div class="w-full md:w-1/2 bg-white flex items-center justify-center">
                 <div class="max-w-sm m-8">
-                    <div class="text-black text-5xl md:text-15xl font-black">
-                        @yield('code', __('Oh no'))
+                    <div class="text-black text-2xl md:text-15xl font-black">
+                        @yield('code', __('503, Layanan Tidak Tersedia'))
                     </div>
 
                     <div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
