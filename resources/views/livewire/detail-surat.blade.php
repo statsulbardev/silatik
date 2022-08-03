@@ -135,7 +135,15 @@
                                                         @endhasanyrole
 
                                                         @hasanyrole('kabag|kf')
+                                                        @if (count($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit']) > 1)
+                                                            <ul class="pl-3">
+                                                                @foreach ($surat->relasiDisposisi->unit_fungsi_koordinasi[0]['unit'] as $item)
+                                                                    <li>{{ \App\Models\UnitFungsi::where('id', $item)->pluck('nama')[0] }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @else
                                                             {{ \App\Models\UnitFungsi::where('id', auth()->user()->unit_fungsi_id)->pluck('nama')[0] }}
+                                                        @endif
                                                         @endhasanyrole
 
                                                         @hasanyrole('skf|staf')
@@ -205,7 +213,7 @@
                                                         </td>
                                                         <td>
                                                             @if (count($teknis->pluck('unit_penerima')[0]) > 1)
-                                                                <ul>
+                                                                <ul class="pl-3">
                                                                     @foreach ($teknis->pluck('unit_penerima')[0] as $item)
                                                                         <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
                                                                     @endforeach
