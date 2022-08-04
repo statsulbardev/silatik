@@ -16,7 +16,7 @@
                                     <th>Informasi Surat</th>
                                     <th>Pengirim</th>
                                     <th>Tanggal Diterima</th>
-                                    <th>Status Disposisi</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                                 @foreach ($daftar_surat->paginate(20) as $item)
