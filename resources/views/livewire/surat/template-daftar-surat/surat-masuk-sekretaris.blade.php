@@ -2,11 +2,7 @@
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <div class="mx-auto"></div>
-                <a href="{{ url(env('APP_URL') . 'surat-masuk/sekretaris/tambah') }}" class="btn btn-icon icon-left btn-primary">
-                    <i class="fa-solid fa-plus"></i>
-                    Entri {{ str_replace('-',' ',ucwords($routing, '-')) }}
-                </a>
+                <h4>Daftar Surat</h4>
             </div>
             @if (count($daftar_surat) > 0)
                 <div class="card-body">
@@ -14,44 +10,70 @@
                         <table class="table table-bordered table-striped table-md">
                             <tbody>
                                 <tr>
+                                    <th>No. Agenda</th>
                                     <th>Informasi Surat</th>
                                     <th>Pengirim</th>
                                     <th>Tanggal Diterima</th>
-                                    <th>Status Disposisi</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                                 @foreach ($daftar_surat->paginate(20) as $item)
                                     <tr>
+                                        {{-- Nomor Agenda Surat --}}
+                                        <td>
+                                            {{ $item->no_agenda }}
+                                        </td>
+
+                                        {{-- Informasi Surat --}}
                                         <td>
                                             <label class="text-primary">
                                                 <span style="letter-spacing: 1px">
                                                     No. {{ $item->no_surat }},
-                                                    <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                    <i class="fa-solid fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                 </span>
                                             </label><br>
-                                            <span>{!! $item->perihal !!}</span>
+                                            <span>
+                                                <div>{!! $item->perihal !!}</div>
+                                            </span><br>
+
+                                            @include('components.partials.orang-baca', [
+                                                'route' => 'sekretaris-detail-surat-masuk',
+                                                'surat' => $item
+                                            ])
                                         </td>
+
+                                        {{-- Pengirim Surat --}}
                                         <td>{{ $item->pengirim }}</td>
+
+                                        {{-- Tanggal Diterima --}}
                                         <td>
                                             {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                         </td>
+
+                                        {{-- Status --}}
                                         <td>
                                             @if ($item->relasiDisposisi)
-                                                <div class="badge badge-primary">Sudah Disposisi</div>
+                                                <div class="badge badge-primary">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Sudah Disposisi
+                                                </div>
                                             @else
-                                                <div class="badge badge-warning">Belum Disposisi</div>
+                                                <div class="badge badge-danger">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    Belum Disposisi
+                                                </div>
                                             @endif
                                         </td>
                                         <td>
                                             @if ($item->relasiDisposisi)
-                                                <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <a href="{{ route('sekretaris-detail-surat-masuk', $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             @else
-                                                <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/' . $item->id }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <a href="{{ route('sekretaris-detail-surat-masuk', $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ env('APP_URL') . 'surat-masuk/sekretaris/edit/' . $item->id }}" id="edit" class="btn btn-icon btn-warning">
+                                                <a href="{{ route('sekretaris-edit-surat-masuk', $item->id) }}" id="edit" class="btn btn-icon btn-warning">
                                                     <i class="fas fa-pencil"></i>
                                                 </a>
                                                 <button wire:click="delete({{ $item->id }})" id="hapus" class="btn btn-danger">

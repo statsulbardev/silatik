@@ -85,7 +85,7 @@ trait SuratTrait
         $user = Auth::user();
 
         return Surat::query()
-                -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
                 -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                 -> where('tipe', $tipe)
                 -> where('unit_kerja_id', $user->unit_kerja_id)
@@ -118,8 +118,8 @@ trait SuratTrait
                                             $q
                                                 -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
                                                 -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
-                                                -> whereNull('unit_fungsi_teknis')
-                                                -> orWhereJsonDoesntContain('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
+                                                -> whereNull('unit_fungsi_teknis');
+                                                // -> orWhereJsonDoesntContain('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
                                     })
                                     -> with('relasiDisposisi')
                                     -> latest('tanggal_buat');
@@ -178,7 +178,7 @@ trait SuratTrait
         $tempQuery
             ->when($tipe === "sm", function($query) use ($user) {
                 return $query
-                        -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                        -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
                         -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                         -> whereHas('relasiDisposisi', function($qr) use ($user) {
                                 $qr
@@ -205,7 +205,7 @@ trait SuratTrait
         $tempQuery
             -> when($tipe === 'sm', function($query) use ($tipe, $user) {
                     return $query
-                        -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                        -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
                         -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                         -> whereHas('relasiDisposisi', function($qr) use ($user) {
                                 $qr

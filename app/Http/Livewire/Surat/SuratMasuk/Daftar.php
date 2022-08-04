@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Main\Surat;
+namespace App\Http\Livewire\Surat\SuratMasuk;
 
-use App\Models\SuratBaca;
 use App\Traits\SuratTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,12 +9,11 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DaftarSurat extends Component
+class Daftar extends Component
 {
     use SuratTrait, WithPagination;
 
     public $tipe;
-    public $role;
     public $routing;
     public $daftar_surat;
     public $nama_routing;
@@ -32,9 +30,7 @@ class DaftarSurat extends Component
             $this->judul = "Surat Keluar";
         }
 
-        $this->role = Auth::user()->roles->sortDesc()->max()->name;
-
-        switch ($this->role)
+        switch (Auth::user()->roles->sortDesc()->max()->name)
         {
             case 'kabps':
                 $this->daftar_surat = $this->getChiefMails($this->tipe, $this->nama_routing);
@@ -54,13 +50,12 @@ class DaftarSurat extends Component
             case 'staf':
                 $this->daftar_surat = $this->getStafMails($this->tipe);
                 break;
-            default;
         }
     }
 
     public function render()
     {
-        return view('livewire.main.surat.daftar-surat')->layout('layouts.main');
+        return view('livewire.surat.surat-masuk.daftar')->layout('layouts.main');
     }
 
     public function delete($id)

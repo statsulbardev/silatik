@@ -23,6 +23,7 @@
                                     <th>Informasi Surat</th>
                                     <th>Pengirim</th>
                                     <th>Tanggal Diterima</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                                 @foreach ($daftar_surat->paginate(20) as $index => $item)
@@ -32,7 +33,7 @@
                                             <label class="text-primary">
                                                 <span style="letter-spacing: 1px">
                                                     No. {{ $item->no_surat }},
-                                                    <i class="fas fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
+                                                    <i class="fa-solid fa-calendar"></i> {{ DateFormat::convertDateTime($item->tanggal_surat) }}
                                                 </span>
                                             </label>
                                             <span><div>{!! $item->perihal !!}</div></span><br>
@@ -51,14 +52,33 @@
                                             {{ DateFormat::convertDateTime($item->tanggal_buat) }}
                                         </td>
 
+                                        {{-- Status --}}
+                                        <td>
+                                            <div class="badge badge-primary mb-1">
+                                                <i class="fa-solid fa-check"></i>
+                                                Disposisi Kepala
+                                            </div><br>
+                                            @if (str_contains($nama_routing, "disposisi"))
+                                                <div class="badge badge-danger">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    Disposisi KF
+                                                </div>
+                                            @else
+                                                <div class="badge badge-primary">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    Disposisi KF
+                                                </div>
+                                            @endif
+                                        </td>
+
                                         {{-- Aksi --}}
                                         <td>
-                                            @if (Str::contains($nama_routing, "disposisi"))
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id . '/disposisi') }}" id="disposisi" class="btn btn-icon btn-warning">
+                                            @if (str_contains($nama_routing, "disposisi"))
+                                                <a href="{{ route('kf-disposisi-surat-masuk', $item->id) }}" id="disposisi" class="btn btn-icon btn-warning">
                                                     <i class="fas fa-tags"></i>
                                                 </a>
                                             @else
-                                                <a href="{{ url(env('APP_URL') . 'surat-masuk/kf/' . $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
+                                                <a href="{{ route('kf-detail-surat-masuk', $item->id) }}" id="lihat" class="btn btn-icon btn-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             @endif
@@ -81,8 +101,8 @@
 
 @push('scripts')
 <script>
-    tippy('#periksa', {
-        content: 'Periksa Surat',
+    tippy('#disposisi', {
+        content: 'Disposisi Surat',
         placement: 'bottom',
         arrow: true
     })

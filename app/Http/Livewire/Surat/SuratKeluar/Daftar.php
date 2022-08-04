@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Main\Surat;
+namespace App\Http\Livewire\Surat\SuratKeluar;
 
 use App\Traits\SuratTrait;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class DaftarPemeriksaan extends Component
+class Daftar extends Component
 {
     use SuratTrait;
 
@@ -23,6 +23,6 @@ class DaftarPemeriksaan extends Component
 
     // public function render()
     // {
-    //     return view('livewire.main.surat.daftar-pemeriksaan')->layout('layouts.main');
+    //     return view('livewire.surat.surat-keluar.pemeriksaan')->layout('layouts.main');
     // }
 }

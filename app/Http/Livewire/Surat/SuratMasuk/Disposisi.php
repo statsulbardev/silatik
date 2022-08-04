@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Main\Surat;
+namespace App\Http\Livewire\Surat\SuratMasuk;
 
 use App\Models\Surat;
 use App\Models\UnitFungsi;
@@ -39,7 +39,7 @@ class Disposisi extends Component
 
     public function render()
     {
-        return view('livewire.main.surat.disposisi')->layout('layouts.main');
+        return view('livewire.surat.surat-masuk.disposisi')->layout('layouts.main');
     }
 
     public function updatedUnitFungsi($value)

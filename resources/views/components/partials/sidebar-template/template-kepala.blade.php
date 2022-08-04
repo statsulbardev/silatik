@@ -4,12 +4,12 @@
         <i class="fas fa-paper-plane"></i>
         <span>Disposisi</span>
     </a>
-    <a href="{{ route('kepala-surat-masuk') }}" class="nav-link">
+    <a href="{{ route('kepala-daftar-surat-masuk') }}" class="nav-link">
         <i class="fas fa-right-to-bracket"></i>
         <span>Kotak Surat</span>
     </a>
 </li>
-<li class="menu-header">SURAT KELUAR</li>
+{{-- <li class="menu-header">SURAT KELUAR</li>
 <li>
     <a href="{{ route('kepala-periksa-daftar-surat-keluar') }}" class="nav-link">
         <i class="fas fa-check-double"></i>
@@ -19,4 +19,4 @@
         <i class="fas fa-right-from-bracket"></i>
         <span>Kotak Surat</span>
     </a>
-</li>
+</li> --}}

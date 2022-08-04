@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -44,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
                     'pageName' => $pageName
                 ]
             );
+        });
+
+        Blade::if('umum', function () {
+            return Auth::user()->hasAnyRole('skf|staf') && Auth::user()->relasiUnitFungsi->nama === 'Fungsi Umum';
         });
     }
 }

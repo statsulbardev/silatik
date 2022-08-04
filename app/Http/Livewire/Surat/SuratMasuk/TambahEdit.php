@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Main\Surat;
+namespace App\Http\Livewire\Surat\SuratMasuk;
 
 use App\Traits\SuratTrait;
 use App\Models\Surat;
@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class TambahEditSurat extends Component
+class TambahEdit extends Component
 {
     use WithFileUploads, SuratTrait;
 
@@ -93,7 +93,7 @@ class TambahEditSurat extends Component
 
     public function render()
     {
-        return view('livewire.main.surat.tambah-edit-surat')->layout('layouts.main');
+        return view('livewire.surat.surat-masuk.tambah-edit')->layout('layouts.main');
     }
 
     public function create(RepositoriSurat $repositoriSurat)

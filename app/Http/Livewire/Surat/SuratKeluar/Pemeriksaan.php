@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Main\Surat;
+namespace App\Http\Livewire\Surat\SuratKeluar;
 
 use App\Models\Surat;
 use App\Repositories\RepositoriPemeriksaan;
@@ -32,7 +32,7 @@ class Pemeriksaan extends Component
 
     public function render()
     {
-        return view('livewire.main.surat.pemeriksaan')->layout('layouts.main');
+        return view('livewire.surat.surat-keluar.pemeriksaan')->layout('layouts.main');
     }
 
     public function save(RepositoriPemeriksaan $repositoriPemeriksaan)

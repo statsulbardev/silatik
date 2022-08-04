@@ -13,28 +13,33 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @switch(auth()->user()->roles->sortDesc()->max()->name)
-                @case('admin')
-                    @break
-                @case('kabps')
-                    @include('components.partials.sidebar-template.template-kepala')
-                    @break
-                @case('sekretaris')
-                    @include('components.partials.sidebar-template.template-sekretaris')
-                    @break
-                @case('kf')
-                    @include('components.partials.sidebar-template.template-kf')
-                    @break
-                @case('kabag')
-                    @include('components.partials.sidebar-template.template-kabag')
-                    @break
-                @case('skf')
-                    @include('components.partials.sidebar-template.template-skf')
-                    @break
-                @case('staf')
-                    @include('components.partials.sidebar-template.template-staf')
-                    @break
-            @endswitch
+            @role('admin')
+
+            @endrole
+
+            @role('kabps')
+                @include('components.partials.sidebar-template.template-kepala')
+            @endrole
+
+            @role('kabag')
+                @include('components.partials.sidebar-template.template-kabag')
+            @endrole
+
+            @role('kf')
+                @include('components.partials.sidebar-template.template-kf')
+            @endrole
+
+            @role('skf')
+                @include('components.partials.sidebar-template.template-skf')
+            @endrole
+
+            @role('sekretaris')
+                @include('components.partials.sidebar-template.template-sekretaris')
+            @endrole
+
+            @role('staf')
+                @include('components.partials.sidebar-template.template-staf')
+            @endrole
         </ul>
     </aside>
   </div>

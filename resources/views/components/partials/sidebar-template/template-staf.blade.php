@@ -1,11 +1,24 @@
-<li class="menu-header">PERSURATAN</li>
+<li class="menu-header">SURAT MASUK</li>
 <li>
-    <a href="{{ route('staf-surat-masuk') }}" class="nav-link">
-        <i class="fas fa-mail-bulk"></i>
-        <span>Surat Masuk</span>
-    </a>
-    <a href="{{ route('staf-surat-keluar') }}" class="nav-link">
-        <i class="fas fa-inbox"></i>
-        <span>Surat Keluar</span>
+    @umum
+        <a href="{{ route('staf-tambah-surat-masuk') }}" class="nav-link">
+            <i class="fas fa-pencil"></i>
+            <span>Entri Surat</span>
+        </a>
+    @endumum
+    <a href="{{ route('staf-daftar-surat-masuk') }}" class="nav-link">
+        <i class="fas fa-right-to-bracket"></i>
+        <span>Kotak Surat</span>
     </a>
 </li>
+{{-- <li class="menu-header">SURAT KELUAR</li>
+<li>
+    <a href="#" class="nav-link">
+        <i class="fas fa-pencil"></i>
+        <span>Entri Surat</span>
+    </a>
+    <a href="#" class="nav-link">
+        <i class="fas fa-right-from-bracket"></i>
+        <span>Kotak Surat</span>
+    </a>
+</li> --}}
