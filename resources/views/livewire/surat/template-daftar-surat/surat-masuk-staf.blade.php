@@ -99,3 +99,23 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+     tippy('#lihat', {
+        content: 'Lihat Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#edit', {
+        content: 'Edit Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+    tippy('#hapus', {
+        content: 'Hapus Surat',
+        placement: 'bottom',
+        arrow: true
+    })
+</script>
+@endpush
