@@ -89,6 +89,7 @@ trait SuratTrait
                 -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                 -> where('tipe', $tipe)
                 -> where('unit_kerja_id', $user->unit_kerja_id)
+                -> where('pegawai_id', $user->id)
                 -> latest('tanggal_buat')
                 -> get();
     }
