@@ -115,11 +115,16 @@ trait SuratTrait
                                 return $qr
                                     -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
                                     -> whereHas('relasiDisposisi', function($q) use ($user) {
-                                            $q
-                                                -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
-                                                -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
-                                                -> whereNull('unit_fungsi_teknis');
-                                                // -> orWhereJsonDoesntContain('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
+                                        $q
+                                            -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
+                                            -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
+                                            -> whereJsonDoesntContain('unit_fungsi_teknis', ['unit_koordinator' => $user->unit_fungsi_id]);
+                                    })
+                                    -> orWhereHas('relasiDisposisi', function($r) use ($user) {
+                                        $r
+                                            -> whereJsonContains('unit_kerja_penerima', (string) $user->unit_kerja_id)
+                                            -> whereJsonContains('unit_fungsi_koordinasi', ['unit' => (string) $user->unit_fungsi_id])
+                                            -> whereNull('unit_fungsi_teknis');
                                     })
                                     -> with('relasiDisposisi')
                                     -> latest('tanggal_buat');
@@ -175,21 +180,39 @@ trait SuratTrait
 
         $user = Auth::user();
 
-        $tempQuery
-            ->when($tipe === "sm", function($query) use ($user) {
-                return $query
-                        -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
-                        -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
-                        -> whereHas('relasiDisposisi', function($qr) use ($user) {
+        // Cek dari fungsi umum
+        if ($user->relasiUnitFungsi->nama === 'Fungsi Umum') {
+            $tempQuery
+                -> when($tipe === "sm", function($query) use ($user) {
+                    return $query
+                            -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                            -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
+                            -> whereHas('relasiDisposisi', function($qr) use ($user) {
                                 $qr
                                     -> whereJsonContains('unit_fungsi_teknis', ['unit_penerima' => (string) $user->unit_fungsi_id]);
-                        })
-                        -> where('tipe', "sm")
-                        -> latest('tanggal_buat');
-            })
-            ->when($tipe === "sk", function($query) {
+                            })
+                            -> orWhere('pegawai_id', $user->id)
+                            // -> orWhere('unit_fungsi_id', $user->unit_fungsi_id)
+                            -> where('tipe', "sm")
+                            -> latest('tanggal_buat');
+                });
+        } else {
+            $tempQuery
+                -> when($tipe === "sm", function($query) use ($user) {
+                    return $query
+                            -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                            -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
+                            -> whereHas('relasiDisposisi', function($qr) use ($user) {
+                                    $qr
+                                        -> whereJsonContains('unit_fungsi_teknis', ['unit_penerima' => (string) $user->unit_fungsi_id]);
+                            })
+                            -> where('tipe', "sm")
+                            -> latest('tanggal_buat');
+                })
+                -> when($tipe === "sk", function($query) {
 
-            });
+                });
+        }
 
         $surat = $tempQuery->get();
 
@@ -202,21 +225,38 @@ trait SuratTrait
 
         $user = Auth::user();
 
-        $tempQuery
-            -> when($tipe === 'sm', function($query) use ($tipe, $user) {
+        // Cek Jika Dari Fungsi Umum
+        if ($user->relasiUnitFungsi->nama === 'Fungsi Umum') {
+            $tempQuery
+                -> when($tipe === 'sm', function($query) use ($user) {
                     return $query
                         -> select('id', 'no_agenda', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
                         -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
                         -> whereHas('relasiDisposisi', function($qr) use ($user) {
-                                $qr
-                                    -> whereJsonContains('unit_fungsi_teknis', ['unit_penerima' => (string) $user->unit_fungsi_id]);
+                            $qr
+                                -> whereJsonContains('unit_fungsi_teknis', ['unit_penerima' => (string) $user->unit_fungsi_id]);
                         })
-                        -> where('tipe', $tipe)
+                        -> orWhere('pegawai_id', $user->id)
+                        -> where('tipe', 'sm')
                         -> latest('tanggal_buat');
-            })
-            -> when($tipe === 'sk', function($query) {
+                });
+        } else {
+            $tempQuery
+                -> when($tipe === 'sm', function($query) use ($user) {
+                        return $query
+                            -> select('id', 'no_surat', 'tanggal_surat', 'perihal', 'pengirim', 'tanggal_buat')
+                            -> with(['relasiPegawai', 'relasiBerkas', 'relasiDisposisi'])
+                            -> whereHas('relasiDisposisi', function($qr) use ($user) {
+                                    $qr
+                                        -> whereJsonContains('unit_fungsi_teknis', ['unit_penerima' => (string) $user->unit_fungsi_id]);
+                            })
+                            -> where('tipe', 'sm')
+                            -> latest('tanggal_buat');
+                })
+                -> when($tipe === 'sk', function($query) {
 
-            });
+                });
+        }
 
         $surat = $tempQuery->get();
 
