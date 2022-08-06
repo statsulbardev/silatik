@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function() {
         // Surat Masuk
         Route::get('surat-masuk/skf', DaftarSuratMasuk::class)->name('skf-daftar-surat-masuk');
         Route::get('surat-masuk/skf/tambah', TambahEditSuratMasuk::class)->middleware('cek_umum')->name('skf-tambah-surat-masuk');
+        Route::get('surat-masuk/skf/edit/{surat}', TambahEditSuratMasuk::class)->middleware('cek_umum')->name('skf-edit-surat-masuk');
         Route::get('surat-masuk/skf/{surat}', DetailSuratMasuk::class)->name('skf-detail-surat-masuk');
     });
 
