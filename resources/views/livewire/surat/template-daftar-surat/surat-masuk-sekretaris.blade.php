@@ -56,12 +56,12 @@
                                                 <div class="badge badge-primary">
                                                     <i class="fa-solid fa-check"></i>
                                                     Sudah Disposisi
-                                                </div>
+                                                </div><br>
                                             @else
-                                                <div class="badge badge-danger">
+                                                <div class="badge badge-danger mb-1">
                                                     <i class="fa-solid fa-xmark"></i>
                                                     Belum Disposisi
-                                                </div>
+                                                </div><br>
                                             @endif
                                         </td>
                                         <td>

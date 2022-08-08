@@ -71,10 +71,11 @@
                                                     <i class="fa-solid fa-check"></i>
                                                     Disposisi Kepala
                                                 </div><br>
-                                                <div class="badge badge-primary">
+                                                <div class="badge badge-primary mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Disposisi Kabag/KF
-                                                </div>
+                                                </div><br>
+                                                @include('components.partials.status-baca', ['item' => $item])
                                             @endumum
                                         </td>
 

@@ -69,16 +69,17 @@
                                         {{-- Status --}}
                                         <td>
                                             @if (str_contains($nama_routing, "disposisi"))
-                                                <span class="badge badge-danger">
+                                                <span class="badge badge-danger mb-1">
                                                     <i class="fa-solid fa-xmark"></i>
                                                     Belum Disposisi
-                                                </span>
+                                                </span><br>
                                             @else
-                                                <span class="badge badge-primary">
+                                                <span class="badge badge-primary mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Sudah Disposisi
-                                                </span>
+                                                </span><br>
                                             @endif
+                                            @include('components.partials.status-baca', ['item' => $item])
                                         </td>
 
                                         {{-- Aksi --}}

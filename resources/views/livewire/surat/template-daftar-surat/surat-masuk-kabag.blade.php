@@ -61,16 +61,17 @@
                                                 Disposisi Kepala
                                             </div><br>
                                             @if (str_contains($nama_routing, "disposisi"))
-                                                <div class="badge badge-danger">
+                                                <div class="badge badge-danger mb-1">
                                                     <i class="fa-solid fa-xmark"></i>
                                                     Disposisi Kabag
-                                                </div>
+                                                </div><br>
                                             @else
-                                                <div class="badge badge-primary">
+                                                <div class="badge badge-primary mb-1">
                                                     <i class="fa-solid fa-check"></i>
                                                     Disposisi Kabag
-                                                </div>
+                                                </div><br>
                                             @endif
+                                            @include('components.partials.status-baca', ['item' => $item])
                                         </td>
 
                                         {{-- Aksi --}}
