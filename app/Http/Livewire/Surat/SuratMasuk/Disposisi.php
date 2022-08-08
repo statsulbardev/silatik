@@ -6,6 +6,7 @@ use App\Models\Surat;
 use App\Models\UnitFungsi;
 use App\Models\UnitKerja;
 use App\Repositories\RepositoriDisposisi;
+use App\Traits\HasReadMails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -13,6 +14,8 @@ use Livewire\Component;
 
 class Disposisi extends Component
 {
+    use HasReadMails;
+
     public $surat;
     public $judul;
     public $role;
@@ -68,5 +71,10 @@ class Disposisi extends Component
 
                 return redirect(url(env('APP_URL') . 'surat-masuk/' . $this->role . '/disposisi'));
         }
+    }
+
+    public function hasRead($userId, $suratId)
+    {
+        $this->storeReaderInfo($userId, $suratId);
     }
 }

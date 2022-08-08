@@ -68,7 +68,7 @@
                 <div style="width: 22%" class="my-4 mx-auto">
                     @include('components.icons.pdf-file')
                 </div>
-                <a href="{{ google_view_file($surat->relasiBerkas->sortDesc()->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
+                <a wire:click="hasRead({{ auth()->user()->id }}, {{ $surat->id }})" href="{{ google_view_file($surat->relasiBerkas->sortDesc()->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-primary">
                     <i class="fas fa-eye"></i>
                     Lihat Berkas
                 </a>
