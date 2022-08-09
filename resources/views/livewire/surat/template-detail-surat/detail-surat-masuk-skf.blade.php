@@ -54,41 +54,44 @@
                     @if ($surat->relasiDisposisi->unit_fungsi_teknis)
                         @php
                             $teknis = collect($surat->relasiDisposisi->unit_fungsi_teknis)
-                                      -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
-                            @endphp
-                        <tr>
-                            <td>
-                                {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
-                            </td>
-                            <td>
-                                @if (count($teknis->pluck('unit_penerima')[0]) > 1)
-                                    <ul class="pl-3">
-                                        @foreach ($teknis->pluck('unit_penerima')[0] as $item)
-                                            <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_penerima')[0][0])->nama }}
-                                @endif
-                            </td>
-                            <td>
-                                {!! $teknis->pluck('catatan')[0] !!}
-                            </td>
-                            <td>
-                                @if (count($surat->relasiDisposisi->poin) > 1)
-                                    <ul class="pl-3">
-                                        @foreach ($surat->relasiDisposisi->poin as $item)
-                                            <li>{{ $item }}</li>
-                                        @endforeach
-                                    </ul>
-                                @else
-                                    {{ $surat->relasiDisposisi->poin[0] }}
-                                @endif
-                            </td>
-                            <td>
-                                {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
-                            </td>
-                        </tr>
+                                    -> where('unit_koordinator', auth()->user()->relasiUnitFungsi->parent);
+                        @endphp
+
+                        @if ($teknis->count() > 0)
+                            <tr>
+                                <td>
+                                    {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_koordinator')[0])->nama }}
+                                </td>
+                                <td>
+                                    @if (count($teknis->pluck('unit_penerima')[0]) > 1)
+                                        <ul class="pl-3">
+                                            @foreach ($teknis->pluck('unit_penerima')[0] as $item)
+                                                <li>{{ \App\Models\UnitFungsi::find((int) $item)->nama }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{ \App\Models\UnitFungsi::find((int) $teknis->pluck('unit_penerima')[0][0])->nama }}
+                                    @endif
+                                </td>
+                                <td>
+                                    {!! $teknis->pluck('catatan')[0] !!}
+                                </td>
+                                <td>
+                                    @if (count($surat->relasiDisposisi->poin) > 1)
+                                        <ul class="pl-3">
+                                            @foreach ($surat->relasiDisposisi->poin as $item)
+                                                <li>{{ $item }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{ $surat->relasiDisposisi->poin[0] }}
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ DateFormat::convertDateTime(date("Y-m-d", strtotime($teknis->pluck('tgl_disposisi')[0]))) }}
+                                </td>
+                            </tr>
+                        @endif
                     @endif
                 </table>
             </div>
