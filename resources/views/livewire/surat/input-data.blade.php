@@ -6,6 +6,17 @@
     <form wire:submit.prevent="{{ $metode }}">
         <div class="card">
             <div class="card-body">
+                {{-- File Surat --}}
+                <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
+
+                {{-- Berkas Surat Sebelumnya --}}
+                @if ($tahapan === 'edit')
+                    <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-success">
+                        <i class="fas fa-eye"></i>
+                        Link Berkas Surat Sebelumnya
+                    </a>
+                @endif
+
                 {{-- Nomor Agenda --}}
                 <x-forms.input-text judul='Nomor Agenda' model='no_agenda' tipe='number' />
 
@@ -44,18 +55,6 @@
                         <x-forms.checkbox judul='Fungsi IPDS' model='unitFungsi' nilai='7' style='col-12 col-md-6 col-lg-6' />
                     </div>
                 @endif
-
-                {{-- File Surat --}}
-                <x-forms.file-upload judul='Unggah Berkas Surat' model='file_surat' />
-
-                {{-- Berkas Surat Sebelumnya --}}
-                @if ($tahapan === 'edit')
-                    <a href="{{ google_view_file($surat->relasiBerkas->max()->tautan) }}" target="_blank" class="btn btn-icon icon-left btn-success">
-                        <i class="fas fa-eye"></i>
-                        Link Berkas Surat Sebelumnya
-                    </a>
-                @endif
-
             </div>
             <div class="card-footer text-right">
                 <button class="btn btn-primary" type="submit">
