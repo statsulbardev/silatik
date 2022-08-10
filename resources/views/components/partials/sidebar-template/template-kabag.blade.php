@@ -9,13 +9,13 @@
         <span>Kotak Surat</span>
     </a>
 </li>
-{{-- <li class="menu-header">SURAT KELUAR</li>
+<li class="menu-header">SURAT KELUAR</li>
 <li>
-    <a href="{{ route('kabag-periksa-daftar-surat-keluar') }}" class="nav-link">
+    <a href="#" class="nav-link">
         <i class="fas fa-check-double"></i>
         <span>Pemeriksaan</span>
     </a>
-    <a href="{{ route('kabag-surat-keluar') }}" class="nav-link">
+    <a href="#" class="nav-link">
         <i class="fas fa-right-from-bracket"></i>
         <span>Kotak Surat</span>
     </a>

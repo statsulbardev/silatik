@@ -11,7 +11,7 @@
         <span>Kotak Surat</span>
     </a>
 </li>
-{{-- <li class="menu-header">SURAT KELUAR</li>
+<li class="menu-header">SURAT KELUAR</li>
 <li>
     <a href="#" class="nav-link">
         <i class="fas fa-pencil"></i>
@@ -21,4 +21,4 @@
         <i class="fas fa-right-from-bracket"></i>
         <span>Kotak Surat</span>
     </a>
-</li> --}}
+</li>
