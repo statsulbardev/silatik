@@ -6,14 +6,16 @@
                     @include('livewire.surat.input-data', [
                         'tahapan'     => 'tambah',
                         'metode'      => 'create',
-                        'judul'       => 'Entri Informasi Surat Masuk'
+                        'judul'       => 'Entri Informasi Surat Masuk',
+                        'judul_besar' => 'Surat Masuk'
                     ])
                     @break
                 @case('edit')
                     @include('livewire.surat.input-data', [
                         'tahapan'     => 'edit',
                         'metode'      => 'edit',
-                        'judul'       => 'Edit Informasi Surat ' . $surat->no_surat
+                        'judul'       => 'Edit Informasi Surat ' . $surat->no_surat,
+                        'judul_besar' => 'Surat Masuk'
                     ])
                     @break
             @endswitch

@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label>
+    <label class="font-weight-bold">
         {{ $judul }}
         @if ($opsi) <sup class="p-1 bg-info rounded text-white">opsional</sup> @endif
     </label>
