@@ -113,6 +113,12 @@
                             <x-forms.checkbox judul='ACC Untuk Ditindaklanjuti' model='poin' nilai='ACC Untuk Ditindaklanjuti' style='col-12 col-md-6 col-lg-6' />
                             <x-forms.checkbox judul='Arsip' model='poin' nilai='Arsip' style='col-12 col-md-6 col-lg-6' />
                         </div>
+
+                        {{-- error message --}}
+                        @include('components.notifications.error-field', [
+                            'model' => 'poin',
+                            'pesan' => 'Poin disposisi dibutuhkan, pilih minimal satu poin disposisi.'
+                        ])
                     </div>
                 </div>
 
@@ -135,6 +141,12 @@
                             <x-forms.checkbox judul='Fungsi Nerwilis' model='penerima' nilai='6' style='col-12 col-md-6 col-lg-6' />
                             <x-forms.checkbox judul='Fungsi IPDS' model='penerima' nilai='7' style='col-12 col-md-6 col-lg-6' />
                         </div>
+
+                        {{-- error message --}}
+                        @include('components.notifications.error-field', [
+                            'model' => 'penerima',
+                            'pesan' => 'Tujuan disposisi dibutuhkan, pilih minimal satu tujuan disposisi.'
+                        ])
                     </div>
                 </div>
 
@@ -147,6 +159,12 @@
                         <div class="form-group">
                             <textarea wire:model.defer="catatan" class="form-control" style="height: 125px"></textarea>
                         </div>
+
+                        {{-- error message --}}
+                        @include('components.notifications.error-field', [
+                            'model' => 'catatan',
+                            'pesan' => 'Isian kolom catatan dibutuhkan, isikan minimal 5 karakter.'
+                        ])
                     </div>
                 </div>
             </div>

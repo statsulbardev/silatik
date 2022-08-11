@@ -148,6 +148,12 @@
                                 <x-forms.checkbox judul='{{ $item->nama }}' model='penerima' nilai='{{ $item->id }}' style='col-12 col-md-10 col-lg-10' />
                             </div>
                         @endforeach
+
+                        {{-- error message --}}
+                        @include('components.notifications.error-field', [
+                            'model' => 'penerima'
+                            'pesan' => 'Tujuan disposisi dibutuhkan, pilih minimal satu tujuan disposisi.'
+                        ])
                     </div>
                 </div>
 
@@ -160,6 +166,12 @@
                         <div class="form-group">
                             <textarea wire:model.defer="catatan" class="form-control" style="height: 125px"></textarea>
                         </div>
+
+                        {{-- error message --}}
+                        @include('components.notifications.error-field', [
+                            'model' => 'catatan',
+                            'pesan' => 'Isian kolom catatan dibutuhkan, isikan minimal 5 karakter.'
+                        ])
                     </div>
                 </div>
             </div>

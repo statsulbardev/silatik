@@ -25,7 +25,9 @@ class Disposisi extends Component
     public $unitFungsi;
 
     protected $rules = [
-        'catatan'    => 'required|min:5'
+        'poin'     => 'required',
+        'penerima' => 'required',
+        'catatan'  => 'required|min:5'
     ];
 
     public function mount(Surat $surat)
