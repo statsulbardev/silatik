@@ -51,7 +51,7 @@
                         @endif
                     </div>
                     <div class="col-12 col-md-3 col-lg-3">
-                        {{-- File Surat --}}w
+                        {{-- File Surat --}}
                         <div class="bg-whitesmoke text-center border rounded">
                             <p class="mt-3 font-weight-bold">Unggah Berkas Surat</p>
                             <i class="fa-solid fa-cloud-upload mb-4" style="font-size:8em"></i>
@@ -65,7 +65,7 @@
                                 Berkas surat sedang dimuat ...
                             </div>
                             @if ($file_surat)
-                                <p class="px-4" class="font-weight-bold">{{ $file_surat->getFileName() }}</p>
+                                <p class="px-4" class="font-weight-bold">{{ $file_surat->getClientOriginalName() }}</p>
                             @endif
                         </div>
 

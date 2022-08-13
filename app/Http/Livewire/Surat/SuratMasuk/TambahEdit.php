@@ -98,7 +98,6 @@ class TambahEdit extends Component
 
     public function create(RepositoriSurat $repositoriSurat)
     {
-        // dd($this->unitFungsi);
         $this->validate();
 
         $pesan = $repositoriSurat->store($this);
