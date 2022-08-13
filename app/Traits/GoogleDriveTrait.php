@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 trait GoogleDriveTrait
 {
-    private $disk = 'google';
-
     public function uploadFile(string $folderId, string $stage, $file)
     {
         switch($stage)
@@ -18,13 +16,13 @@ trait GoogleDriveTrait
                     $folderName = Str::random(5);
 
                     // Create Sub Directory By Given Date
-                    Storage::disk($this->disk)->makeDirectory($folderId . '/' . $folderName);
+                    Storage::disk(config('filesystems.disks.google.driver'))->makeDirectory($folderId . '/' . $folderName);
 
-                    $folderId = collect(Storage::disk($this->disk)->listContents($folderId, false))->where('name', $folderName)->first();
+                    $folderId = collect(Storage::disk(config('filesystems.disks.google.driver'))->listContents($folderId, false))->where('name', $folderName)->first();
 
-                    foreach ($file as $item) $item['url']->storeAs($folderId['basename'], Str::random(5) . '-' . $item['url']->getClientOriginalName(), $this->disk);
+                    foreach ($file as $item) $item['url']->storeAs($folderId['basename'], Str::random(5) . '-' . $item['url']->getClientOriginalName(), config('filesystems.disks.google.driver'));
 
-                    $contents = collect(Storage::disk($this->disk)->listContents($folderId['basename'], false));
+                    $contents = collect(Storage::disk(config('filesystems.disks.google.driver'))->listContents($folderId['basename'], false));
 
                     return collect([
                         'folderId' => $folderId['basename'],
@@ -33,9 +31,9 @@ trait GoogleDriveTrait
                 } else {
                     $filename = Str::random(5) . '_' . $file->getClientOriginalName();
 
-                    if (!is_null($file)) $file->storeAs($folderId, $filename, $this->disk);
+                    if (!is_null($file)) $file->storeAs($folderId, $filename, config('filesystems.disks.google.driver'));
 
-                    $contents = collect(Storage::disk($this->disk)->listContents($folderId, false))->where('name', $filename)->first();
+                    $contents = collect(Storage::disk(config('filesystems.disks.google.driver'))->listContents($folderId, false))->where('name', $filename)->first();
 
                     $file = $contents['basename'];
 
@@ -45,17 +43,17 @@ trait GoogleDriveTrait
                 break;
             case 'update' :
                 if (is_array($file)) {
-                    foreach ($file as $item) $item['url']->storeAs($folderId, Str::random(5) . '_' . $item['url']->getClientOriginalName(), $this->disk);
+                    foreach ($file as $item) $item['url']->storeAs($folderId, Str::random(5) . '_' . $item['url']->getClientOriginalName(), config('filesystems.disks.google.driver'));
 
-                    $contents = collect(Storage::disk($this->disk)->listContents($folderId, false));
+                    $contents = collect(Storage::disk(config('filesystems.disks.google.driver'))->listContents($folderId, false));
 
                     return $contents->pluck('basename');
                 } else {
                     $filename = Str::random(5) . '-' . $file->getClientOriginalName();
 
-                    if (!is_null($file)) $file->storeAs($folderId, $filename, $this->disk);
+                    if (!is_null($file)) $file->storeAs($folderId, $filename, config('filesystems.disks.google.driver'));
 
-                    $contents = collect(Storage::disk($this->disk)->listContents($folderId, false))->where('name', $filename)->first();
+                    $contents = collect(Storage::disk(config('filesystems.disks.google.driver'))->listContents($folderId, false))->where('name', $filename)->first();
 
                     $file = $contents['basename'];
 
@@ -66,22 +64,22 @@ trait GoogleDriveTrait
         }
     }
 
-    public function createDirectory($model) : array
-    {
-        Storage::disk('google')->makeDirectory(env('GOOGLE_DRIVE_FOLDER_GALERI') . '/' . Str::random(8));
+    // public function createDirectory($model) : array
+    // {
+    //     Storage::disk(config('filesystems.disks.google.driver'))->makeDirectory(env('GOOGLE_DRIVE_FOLDER_GALERI') . '/' . Str::random(8));
 
-        $arrCompare = $model::where('gallery_id', 1)->pluck('file')->toArray();
+    //     $arrCompare = $model::where('gallery_id', 1)->pluck('file')->toArray();
 
-        return array_values(array_diff(Storage::disk($this->disk)->directories(env('GOOGLE_DRIVE_FOLDER_GALERI')), $arrCompare));
-    }
+    //     return array_values(array_diff(Storage::disk($this->disk)->directories(env('GOOGLE_DRIVE_FOLDER_GALERI')), $arrCompare));
+    // }
 
-    public function deleteDirectory(string $directoryId) : void
-    {
-        Storage::disk($this->disk)->deleteDirectory($directoryId);
-    }
+    // public function deleteDirectory(string $directoryId) : void
+    // {
+    //     Storage::disk($this->disk)->deleteDirectory($directoryId);
+    // }
 
     public function deleteFile(string $fileId) : void
     {
-        Storage::disk($this->disk)->delete($fileId);
+        Storage::disk(config('filesystems.disks.google.driver'))->delete($fileId);
     }
 }

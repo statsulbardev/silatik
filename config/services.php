@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'root_dr' => env('GOOGLE_DRIVE_FOLDER_ROOT'),
+        'sm_dr'   => env('GOOGLE_DRIVE_SURAT_MASUK'),
+        'sk_dr'   => env('GOOGLE_DRIVE_SURAT_KELUAR')
+    ],
 ];

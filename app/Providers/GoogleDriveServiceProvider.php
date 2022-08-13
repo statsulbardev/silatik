@@ -27,13 +27,13 @@ class GoogleDriveServiceProvider extends ServiceProvider
         Storage::extend('google', function($app, $config) {
             $client = new \Google_Client();
 
-            $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
-            $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
-            $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+            $client->setClientId(config('filesystems.disks.google.clientId'));
+            $client->setClientSecret(config('filesystems.disks.google.clientSecret'));
+            $client->refreshToken(config('filesystems.disks.google.refreshToken'));
 
             $service = new \Google_Service_Drive($client);
 
-            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, config('googleid.folder_root'));
+            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, config('services.google.root_dr'));
 
             return new \League\Flysystem\Filesystem($adapter);
         });
