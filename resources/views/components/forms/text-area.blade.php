@@ -7,10 +7,11 @@
     </label>
     <div class="col-sm-10">
         <textarea wire:model.defer="{{ $model }}" class="form-control" style="height: 80px"></textarea>
-        @error($model)
-            <div class="pt-3">
-                <span class="text-danger">{{ $message }}</span>
-            </div>
-        @enderror
+        <div class="mt-3">
+            @include('components.notifications.error-field', [
+                'model' => $model,
+                'pesan' => 'Kolom ini tidak boleh kosong.'
+            ])
+        </div>
     </div>
 </div>

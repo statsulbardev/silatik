@@ -1,5 +1,5 @@
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 
 <div class="form-group row">
@@ -16,15 +16,16 @@
             </div>
             <input wire:model.defer="{{ $model }}" type="text" class="form-control {{ $model }}">
         </div>
-        @error($model)
-            <div class="pt-3">
-                <span class="text-danger">{{ $message }}</span>
-            </div>
-        @enderror
+        <div class="mt-3">
+            @include('components.notifications.error-field', [
+                'model' => $model,
+                'pesan' => 'Kolom ini tidak boleh kosong.'
+            ])
+        </div>
     </div>
 </div>
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>flatpickr('{{ '.' . $model }}', { dateFormat: "d-M-Y" })</script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>flatpickr('{{ '.' . $model }}', { dateFormat: "d-M-Y" })</script>
 @endpush

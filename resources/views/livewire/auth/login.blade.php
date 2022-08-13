@@ -7,7 +7,12 @@
             <label for="username">username</label>
             <input wire:model.defer="username" type="text" class="form-control" tabindex="1" required autofocus>
             @error('username')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="mt-2">
+                    @include('components.notifications.error-field', [
+                        'model' => 'username',
+                        'pesan' => 'username minimal 3 karakter.'
+                    ])
+                </div>
             @enderror
         </div>
         {{-- Password Input --}}
@@ -15,7 +20,12 @@
             <label for="password" class="control-label">Password</label>
             <input wire:model.defer="password" type="password" class="form-control" tabindex="2" required>
             @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="mt-2">
+                    @include('components.notifications.error-field', [
+                        'model' => 'password',
+                        'pesan' => 'password minimal 5 karakter.'
+                    ])
+                </div>
             @enderror
         </div>
         {{-- Login Button --}}
