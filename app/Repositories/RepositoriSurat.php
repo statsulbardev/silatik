@@ -110,7 +110,7 @@ class RepositoriSurat
     private function uploadFileToDrive($val) : ?String
     {
         $path = !is_null($val->file_surat)
-              ? $this->uploadFile($val->tipe == "sm" ? config('googleid.surat_masuk') : config('googleid.surat_keluar'), 'create', $val->file_surat)
+              ? $this->uploadFile($val->tipe == "sm" ? config('services.google.sm_dr') : config('services.google.sk_dr'), 'create', $val->file_surat)
               : null;
 
         return $path;
