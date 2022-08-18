@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'cek_umum' => \App\Http\Middleware\FromGeneralDivision::class,
+        'ganti_password' => \App\Http\Middleware\ChangePassword::class,
     ];
 }
