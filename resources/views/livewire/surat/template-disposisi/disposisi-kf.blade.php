@@ -151,7 +151,7 @@
 
                         {{-- error message --}}
                         @include('components.notifications.error-field', [
-                            'model' => 'penerima'
+                            'model' => 'penerima',
                             'pesan' => 'Tujuan disposisi dibutuhkan, pilih minimal satu tujuan disposisi.'
                         ])
                     </div>
