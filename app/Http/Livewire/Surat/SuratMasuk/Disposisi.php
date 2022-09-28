@@ -4,12 +4,9 @@ namespace App\Http\Livewire\Surat\SuratMasuk;
 
 use App\Models\Surat;
 use App\Models\UnitFungsi;
-use App\Models\UnitKerja;
 use App\Repositories\RepositoriDisposisi;
 use App\Traits\HasReadMails;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Disposisi extends Component
@@ -24,8 +21,13 @@ class Disposisi extends Component
     public $catatan;
     public $unitFungsi;
 
-    protected $rules = [
+    protected $rulesKepala = [
         'poin'     => 'required',
+        'penerima' => 'required',
+        'catatan'  => 'required|min:5'
+    ];
+
+    protected $rulesNonKepala = [
         'penerima' => 'required',
         'catatan'  => 'required|min:5'
     ];
@@ -54,11 +56,11 @@ class Disposisi extends Component
 
     public function save(RepositoriDisposisi $repositoriDisposisi)
     {
-        $this->validate();
-
         switch($this->role)
         {
             case 'kabps' :
+                $this->validate($this->rulesKepala);
+
                 $result = $repositoriDisposisi->store($this);
 
                 session()->flash('messages', $result);
@@ -67,6 +69,8 @@ class Disposisi extends Component
 
                 break;
             default:
+                $this->validate($this->rulesNonKepala);
+
                 $result = $repositoriDisposisi->update($this);
 
                 session()->flash('messages', $result);
